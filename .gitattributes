@@ -1,0 +1,73 @@
+# Base: Mihu gitattributes 1.0.1
+# @author mihu86
+# Repository specific GIT options
+
+# Set default handling of line terminators for all non explicitly listed file types:
+* text=auto
+
+# Set line ending normalization (for text files) and diff types
+*.java text diff=java
+*.cs text eol=crlf diff=csharp
+*.groovy text
+*.gradle text
+*.py text
+*.rb text
+*.properties text
+*.c text
+*.cpp text
+*.h text
+*.hpp text
+*.csproj text merge=union eol=crlf
+*.vbproj text merge=union eol=crlf
+*.fsproj text merge=union eol=crlf
+*.dbproj text merge=union eol=crlf
+*.sln -text merge=union eol=crlf
+*.html text diff=html
+*.htm text diff=html
+*.js text
+*.jsp text
+*.css text
+*.php text
+*.gsp text
+*.xml text
+*.yml text
+*.yaml text
+*.txt text
+*.md text
+*.sql text
+*.bat text
+*.sh text
+*.ini text
+.classpath text
+.project text
+*.graphml text
+*.fo text
+*.tex text
+
+# Binary files (no line ending normalization, no diff)
+*.jpg binary
+*.png binary
+*.gif binary
+*.bmp binary
+*.zip binary
+*.jar binary
+*.exe binary
+*.dll binary
+*.so binary
+*.flv binary
+*.fla binary
+*.mp3 binary
+*.mp4 binary
+*.avi binary
+*.bin binary
+
+*.doc  diff=astextplain
+*.DOC	diff=astextplain
+*.docx	diff=astextplain
+*.DOCX	diff=astextplain
+*.dot	diff=astextplain
+*.DOT	diff=astextplain
+*.pdf	diff=astextplain
+*.PDF	diff=astextplain
+*.rtf	diff=astextplain
+*.RTF	diff=astextplain

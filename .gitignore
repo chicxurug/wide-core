@@ -1,0 +1,14 @@
+*/bin
+*/build
+/bin
+/build
+.gradle
+/release
+
+.metadata
+.project
+.classpath
+.settings
+.pmd
+.springBeans
+
