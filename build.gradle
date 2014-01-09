@@ -1,0 +1,67 @@
+// Build base: Mihu build 1.0.8
+// @author mihu86
+
+// Feel free to delete commented lines
+
+apply from: "libraries.gradle"
+apply plugin: "java" // for clean task
+
+allprojects {
+    version = '0.1.0' // default version, this can be overridden in subprojects!
+}
+
+// Version to use for eclipse dynamic web module (should be the same in web.xml) for war projects
+ext.webModuleVersion = '3.0'
+
+// common configurations, tasks, etc.
+apply from: "common.gradle"
+
+// one way to declare dependencies for the buildDist task - but not the preferred way:
+//
+// gradle.projectsEvaluated {
+//     buildDist.dependsOn(subprojects.build)
+//     // other things can be done here which require the evaluation of all projects
+// }
+//
+// API for the Gradle interface:
+//  - DSL: http://www.gradle.org/docs/current/dsl/org.gradle.api.invocation.Gradle.html
+//  - Javadoc: http://www.gradle.org/docs/current/javadoc/org/gradle/api/invocation/Gradle.html
+//  - Groovydoc: http://www.gradle.org/docs/current/groovydoc/org/gradle/api/invocation/Gradle.html
+
+ext.distDir = file("$buildDir/dist")
+
+task buildDist {
+    //  outputs.dir distDir // only declare outputs if you can declare all inputs too!!! @see: http://www.gradle.org/docs/current/userguide/userguide_single.html#sec:up_to_date_checks
+    
+    doLast {
+        copy {
+            from project(':webapp').configurations.archives.artifacts.files.filter { file -> file.name.endsWith 'war' }
+            from project(':commandline-app').configurations.distribution.artifacts.files
+            into distDir // should be build/dist or build/dist/something
+            // rename somethingFrom, somethingTo // rename if necessary
+        }
+        // other custom actions can be done here
+    }
+}
+
+subprojects {
+    // change these to the appropriate version (Java convention: sourceCompatibility <= targetCompatibility)
+    sourceCompatibility = JavaVersion.VERSION_1_6
+    targetCompatibility = JavaVersion.VERSION_1_6
+    
+    dependencies {
+        // common dependencies for all projects - use with care
+        testCompile libraries.junit // test dependencies are not transitive by default
+    }
+    
+    // special task to prepare for buildDist - this can be extended (with doFirst or doLast actions) in the build files of the subprojects
+    task prepareDist(dependsOn: build)
+    // preferred way to set task dependency for the main release task
+    rootProject.buildDist.dependsOn prepareDist
+}
+
+// generates gradlew and gradlew.bat
+// only run this if version changed
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.6'
+}

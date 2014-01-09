@@ -1,0 +1,83 @@
+// Build base: Mihu build 1.0.8
+// @author mihu86
+// @author kancsuki
+
+project.ext {
+	
+	def vaadin_version = '7.1.9'
+	def spring_version = '3.2.1.RELEASE'
+	def spring_security_version = '3.1.4.RELEASE'
+	
+    libraries = [
+		// ------/  Util  \------
+        guava:                   'com.google.guava:guava:14.0', // google collections
+		xstream:                 'com.thoughtworks.xstream:xstream:1.4.4', // serialisation
+		joda_time:				 'joda-time:joda-time:2.2', // better time management
+        logback_classic:         'ch.qos.logback:logback-classic:1.0.9', // logging
+        logback_core:            'ch.qos.logback:logback-core:1.0.9', // logging
+        slf4j_api:               'org.slf4j:slf4j-api:1.7.2', // logging
+		opencsv:                 'net.sf.opencsv:opencsv:2.3', // CSV management
+		jewelcli:                'com.lexicalscope.jewelcli:jewelcli:0.8.6', // Command line argument parser
+		hamcrest:                'org.hamcrest:hamcrest-all:1.3', // matchers
+		// ------\  Util  /------
+		
+		// ------/  Apache  \------
+		commons_beanutils:       'commons-beanutils:commons-beanutils:1.8.3',
+		commons_cli:             'commons-cli:commons-cli:1.2',
+		commons_codec:			 'commons-codec:commons-codec:1.7',
+		commons_collections:     'commons-collections:commons-collections:3.2.1',
+		commons_exec:			 'org.apache.commons:commons-exec:1.1',
+		commons_io:              'commons-io:commons-io:2.4',
+		commons_lang:			 'commons-lang:commons-lang:2.6',
+		commons_lang3:			 'org.apache.commons:commons-lang3:3.1',
+		commons_logging:         'commons-logging:commons-logging:1.1.1',
+		// ------\  Apache  /------
+		
+		// ------/  Vaadin  \------
+		vaadin_archtype:		 "com.vaadin:vaadin-archetype-application:$vaadin_version",
+		vaadin_compiler:		 "com.vaadin:vaadin-client-compiler:$vaadin_version",
+		vaadin_compiled:		 "com.vaadin:vaadin-client-compiled:$vaadin_version",
+		vaadin_client:			 "com.vaadin:vaadin-client:$vaadin_version",
+		vaadin_push:			 "com.vaadin:vaadin-push:$vaadin_version",
+		vaadin_themes:			 "com.vaadin:vaadin-themes:$vaadin_version",
+		vaadin_server:			 "com.vaadin:vaadin-server:$vaadin_version",
+		// ------\  Vaadin  /------
+
+		// ------/  Spring  \------
+		spring_aop:              "org.springframework:spring-aop:$spring_version",
+		spring_beans:            "org.springframework:spring-beans:$spring_version",
+		spring_context:          "org.springframework:spring-context:$spring_version",
+		spring_core:             "org.springframework:spring-core:$spring_version",
+		spring_expression:       "org.springframework:spring-expression:$spring_version",
+		spring_jdbc:             "org.springframework:spring-jdbc:$spring_version",
+		spring_orm:              "org.springframework:spring-orm:$spring_version",
+		spring_test:             "org.springframework:spring-test:$spring_version",
+		spring_tx:               "org.springframework:spring-tx:$spring_version",
+		spring_web:              "org.springframework:spring-web:$spring_version",
+		spring_security_core:	 "org.springframework.security:spring-security-core:$spring_security_version",
+		spring_security_config:	 "org.springframework.security:spring-security-config:$spring_security_version",
+		spring_security_taglibs: "org.springframework.security:spring-security-taglibs:$spring_security_version",
+		spring_security_web:	 "org.springframework.security:spring-security-web:$spring_security_version",
+		spring_ws_core:			 "org.springframework.ws:spring-ws-core:2.1.2.RELEASE",
+		// ------\  Spring  /------
+		
+		// ------/  Web-Compontents  \------
+		jstl:					 'javax.servlet:jstl:1.2',
+		jstl_api:				 'javax.servlet.jsp.jstl:jstl-api:1.2',
+		jaxws_rt:				 'com.sun.xml.ws:jaxws-rt:2.1.7',
+		wss4j:					 'wss4j:wss4j:1.5.1',
+		xmlsec:					 'xml-security:xmlsec:1.3.0',
+		json:					 'org.json:json:20090211',
+		stripes:				 'net.sourceforge.stripes:stripes:1.5.7',
+		jaxb_api:				 'javax.xml.bind:jaxb-api:2.2.7',
+		jaxb_impl:				 'javax.xml:jaxb-impl:2.1',
+		javax_servlet_api:		 'javax.servlet:javax.servlet-api:3.0.1',
+		// ------\  Web-Swing-Compontents  /------
+		
+		// ------/  Other  \------
+		javax_servlet:			 'javax.servlet:javax.servlet-api:3.0.1',
+		junit:                   'junit:junit:4.+' // newest 4.x version
+		// ------\  Other  /------
+		
+    ]
+}

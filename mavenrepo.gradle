@@ -1,0 +1,2 @@
+rootProject.ext.snapshotUrl = 'https://github.com/chicxurug/wide-core/nexus/content/repositories/snapshots'
+rootProject.ext.releaseUrl = 'https://github.com/chicxurug/wide-core/nexus/content/repositories/releases'

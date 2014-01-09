@@ -1,0 +1,61 @@
+// Build base: Mihu build 1.0.8
+// @author mihu86
+
+apply plugin: 'maven'
+apply from: "${rootProject.projectDir}/mavenrepo.gradle"
+
+ext.registeredUpload = true
+
+private void ensureCredentials() {
+    if (!rootProject.hasProperty("publishUsername")) {
+        def console = System.console()
+        rootProject.ext.publishUsername = console.readLine('\nDeployment username: ')
+        def passw = console.readPassword('Deployment password: ') as String // need to make String from char[]
+        rootProject.ext.publishPassword = passw
+    }
+}
+
+def configClosure = {
+    ensureCredentials()
+    
+    repositories {
+        flatDir {
+            dirs "${project.buildDir}/localrepo/${localPublishDir}"
+        }
+        mavenDeployer {
+            repository(url: publishUrl) {
+                authentication(userName: publishUsername, password: publishPassword)
+            }
+            uniqueVersion = false
+        }
+    }
+}
+
+gradle.taskGraph.whenReady {taskGraph ->
+    def release = false
+    
+    taskGraph.allTasks.each() { task ->
+        if (task instanceof Upload && task.project.hasProperty("registeredUpload")) {
+            task.doFirst(configClosure)
+            if (task.name.endsWith('Release')) {
+                release = true
+            }
+        }
+    }
+    
+    def versionQualifier = release ? "RELEASE" : "SNAPSHOT"
+    
+    // append version qualifier to all projects to ensure correct maven dependencies
+    allprojects.each { project -> 
+        if (!project.hasProperty("versionQualified")) {
+            project.version += "-${versionQualifier}"
+            project.ext.versionQualified = true
+        }
+        project.tasks.withType(Jar)*.manifest {
+            attributes 'Implementation-Version': project.version
+        }
+    }
+    
+    rootProject.ext.publishUrl = release ? releaseUrl : snapshotUrl
+    rootProject.ext.localPublishDir = versionQualifier
+}

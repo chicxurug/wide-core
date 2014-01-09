@@ -1,0 +1,8 @@
+// Build base: Mihu build 1.0.8
+// @author mihu86
+
+apply from: "${rootProject.projectDir}/upload.gradle" // for artifact upload
+
+dependencies {
+    compile libraries.slf4j_api
+}

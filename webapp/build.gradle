@@ -1,0 +1,29 @@
+// Build base: Mihu build 1.0.8
+// @author mihu86
+// @author kancsuki
+
+apply plugin: 'war'
+// apply plugin: 'jetty' // simple webapps can be run instantly by gradle with this plugin - don't use it if not necessary
+
+// run the application in jetty: gradle jettyRun
+
+dependencies {
+    compile project(':middleware')
+	
+	compile libraries.vaadin_compiler
+	compile libraries.vaadin_compiled
+	compile libraries.vaadin_client
+	compile libraries.vaadin_push
+	compile libraries.vaadin_themes
+	compile libraries.vaadin_server
+	
+	providedCompile libraries.javax_servlet
+}
+
+// custom archive name if necessary
+//war {
+//    archiveName = 'mywebapp.war'
+//}
+
+// main release task depends on the build task of this project
+rootProject.buildDist.dependsOn build

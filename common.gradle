@@ -1,0 +1,210 @@
+// Build base: Mihu build 1.0.8
+// @author mihu86
+
+import org.apache.ivy.ant.IvyAntSettings.Credentials
+import org.eclipse.jgit.lib.*
+import org.eclipse.jgit.api.*
+import org.gradle.plugins.ide.eclipse.model.Facet
+
+buildscript {
+    repositories { mavenCentral() }
+    dependencies { classpath 'org.eclipse.jgit:org.eclipse.jgit:2.3.1.201302201838-r' }
+}
+
+gradle.projectsEvaluated {
+    def gitBuilder = new RepositoryBuilder().findGitDir(rootProject.projectDir)
+    def gitStatus
+    
+    if (gitBuilder.gitDir != null) {
+        def gitRepo = gitBuilder.build()
+        def head = gitRepo.resolve("HEAD")
+        def git = new Git(gitRepo)
+        gitStatus = git.status().call()
+        
+        allprojects.each { project ->
+            project.tasks.withType(Jar)*.manifest {
+                attributes 'Git-Branch': gitRepo.fullBranch
+                attributes 'Git-HEAD': ObjectId.toString(head)
+                attributes 'Git-IsClean': gitStatus.clean
+                attributes 'Git-RepositoryState': gitRepo.repositoryState
+            }
+        }
+    } else {
+        logger.warn('Not in a Git working copy, skipping Git specific properties from Manifest.')
+    }
+    
+    allprojects.each { project ->
+        project.tasks.withType(Jar).each { jar ->
+            jar.manifest {
+                attributes 'Implementation-Title': project.name, 'Implementation-Version': project.version
+                attributes 'Build-BuiltOn': new Date().format('yyyy-MM-dd HH:mm:ss')
+                attributes 'Build-GradleVersion': gradle.gradleVersion
+            }
+            
+            jar.exclude '.gitkeep'
+        }
+    }
+    
+    if (!rootProject.getTasksByName('buildDist', false).empty && rootProject.hasProperty('distDir')) {
+        buildDist.doLast {
+            def version = new File("$distDir/version.txt")
+            version.text = rootProject.name + " " + rootProject.version + "\n"
+            if (gitBuilder.gitDir != null) {
+                def gitRepo = gitBuilder.build()
+                def head = gitRepo.resolve("HEAD")
+                def config = gitRepo.getConfig();
+                def url = config.getString("remote", "origin", "url");
+                def gitRepoName = url ? url.substring(url.lastIndexOf("/")) : rootProject.name
+                version.text += "From: ${gitRepoName} repository\n"
+                def mod = gitStatus.clean ? "" : " modified"
+                version.text += "Revision: ${ObjectId.toString(head)}${mod}\n"
+            }
+            assert file("$distDir/version.txt").exists()
+        }
+    } else {
+        println "The project has to define a task named 'buildDist' and a property named 'distDir'!"
+    }
+}
+
+configure(rootProject) {
+    apply plugin: 'eclipse-wtp'
+    
+    eclipse.project.file.withXml { xmlProvider ->
+        Node project = xmlProvider.asNode()
+        Node filter = project.appendNode('filteredResources').appendNode('filter')
+        filter.appendNode('id', new Date().time)
+        filter.appendNode('name')
+        filter.appendNode('type', 10)
+        Node matcher = filter.appendNode('matcher')
+        matcher.appendNode('id', 'org.eclipse.ui.ide.orFilterMatcher')
+        Node arguments = matcher.appendNode('arguments')
+        subprojects.each { subproject ->
+            Node submatcher = arguments.appendNode('matcher')
+            submatcher.appendNode('id', 'org.eclipse.ui.ide.multiFilter')
+            submatcher.appendNode('arguments', "1.0-projectRelativePath-equals-true-false-${subproject.name}")
+        }
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'eclipse-wtp'
+    
+    group = 'com.wide-education'
+    
+    repositories {
+        mavenCentral()
+    }
+    
+    configurations {
+        // development (SNAPSHOT) configurations
+
+        archivesDevel { // to follow conventions
+            extendsFrom archives
+        }
+        
+        javadocsDevel
+        sourcesDevel
+        testsDevel
+        fullDevel {
+            extendsFrom archivesDevel
+            extendsFrom javadocsDevel
+            extendsFrom sourcesDevel
+            extendsFrom testsDevel
+        }
+
+        // release configurations
+        archivesRelease {
+            extendsFrom archivesDevel
+        }
+        javadocsRelease {
+            extendsFrom javadocsDevel
+        }
+        sourcesRelease {
+            extendsFrom sourcesDevel
+        }
+        testsRelease {
+            extendsFrom testsDevel
+        }
+        fullRelease {
+            extendsFrom fullDevel
+        }
+    }
+    
+    configurations.all {
+        // always refresh SNAPSHOTs (default: 24 hours)
+        resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+        // refresh dynamic dependencies frequently (default: 24 hours)
+        resolutionStrategy.cacheDynamicVersionsFor 2, 'hours'
+    }
+    
+    // Set UTF-8 encoding for compiler
+    tasks.withType(Compile)*.options*.encoding = 'UTF-8'
+    tasks.withType(Javadoc)*.options*.encoding = 'UTF-8'
+    
+    // custom tasks for creating source/test/javadoc jars
+    task sourcesJar(type: Jar, dependsOn:classes) {
+        classifier = 'sources'
+        from sourceSets.main.allSource
+    }
+    
+    task javadocJar(type: Jar, dependsOn:javadoc) {
+        classifier = 'javadoc'
+        from javadoc.destinationDir
+    }
+    
+    task testsJar(type: Jar, dependsOn:classes) {
+        classifier = 'tests'
+        from sourceSets.test.allSource
+    }
+     
+    // add javadoc/test/source jar tasks as artifacts
+    artifacts {
+        javadocsDevel javadocJar
+        sourcesDevel sourcesJar
+        testsDevel testsJar
+    }
+    
+    if (!project.hasProperty('doNotFilterBuildDir') || project.doNotFilterBuildDir == false) {
+        eclipse.project.file.withXml { xmlProvider ->
+            Node project = xmlProvider.asNode()
+            Node filter = project.appendNode('filteredResources').appendNode('filter')
+            filter.appendNode('id', new Date().time)
+            filter.appendNode('name')
+            filter.appendNode('type', 10)
+            Node matcher = filter.appendNode('matcher')
+            matcher.appendNode('id', 'org.eclipse.ui.ide.multiFilter')
+            matcher.appendNode('arguments', '1.0-name-matches-false-false-build')
+        }
+    }
+    
+    eclipse.jdt.file.withProperties { properties ->
+        def formatterProps = new Properties()
+        rootProject.file('eclipseFormatter.properties').withInputStream { stream ->
+            formatterProps.load(stream)
+        }
+        properties.putAll formatterProps
+    }
+    
+    eclipseJdt.doLast {
+        def uiProps = 'eclipseUI.properties'
+        def resProps = 'eclipseResources.properties'
+        copy {
+            from(rootProject.projectDir) {
+                include uiProps
+                include resProps
+            }
+            into '.settings'
+            rename uiProps, 'org.eclipse.jdt.ui.prefs'
+            rename resProps, 'org.eclipse.core.resources.prefs'
+        }
+    }
+    
+    def webVersion = project.hasProperty('webModuleVersion') ? project.webModuleVersion : '2.5'
+    
+    plugins.withType(WarPlugin).whenPluginAdded {
+        eclipse.wtp.facet.file.whenMerged { wtp ->
+            wtp.facets.find{it.type == Facet.FacetType.installed && it.name == 'jst.web'}*.version = webVersion
+        }
+    }
+}
