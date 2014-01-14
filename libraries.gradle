@@ -41,6 +41,7 @@ project.ext {
 		vaadin_push:			 "com.vaadin:vaadin-push:$vaadin_version",
 		vaadin_themes:			 "com.vaadin:vaadin-themes:$vaadin_version",
 		vaadin_server:			 "com.vaadin:vaadin-server:$vaadin_version",
+		vaadin_spring:			 'ru.xpoft.vaadin:spring-vaadin-integration:2.0.2',
 		// ------\  Vaadin  /------
 
 		// ------/  Spring  \------
