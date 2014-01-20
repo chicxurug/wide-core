@@ -8,5 +8,4 @@ dependencies {
     compile libraries.guava
     //testCompile project(':bottomlayer').sourceSets.test.output // use the test classes of bottomlayer directly (not necessary just in special cases) - a better solution is to make the test configuration of bottomlayer transitive
     // we don't need to define slf4j as compile dependency here - it's inherited from bottomlayer
-    compile libraries.vaadin_spring
 }

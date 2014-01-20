@@ -16,6 +16,13 @@ dependencies {
 	compile libraries.vaadin_push
 	compile libraries.vaadin_themes
 	compile libraries.vaadin_server
+    compile libraries.spring_security_core
+    compile libraries.spring_security_config
+    compile libraries.spring_security_web
+    compile libraries.vaadin_spring
+    compile libraries.commons_lang3
+    
+    
 	
 	providedCompile libraries.javax_servlet
 }
