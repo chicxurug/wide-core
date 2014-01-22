@@ -5,4 +5,8 @@ apply from: "${rootProject.projectDir}/upload.gradle" // for artifact upload
 
 dependencies {
     compile libraries.slf4j_api
+    compile libraries.slf4j_simple
+    compile libraries.hibernate_core
+    compile libraries.hibernate_entitymanager
+    compile libraries.postgresql
 }
