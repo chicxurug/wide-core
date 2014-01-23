@@ -16,6 +16,7 @@ project.ext {
         logback_classic:         'ch.qos.logback:logback-classic:1.0.9', // logging
         logback_core:            'ch.qos.logback:logback-core:1.0.9', // logging
         slf4j_api:               'org.slf4j:slf4j-api:1.7.2', // logging
+		slf4j_simple:            'org.slf4j:slf4j-simple:1.7.2', // logging
 		opencsv:                 'net.sf.opencsv:opencsv:2.3', // CSV management
 		jewelcli:                'com.lexicalscope.jewelcli:jewelcli:0.8.6', // Command line argument parser
 		hamcrest:                'org.hamcrest:hamcrest-all:1.3', // matchers
@@ -62,6 +63,12 @@ project.ext {
 		spring_ws_core:			 "org.springframework.ws:spring-ws-core:2.1.2.RELEASE",
 		// ------\  Spring  /------
 		
+		// ------/  Hibernate  \------
+		hibernate_core:			 "org.hibernate:hibernate-core:4.3.0.Final",
+		hibernate_validator:     "org.hibernate:hibernate-validator:4.3.0.Final",
+		hibernate_entitymanager: "org.hibernate:hibernate-entitymanager:4.3.0.Final",
+		// ------\  Hibernate  /------
+		
 		// ------/  Web-Compontents  \------
 		jstl:					 'javax.servlet:jstl:1.2',
 		jstl_api:				 'javax.servlet.jsp.jstl:jstl-api:1.2',
@@ -76,6 +83,7 @@ project.ext {
 		// ------\  Web-Swing-Compontents  /------
 		
 		// ------/  Other  \------
+		postgresql:		 		 'org.postgresql:postgresql:9.2-1002-jdbc4',
 		javax_servlet:			 'javax.servlet:javax.servlet-api:3.0.1',
 		junit:                   'junit:junit:4.+' // newest 4.x version
 		// ------\  Other  /------
