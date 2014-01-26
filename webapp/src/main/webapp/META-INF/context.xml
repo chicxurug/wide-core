@@ -2,7 +2,7 @@
  
 <Context antiJARLocking="true" path="/">
 	<Resource
-		name="jdbc/MyApp"
+		name="jdbc/WideWebApp"
 		auth="Container"
 		type="javax.sql.DataSource"
 		username="postgres"
