@@ -10,7 +10,8 @@ project.ext {
 	
     libraries = [
 		// ------/  Util  \------
-        guava:                   'com.google.guava:guava:14.0', // google collections
+        guava:                   'com.google.guava:guava:16.0', // google collections
+        gson:					 'com.google.code.gson:gson:2.2.4', // json
 		xstream:                 'com.thoughtworks.xstream:xstream:1.4.4', // serialisation
 		joda_time:				 'joda-time:joda-time:2.2', // better time management
         logback_classic:         'ch.qos.logback:logback-classic:1.0.9', // logging

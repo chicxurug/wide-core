@@ -144,6 +144,38 @@ public class BaseDAO {
         EntityManager em = this.entityManagerFactory.createEntityManager();
         EntityTransaction et = em.getTransaction();
         et.begin();
+        Query query = em.createNamedQuery(namedQueryName);
+        int i = 1;
+        for (Object p : params) {
+            query.setParameter(i++, p);
+        }
+        T result = (T) query.getSingleResult();
+        et.commit();
+        em.close();
+        return result;
+    }
+
+    @SuppressWarnings("unchecked")
+    protected <T> List<T> findByQuery(final String namedQueryName, final Object... params) {
+        EntityManager em = this.entityManagerFactory.createEntityManager();
+        EntityTransaction et = em.getTransaction();
+        et.begin();
+        Query query = em.createQuery(namedQueryName);
+        int i = 1;
+        for (Object p : params) {
+            query.setParameter(i++, p);
+        }
+        List<T> result = query.getResultList();
+        et.commit();
+        em.close();
+        return result;
+    }
+
+    @SuppressWarnings("unchecked")
+    protected <T> T findUniqueByQuery(final String namedQueryName, final Object... params) throws NoResultException {
+        EntityManager em = this.entityManagerFactory.createEntityManager();
+        EntityTransaction et = em.getTransaction();
+        et.begin();
         Query query = em.createQuery(namedQueryName);
         int i = 1;
         for (Object p : params) {
@@ -154,4 +186,5 @@ public class BaseDAO {
         em.close();
         return result;
     }
+
 }

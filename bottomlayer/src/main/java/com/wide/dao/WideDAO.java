@@ -27,15 +27,23 @@ public class WideDAO extends BaseDAO {
         return findAll(Category.class);
     }
 
+    public List<Category> getCategoriesByParent(Category parent) {
+        return findByQuery("from Category where parent = ?1", parent);
+    }
+
     public Category getOrCreateCategory(String name, Category parent) {
         Category result;
         try {
-            result = findUniqueByNamedQuery("from Category where name = ?1", name);
+            result = findUniqueByQuery("from Category where name = ?1", name);
         } catch (NoResultException e) {
             result = new Category(name, parent);
             create(result);
         }
         return result;
+    }
+
+    public void createCategory(Category c) {
+        create(c);
     }
 
     public Category saveOrUpdateCategory(Category c) {
@@ -45,4 +53,5 @@ public class WideDAO extends BaseDAO {
     public Feature saveOrUpdateFeature(Feature f) {
         return save(f);
     }
+
 }

@@ -9,4 +9,5 @@ public class WideService extends WideDAO {
     public WideService(EntityManagerFactory entityManagerFactory) {
         super(entityManagerFactory);
     }
+
 }

@@ -1,12 +1,12 @@
 package com.wide.domainmodel;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
@@ -45,7 +45,8 @@ public class Category {
         this.name = name;
     }
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     public Category getParent() {
         return this.parent;
     }

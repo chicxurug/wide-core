@@ -3,23 +3,27 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
 	version="2.0">
 
-	<persistence-unit name="com.wide.jpa"
-		transaction-type="RESOURCE_LOCAL">
-
-		<non-jta-data-source>java:comp/env/jdbc/WideWebApp</non-jta-data-source>
-
+	<persistence-unit name="com.wide.commandline" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+		
+		<class>com.wide.domainmodel.Category</class>
+		<exclude-unlisted-classes>false</exclude-unlisted-classes>
+		
 		<properties>
+			<property name="hibernate.connection.driver_class" value="org.postgresql.Driver" />
+			<property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5433/wide" />
+			<property name="hibernate.connection.username" value="postgres" />
+			<property name="hibernate.connection.password" value="postgres" />
 
-			<property name="hibernate.connection.datasource" value="java:comp/env/jdbc/WideWebApp" />
 			<property name="hibernate.id.new_generator_mappings" value="true" />
 
+			<!-- Scan for annotated classes and Hibernate mapping XML files -->
 			<property name="hibernate.archive.autodetection" value="class" />
 			<property name="hibernate.show_sql" value="false" />
 			<property name="hibernate.format_sql" value="true" />
-			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<property name="hibernate.hbm2ddl.auto" value="create" />
 			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
 			<property name="connection.autocommit" value="false" />
-
 		</properties>
 	</persistence-unit>
 
