@@ -9,4 +9,16 @@
   @include reindeer;
 
   /* Insert your theme rules here */
+  strong { 
+    color: blue;
+  }
+  
+  .widebarmenu .v-menubar-menuitem-loginmenuitem {
+    background: #A68566;
+   }
+  
+  .widebarmenu .v-menubar-menuitem-wideusermenu {
+	    background: #A68566;
+   }
+
 }

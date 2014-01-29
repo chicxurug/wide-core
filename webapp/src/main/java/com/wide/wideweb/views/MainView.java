@@ -101,6 +101,7 @@ public class MainView extends Panel implements View
 
     @SuppressWarnings("serial")
     private final void initMenuBar() {
+        this.menubar.addStyleName("widebarmenu");
         // Main menu
         final MenuItem learnMenuItem = this.menubar.addItem("LEARN", null);
         this.menubar.addItem("TEACH", null);
@@ -110,6 +111,7 @@ public class MainView extends Panel implements View
             User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             final String username = user.getUsername();
             final MenuItem userMenuItem = this.menubar.addItem(username, null);
+            userMenuItem.setStyleName("wideusermenu");
             userMenuItem.addItem("My Profile", null);
             userMenuItem.addSeparator();
             userMenuItem.addItem("Create Exercise", null);
@@ -125,7 +127,7 @@ public class MainView extends Panel implements View
 
             });
         } else {
-            this.menubar.addItem("LOG IN", new MenuBar.Command() {
+            final MenuItem loginMenuItem = this.menubar.addItem("LOG IN", new MenuBar.Command() {
 
                 @Override
                 public void menuSelected(MenuItem selectedItem) {
@@ -133,6 +135,7 @@ public class MainView extends Panel implements View
                 }
 
             });
+            loginMenuItem.setStyleName("loginmenuitem");
         }
 
         this.menuCommand = new MenuBar.Command() {

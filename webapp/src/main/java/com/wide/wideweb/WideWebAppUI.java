@@ -5,6 +5,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.vaadin.annotations.Theme;
 import com.vaadin.server.DefaultErrorHandler;
 import com.vaadin.server.ErrorHandler;
 import com.vaadin.server.VaadinRequest;
@@ -17,6 +18,7 @@ import com.wide.wideweb.core.NavigatorFactory;
  * @author Attila Cs.
  * 
  */
+@Theme("wideweb")
 @Component
 @Scope("prototype")
 public class WideWebAppUI extends UI implements ErrorHandler
