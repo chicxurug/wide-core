@@ -25,6 +25,7 @@ public class WideDAO extends BaseDAO {
 
     public List<Category> getCategories() {
         return findAll(Category.class);
+		System.out.println("Test");
     }
 
     public Category getOrCreateCategory(String name, Category parent) {
