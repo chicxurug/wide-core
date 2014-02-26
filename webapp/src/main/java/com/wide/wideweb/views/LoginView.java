@@ -12,12 +12,12 @@ import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.Link;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.VerticalLayout;
 import com.wide.wideweb.util.SpringSecurityHelper;
 import com.wide.wideweb.util.ViewUtils;
 
@@ -39,25 +39,18 @@ public class LoginView extends Panel implements View {
     @Override
     public void enter(final ViewChangeEvent event) {
 
-        setSizeFull();
-        VerticalLayout layout = new VerticalLayout();
-        layout.setSpacing(true);
-        layout.setMargin(true);
-
-        VerticalLayout usernameLayout = new VerticalLayout();
-        usernameLayout.setSpacing(true);
+        setSizeUndefined();
+        CustomLayout layout = new CustomLayout("widelogin");
 
         final TextField eml = new TextField("UserName");
         final PasswordField pwd = new PasswordField("Password");
         Link lnk = new Link("register", new ExternalResource("#!" + ViewUtils.REGISTER));
         final Button btn = new Button("Login");
 
-        usernameLayout.addComponent(eml);
-        usernameLayout.addComponent(pwd);
-        usernameLayout.addComponent(lnk);
-        usernameLayout.addComponent(btn);
-
-        layout.addComponent(usernameLayout);
+        layout.addComponent(eml, "username");
+        layout.addComponent(pwd, "password");
+        layout.addComponent(lnk);
+        layout.addComponent(btn, "okbutton");
 
         btn.addClickListener(new Button.ClickListener() {
 

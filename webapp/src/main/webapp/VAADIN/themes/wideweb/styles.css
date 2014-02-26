@@ -1,0 +1,470 @@
+/* reset */
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+body {
+  line-height: 1; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after, q:before, q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+/* cursor */
+* {
+  cursor: default; }
+
+a {
+  cursor: pointer; }
+
+input[type="text"], textarea {
+  cursor: text; }
+
+/* fonts */
+@font-face {
+  font-family: education;
+  src: url(css/Candara.ttf); }
+
+.welcomeTop, .welcomeBottom {
+  display: block;
+  width: 100%;
+  height: 50%;
+  z-index: 100;
+  position: absolute;
+  background: #31859a; }
+
+.welcomeTop {
+  top: 0; }
+  .welcomeTop > div {
+    display: block;
+    width: 500px;
+    height: 100%;
+    background: #31859a;
+    margin: 0 auto;
+    position: relative; }
+    .welcomeTop > div > div {
+      display: inline-block;
+      position: absolute;
+      bottom: 0; }
+    .welcomeTop > div .welcome1 {
+      background: #31859a url("img/logoAnim1.png") bottom left no-repeat;
+      width: 174px;
+      height: 211px; }
+    .welcomeTop > div .welcome2 {
+      background: #31859a url("img/logoAnim2.png") bottom left no-repeat;
+      width: 69px;
+      height: 211px;
+      left: 174px; }
+    .welcomeTop > div .welcome3 {
+      background: #31859a url("img/logoAnim3.png") bottom left no-repeat;
+      width: 68px;
+      height: 211px;
+      left: 243px; }
+    .welcomeTop > div .welcome4 {
+      background: #31859a url("img/logoAnim4.png") bottom left no-repeat;
+      width: 189px;
+      height: 211px;
+      left: 311px; }
+
+.welcomeBottom {
+  bottom: 0; }
+  .welcomeBottom > div {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: #31859a url("img/welcomeLogoDown.png") top center no-repeat; }
+
+.main .search {
+  width: 450px;
+  margin: 0 auto;
+  display: block;
+  padding-top: 250px; }
+  .main .search .searchLogo {
+    background: url("img/logoMedium2.png") center center no-repeat;
+    width: 300px;
+    height: 126px;
+    margin-bottom: 20px;
+    margin: 0 auto; }
+  .main .search .input {
+    margin: 15px auto;
+    display: block;
+    width: 450px; }
+    .main .search .input input {
+      border: 1px solid #31859a;
+      line-height: 28px;
+      padding-left: 8px;
+      padding-right: 8px; }
+    .main .search .input input[type="text"] {
+      width: 396px;
+      -webkit-border-top-left-radius: 16px;
+      -moz-border-radius-topleft: 16px;
+      border-top-left-radius: 16px;
+      color: #31859a;
+      border-right: 0;
+      font-size: 16px;
+      padding-left: 12px; }
+      .main .search .input input[type="text"]:focus {
+        outline: none; }
+    .main .search .input input[type="submit"] {
+      -o-transition: background 0.2s ease-in;
+      -ms-transition: background 0.2s ease-in;
+      -moz-transition: background 0.2s ease-in;
+      -webkit-transition: background 0.2s ease-in;
+      transition: background 0.2s ease-in;
+      width: 32px;
+      background: #31859a url("img/find.png") center center no-repeat;
+      color: #31859a;
+      cursor: pointer;
+      -webkit-border-top-right-radius: 16px;
+      -moz-border-radius-topright: 16px;
+      border-top-right-radius: 16px;
+      border-left: 0;
+      font-size: 16px; }
+      .main .search .input input[type="submit"]:hover {
+        background-color: #ffba00; }
+      .main .search .input input[type="submit"]:focus {
+        outline: none; }
+
+.main .pageMenu {
+  margin-top: 25px;
+  display: block;
+  clear: both;
+  background: url("img/shadow.png") bottom center no-repeat;
+  padding-bottom: 29px; }
+  .main .pageMenu .left, .main .pageMenu .right {
+    width: 50%;
+    height: 100%;
+    position: relative;
+    background: white; }
+    .main .pageMenu .left > div, .main .pageMenu .right > div {
+      padding: 10px; }
+  .main .pageMenu .left {
+    float: left; }
+  .main .pageMenu .right {
+    float: right; }
+
+.header > div {
+  width: 960px;
+  margin: 0 auto; }
+  .header > div a.logo {
+    background: url("img/logoIco.png") no-repeat left center;
+    width: 165px;
+    height: 50px;
+    display: inline;
+    float: left;
+    margin-left: 230px;
+    line-height: 84px;
+    vertical-align: bottom;
+    color: white;
+    padding-left: 154px;
+    font-family: education;
+    font-size: 12px;
+    letter-spacing: 7px; }
+  .header > div > ul {
+    float: left;
+    display: inline; }
+    .header > div > ul > li {
+      display: inline-block;
+      margin-right: 15px; }
+      .header > div > ul > li > a {
+        font-size: 12px;
+        color: white;
+        font-family: education; }
+  .header > div a.userIco {
+    display: inline;
+    float: right;
+    width: 40px;
+    height: 40px;
+    margin-top: 5px;
+    background: #c0d7dd url("img/userIco.png") no-repeat center center;
+    -o-transition: background 0.2s ease-in;
+    -ms-transition: background 0.2s ease-in;
+    -moz-transition: background 0.2s ease-in;
+    -webkit-transition: background 0.2s ease-in;
+    transition: background 0.2s ease-in; }
+    .header > div a.userIco:hover {
+      background: #ffba00 url("img/userIco.png") no-repeat center center; }
+
+.subHeader {
+  clear: both;
+  width: 100%;
+  display: flex;
+  background: #31859a;
+  padding-left: 100%;
+  margin-left: -100%; }
+  .subHeader .subMenuContainer, .subHeader .userSubContainer {
+    display: inline;
+    width: 960px; }
+    .subHeader .subMenuContainer ul, .subHeader .userSubContainer ul {
+      margin-top: 15px;
+      margin-bottom: 15px;
+      border-left: 1px dotted #c0d7dd;
+      padding: 0 50px 0 10px;
+      display: inline-block;
+      float: left; }
+      .subHeader .subMenuContainer ul li, .subHeader .userSubContainer ul li {
+        margin: 0; }
+        .subHeader .subMenuContainer ul li a, .subHeader .userSubContainer ul li a {
+          color: white;
+          font-family: education;
+          font-size: 12px;
+          -o-transition: color 0.1s ease-in;
+          -ms-transition: color 0.1s ease-in;
+          -moz-transition: color 0.1s ease-in;
+          -webkit-transition: color 0.1s ease-in;
+          transition: color 0.1s ease-in;
+          line-height: 20px;
+          margin: 0 15px 0 0; }
+          .subHeader .subMenuContainer ul li a:hover, .subHeader .userSubContainer ul li a:hover {
+            color: #ffba00; }
+          .subHeader .subMenuContainer ul li a.selected, .subHeader .userSubContainer ul li a.selected {
+            background: url("img/rightIco.png") left center no-repeat;
+            padding-left: 15px;
+            color: #ffba00; }
+  .subHeader .userSubContainer
+  > .subMenu {
+    border-left: 0;
+    border-right: 1px dotted #c0d7dd;
+    float: right;
+    padding: 0 10px 0 0; }
+    .subHeader .userSubContainer
+    > .subMenu a {
+      margin: 0;
+      float: right; }
+
+.header .learn {
+  display: inline;
+  float: left;
+  background: white url("img/bookIco.png") 50% 50% no-repeat;
+  width: 32px;
+  height: 0;
+  margin-top: 7px;
+  padding-top: 28px;
+  margin-bottom: 10px;
+  color: white;
+  text-align: center;
+  -o-transition: color 0.1s ease-in, background 0.1s ease-in;
+  -ms-transition: color 0.1s ease-in, background 0.1s ease-in;
+  -moz-transition: color 0.1s ease-in, background 0.1s ease-in;
+  -webkit-transition: color 0.1s ease-in, background 0.1s ease-in;
+  transition: color 0.1s ease-in, background 0.1s ease-in; }
+  .header .learn:hover {
+    background-color: #ffba00;
+    color: #ffba00; }
+
+.header .teach {
+  display: inline;
+  float: left;
+  background: white url("img/teachIco.png") 50% 50% no-repeat;
+  width: 40px;
+  height: 0;
+  text-align: center;
+  margin-top: 7px;
+  padding-top: 28px;
+  margin-bottom: 10px;
+  color: white;
+  -o-transition: color 0.1s ease-in, background 0.1s ease-in;
+  -ms-transition: color 0.1s ease-in, background 0.1s ease-in;
+  -moz-transition: color 0.1s ease-in, background 0.1s ease-in;
+  -webkit-transition: color 0.1s ease-in, background 0.1s ease-in;
+  transition: color 0.1s ease-in, background 0.1s ease-in; }
+  .header .teach:hover {
+    background-color: #ffba00;
+    color: #ffba00; }
+
+.header .browse {
+  display: inline;
+  float: left;
+  background: white url("img/browseIco.png") 50% 50% no-repeat;
+  width: 40px;
+  height: 0;
+  text-align: center;
+  margin-top: 7px;
+  padding-top: 28px;
+  margin-bottom: 10px;
+  color: white;
+  -o-transition: color 0.1s ease-in, background 0.1s ease-in;
+  -ms-transition: color 0.1s ease-in, background 0.1s ease-in;
+  -moz-transition: color 0.1s ease-in, background 0.1s ease-in;
+  -webkit-transition: color 0.1s ease-in, background 0.1s ease-in;
+  transition: color 0.1s ease-in, background 0.1s ease-in; }
+  .header .browse:hover {
+    background-color: #ffba00;
+    color: #ffba00; }
+
+.footer > div > a {
+  color: white;
+  -o-transition: color 0.2s ease-in;
+  -ms-transition: color 0.2s ease-in;
+  -moz-transition: color 0.2s ease-in;
+  -webkit-transition: color 0.2s ease-in;
+  transition: color 0.2s ease-in;
+  line-height: 50px;
+  display: inline-block;
+  font-family: education; }
+  .footer > div > a:hover {
+    color: #ffba00; }
+
+.footer > div > ul {
+  display: inline;
+  float: right; }
+  .footer > div > ul > li {
+    display: inline-block; }
+    .footer > div > ul > li > a {
+      font-size: 12px;
+      color: white; }
+    .footer > div > ul > li > ul > li {
+      display: none; }
+
+.footerIcons li {
+  margin-left: 1px; }
+
+.footerIcons a {
+  display: inline;
+  float: left;
+  width: 25px;
+  height: 0;
+  margin-top: 11px;
+  padding-top: 28px;
+  margin-bottom: 10px;
+  color: #c0d7dd;
+  text-align: center;
+  -o-transition: color 0.1s ease-in, background 0.1s ease-in;
+  -ms-transition: color 0.1s ease-in, background 0.1s ease-in;
+  -moz-transition: color 0.1s ease-in, background 0.1s ease-in;
+  -webkit-transition: color 0.1s ease-in, background 0.1s ease-in;
+  transition: color 0.1s ease-in, background 0.1s ease-in; }
+  .footerIcons a:hover {
+    background-color: #ffba00;
+    color: #ffba00; }
+
+.footerIcons .donate {
+  background: #c0d7dd url("img/donateIco.png") 50% 50% no-repeat; }
+
+.footerIcons .aboutUs {
+  background: #c0d7dd url("img/aboutIco.png") 50% 50% no-repeat; }
+
+.socialIcons {
+  margin-right: 15px; }
+
+.socialIcons li {
+  margin-left: 5px !important; }
+
+.socialIcons a {
+  display: inline;
+  float: left;
+  width: 22px;
+  height: 0;
+  margin-top: 14px;
+  padding-top: 22px;
+  margin-bottom: 10px;
+  color: #c0d7dd;
+  text-align: center;
+  -o-transition: color 0.1s ease-in, background 0.1s ease-in;
+  -ms-transition: color 0.1s ease-in, background 0.1s ease-in;
+  -moz-transition: color 0.1s ease-in, background 0.1s ease-in;
+  -webkit-transition: color 0.1s ease-in, background 0.1s ease-in;
+  transition: color 0.1s ease-in, background 0.1s ease-in; }
+  .socialIcons a:hover {
+    background-color: #ffba00;
+    color: #ffba00; }
+
+.socialIcons .fbIco {
+  background: #c0d7dd url("img/fbIco.png") 50% 50% no-repeat; }
+
+.socialIcons .gIco {
+  background: #c0d7dd url("img/gIco.png") 50% 50% no-repeat; }
+
+.socialIcons .twIco {
+  background: #c0d7dd url("img/twIco.png") 50% 50% no-repeat; }
+
+.socialIcons .ytIco {
+  background: #c0d7dd url("img/ytIco.png") 50% 50% no-repeat; }
+
+.top .breadcrumb {
+  margin-top: 25px;
+  border-top: 1px solid #7ba1ad; }
+  .top .breadcrumb li a {
+    display: inline;
+    float: left;
+    padding: 15px;
+    background: white;
+    color: #31859a;
+    font-family: education;
+    width: 210px; }
+
+html {
+  overflow: -moz-scrollbars-vertical;
+  overflow-y: scroll; }
+
+body {
+  background: white url(img/bg.jpg);
+  color: #444444;
+  height: 100%; }
+
+* {
+  font-family: Arial; }
+
+a {
+  color: black;
+  text-decoration: none; }
+  a:visited, a:hover, a:active {
+    color: black; }
+
+.header {
+  display: block;
+  clear: both;
+  min-height: 50px;
+  background-color: #31859a;
+  width: 100%;
+  box-shadow: 0 1px 15px #888; }
+
+.top {
+  margin: 0 auto;
+  width: 960px; }
+
+.main {
+  width: 100%;
+  min-height: 500px;
+  color: #444444; }
+  .main > div {
+    margin: 0 auto;
+    width: 960px; }
+
+.footer {
+  display: block;
+  clear: both;
+  height: 50px;
+  background-color: #31859a;
+  color: #c0d7dd;
+  box-shadow: 0 1px 15px #888; }
+  .footer.fixed {
+    position: fixed;
+    left: 0px;
+    bottom: 0px;
+    width: 100%; }
+  .footer > div {
+    width: 960px;
+    margin: 0 auto;
+    font-size: 12px;
+    text-align: center;
+    line-height: 50px;
+    font-family: education; }
