@@ -1,0 +1,170 @@
+/* reset */ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code,del, dfn, em, img, ins, kbd, q, s, samp,small, strike, strong, sub, sup, tt, var,b, u, i, center,dl, dt, dd, ol, ul, li,fieldset, form, label, legend,table, caption, tbody, tfoot, thead, tr, th, td,article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary,time, mark, audio, video {margin: 0;padding: 0;border: 0;font-size: 100%;font: inherit;vertical-align: baseline;}/* HTML5 display-role reset for older browsers */article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display: block;}body {line-height: 1;}ol, ul {list-style: none;}blockquote, q {quotes: none;}blockquote:before, blockquote:after,q:before, q:after {content: '';content: none;}table {border-collapse: collapse;border-spacing: 0;}
+/* cursor */ *{cursor: default;} a{cursor:pointer;} input[type="text"], textarea{cursor:text}
+/* fonts */
+@font-face { font-family: education; src: url(css/Candara.ttf); }
+
+/* test */
+/*
+*{	outline: 1px solid red !important;	&:hover	{		outline: 1px solid green !important;	}}
+*/
+@import "colorScheme.scss";
+@import "css/mixin.scss";
+@import "css/main.scss";
+@import "css/right.scss";
+@import "css/left.scss";
+@import "css/header.scss";
+@import "css/footer.scss";
+@import "css/top.scss";
+@import "css/welcome.scss";
+ 
+ 
+html {
+	overflow: -moz-scrollbars-vertical; 
+	overflow-y: scroll;
+}
+
+body
+{
+	background: #eee;
+	color: $font-color;
+	height: 100%;
+}
+
+*
+{
+	font-family: Arial;
+}
+
+a
+{
+	color: $link-color;
+	text-decoration: none;
+	&:visited, &:hover, &:active,
+	{
+		color: $link-color;
+	}
+}
+
+b
+{
+	font-weight: bold;
+}
+
+input[type=text], input[type=submit]
+{
+	border: 2px solid transparent;
+	&:focus
+	{
+		outline: none;
+		border: 2px solid $secondary-color;
+	}
+}
+
+.header
+{
+	display: block;
+	clear: both;
+	min-height: 50px;
+	background-color: $headerBg-color;
+	width: 100%;
+	box-shadow: 0 1px 15px #888;
+}
+.container
+{
+	display: block;
+	margin: 0 auto;
+	width: 1290px;
+	margin-top: 25px;
+}
+
+.top
+{
+	margin: 0 auto;
+	width: 960px;
+}
+
+.left
+{
+	float: left;
+}
+
+.left, .right
+{
+	width: 165px;
+	display: inline-block;
+	> div
+	{
+		padding: 0 10px 10px 10px;
+	}
+}
+
+
+.main
+{
+	float: left;
+	min-height: 700px;
+	color: $mainText-color;
+	width: 960px;
+	margin-bottom: 50px;
+	display: inline-block;
+	background-color: $fourth-color;
+	> div
+	{
+		padding: 25px;
+	}
+}
+
+.footer
+{
+	display: block;
+	clear: both;
+	height: 200px;
+	background-color: $footerBg-color;
+	color: $footerText-color;
+	box-shadow: 0 1px 15px #888;
+	> div
+	{
+		width: 960px;
+		margin: 0 auto;
+		font-size: 12px;
+		text-align: center;
+		line-height: 50px;
+		font-family: education;
+	}
+}
+
+.mainPageShadow 
+{
+  position: relative;
+  
+}
+.mainPageShadow:before, .mainPageShadow:after
+{
+  z-index: -1;
+  position: absolute;
+  content: "";
+  bottom: 15px;
+  left: 10px;
+  width: 50%;
+  top: 80%;
+  max-width:300px;
+  background: #777;
+  -webkit-box-shadow: 0 15px 10px #777;
+  -moz-box-shadow: 0 15px 10px #777;
+  box-shadow: 0 15px 10px #777;
+  -webkit-transform: rotate(-3deg);
+  -moz-transform: rotate(-3deg);
+  -o-transform: rotate(-3deg);
+  -ms-transform: rotate(-3deg);
+  transform: rotate(-3deg);
+}
+.mainPageShadow:after
+{
+  -webkit-transform: rotate(3deg);
+  -moz-transform: rotate(3deg);
+  -o-transform: rotate(3deg);
+  -ms-transform: rotate(3deg);
+  transform: rotate(3deg);
+  right: 10px;
+  left: auto;
+}

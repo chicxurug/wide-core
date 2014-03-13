@@ -1,0 +1,131 @@
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+      -ms-border-radius: $radius;
+       -o-border-radius: $radius;
+          border-radius: $radius;
+}
+
+@mixin border-radius-left($radius) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+      -ms-border-radius: $radius;
+       -o-border-radius: $radius;
+          border-radius: $radius;
+		-webkit-border-top-right-radius: 0px;
+		-webkit-border-bottom-right-radius: 0px;
+		-moz-border-radius-topright: 0px;
+		-moz-border-radius-bottomright: 0px;
+		border-top-right-radius: 0px;
+		border-bottom-right-radius: 0px;
+}
+
+@mixin border-radius-right($radius) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+      -ms-border-radius: $radius;
+       -o-border-radius: $radius;
+          border-radius: $radius;
+		-webkit-border-top-left-radius: 0px;
+		-webkit-border-bottom-left-radius: 0px;
+		-moz-border-radius-topleft: 0px;
+		-moz-border-radius-bottomleft: 0px;
+		border-top-left-radius: 0px;
+		border-bottom-left-radius: 0px;
+}
+
+@mixin ease-transition($time) {
+	 -webkit-transition: all $time ease;                  
+	-moz-transition: all $time ease;                 
+	-o-transition: all $time ease;   
+	-ms-transition: all $time ease;          
+	transition: all $time ease;
+}
+@mixin background-transition($time) {
+	-o-transition: background $time ease-in;
+	-ms-transition: background $time ease-in;
+	-moz-transition: background $time ease-in;
+	-webkit-transition: background $time ease-in;
+	transition: background $time ease-in;
+}
+@mixin color-transition($time) {
+	-o-transition: color $time ease-in;
+	-ms-transition: color $time ease-in;
+	-moz-transition: color $time ease-in;
+	-webkit-transition: color $time ease-in;
+	transition: color $time ease-in;
+}
+@mixin color-background-transition($time) {
+	-o-transition: color $time ease-in, background $time ease-in;
+	-ms-transition: color $time ease-in, background $time ease-in;
+	-moz-transition: color $time ease-in, background $time ease-in;
+	-webkit-transition: color $time ease-in, background $time ease-in;
+	transition: color $time ease-in, background $time ease-in;
+}
+
+@-webkit-keyframes fadeIn {
+  0%   { opacity: 0; }
+  50%   { opacity: 0; }
+  100% { opacity: 1; }
+}
+@-moz-keyframes fadeIn {
+  0%   { opacity: 0; }
+  50%   { opacity: 0; }
+  100% { opacity: 1; }
+}
+@-o-keyframes fadeIn {
+  0%   { opacity: 0; }
+  50%   { opacity: 0; }
+  100% { opacity: 1; }
+}
+@keyframes fadeIn {
+  0%   { opacity: 0; }
+  50%   { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@-webkit-keyframes fadeOut {
+  0%   { opacity: 1; }
+  100% { opacity: 0; }
+}
+@-moz-keyframes fadeOut {
+  0%   { opacity: 1; }
+  100% { opacity: 0; }
+}
+@-o-keyframes fadeOut {
+  0%   { opacity: 1; }
+  100% { opacity: 0; }
+}
+@keyframes fadeOut {
+  0%   { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+
+@mixin fadeIn($time) {
+	-webkit-animation-duration: $time;
+	-moz-animation-duration: $time;
+	-ms-animation-duration: $time;
+	-o-animation-duration: $time;
+	animation-duration: $time;
+	
+	-webkit-animation-name: fadeIn;
+	-moz-animation-name: fadeIn;
+	-ms-animation-name: fadeIn;
+	-o-animation-name: fadeIn;
+	animation-name: fadeIn;
+}
+
+@mixin fadeOut($time) {
+	-webkit-animation-duration: $time;
+	-moz-animation-duration: $time;
+	-ms-animation-duration: $time;
+	-o-animation-duration: $time;
+	animation-duration: $time;
+	
+	-webkit-animation-name: fadeOut;
+	-moz-animation-name: fadeOut;
+	-ms-animation-name: fadeOut;
+	-o-animation-name: fadeOut;
+	animation-name: fadeOut;
+}

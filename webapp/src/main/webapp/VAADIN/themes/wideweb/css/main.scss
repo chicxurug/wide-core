@@ -1,0 +1,121 @@
+.firstContent
+{
+	display: none;
+}
+
+.main .filterList
+{
+	overflow: hidden;
+		width: 920px;
+	li
+	{
+		width: 880px;
+		overflow: hidden;
+		float: left;
+		min-height: 100px;
+		border-left: 30px solid;
+		border-top: 1px solid;
+		border-right: 1px solid;
+		border-bottom: 1px solid;
+		background-color: white; 
+		font-family: education;
+		@include color-background-transition(0.1s);
+		margin-bottom: 10px;
+		cursor: pointer;
+		*
+		{
+			cursor: pointer;
+		}
+		&:hover
+		{
+			@include ease-transition(0.1s);
+			background-color: $fourth-fade-color;
+			*
+			{
+				color: black;
+			}
+		}
+		&.folder
+		{
+			border-color: $folder-color;
+		}
+		&.lesson
+		{
+			border-color: $lesson-color;
+		}
+		> img.icon
+		{
+			float: left;
+			margin: 5px 15px 5px 5px;
+			max-width: 100px;
+			max-height: 100px;
+			display: inline-block;
+			v-align: top;
+			cursor: pointer;
+		}
+		.title
+		{
+			display: inline-block;
+			font-size: 18px;
+			font-weight: bold;
+			margin-top: 7px;
+			cursor: pointer;
+			line-height: 20px;
+			height: 20px;
+			width: 600px;
+		}
+		.subfolders
+		{
+			display: block;
+		}
+		.lessons
+		{
+			display: block;
+		}
+		.tests
+		{
+			display: block;
+		}
+		.author
+		{
+			display: block;
+			float: left;
+			margin-left: 45px;
+			& > a:hover
+			{
+				color: $secondary-color;
+			}
+		}
+		.schoolLevel
+		{
+			display: inline-block;
+			width:40px;
+			height: 40px;
+			vertical-align: middle;
+			margin-right: 10px;
+			&.university
+			{
+				background: $fourth-dark-color url('img/uni.png') center center no-repeat;
+				@include border-radius(20px)
+			}
+		}
+		.rank
+		{
+			display: block;
+			float: right;
+			margin: 8px 5px 5px 5px;
+			vertical-align: bottom;
+		}
+		.level
+		{
+			display: block;
+			float: right;
+			margin: 8px 5px 5px 5px;
+			vertical-align: bottom;
+		}
+	}
+}
+
+
+
+

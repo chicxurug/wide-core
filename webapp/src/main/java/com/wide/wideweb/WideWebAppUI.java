@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.vaadin.annotations.JavaScript;
+import com.vaadin.annotations.StyleSheet;
 import com.vaadin.annotations.Theme;
 import com.vaadin.server.DefaultErrorHandler;
 import com.vaadin.server.ErrorHandler;
@@ -22,7 +23,8 @@ import com.wide.wideweb.core.NavigatorFactory;
 @Theme("wideweb")
 @Component
 @Scope("prototype")
-@JavaScript({ "app://VAADIN/themes/wideweb/js/jquery-2.1.0.js", "app://VAADIN/themes/wideweb/js/subHeader.js" })
+@JavaScript({ "app://VAADIN/themes/wideweb/js/jquery-2.1.0.js" })
+@StyleSheet({ "app://VAADIN/themes/wideweb/styles.css" })
 public class WideWebAppUI extends UI implements ErrorHandler
 {
 

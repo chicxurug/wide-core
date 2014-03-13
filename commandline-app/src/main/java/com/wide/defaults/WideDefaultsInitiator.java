@@ -1,10 +1,23 @@
 package com.wide.defaults;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.LinkedHashMultimap;
@@ -97,13 +110,46 @@ public class WideDefaultsInitiator {
 
     }
 
+    private void initDefaultsFromMM(File mmFile) throws ParserConfigurationException, SAXException, IOException {
+        Map<Node, Category> nodeCategories = new HashMap<Node, Category>();
+        ArrayList<Category> categoryList = new ArrayList<Category>();
+        Category root = null;
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+        Document doc = dBuilder.parse(mmFile);
+        NodeList nList = doc.getElementsByTagName("node");
+        for (int i = 0; i < nList.getLength(); i++) {
+            Node nNode = nList.item(i);
+            if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+                if ("WIDE".equals(nNode.getAttributes().getNamedItem("TEXT").getNodeValue())) {
+                    root = new Category("", null);
+                    nodeCategories.put(nNode, root);
+                } else {
+                    Category cat = new Category(nNode.getAttributes().getNamedItem("TEXT").getNodeValue(), nodeCategories.get(nNode.getParentNode()));
+                    categoryList.add(cat);
+                    nodeCategories.put(nNode, cat);
+                }
+            }
+        }
+
+        // save to db
+        this.service.createCategory(root);
+        for (Category category : categoryList) {
+            this.service.createCategory(category);
+        }
+    }
+
     public static void main(String[] args) throws Exception {
         logger.info("Starting WIDE command line application.");
         // Use local persistence.xml configuration
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.wide.commandline");
         WideService wideService = new WideService(emf);
         WideDefaultsInitiator main = new WideDefaultsInitiator(wideService);
-        main.initDefaults();
+        if (args.length == 0) {
+            main.initDefaults();
+        } else {
+            main.initDefaultsFromMM(new File(args[0]));
+        }
         // Close at application end
         emf.close();
         logger.info("Done.");

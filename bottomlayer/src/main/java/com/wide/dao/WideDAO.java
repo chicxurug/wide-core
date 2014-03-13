@@ -23,6 +23,10 @@ public class WideDAO extends BaseDAO {
         return findAll(Exercise.class);
     }
 
+    public List<Exercise> getExercisesByCategory(Category category) {
+        return findByQuery("from Exercise where category = ?1", category);
+    }
+
     public List<Category> getCategories() {
         return findAll(Category.class);
     }

@@ -1,0 +1,438 @@
+input.default
+{
+	color: #aaa !important;
+}
+
+.header	> div
+{	
+	width: 960px;
+	margin: 0 auto;
+	a.logo
+	{
+		background: url("img/logo2color.png") no-repeat left center;
+		width: 120px;
+		height: 47px;
+		display: inline-block;
+		float: right;
+		vertical-align: bottom;
+		color: $fourth-color;
+		font-family: education;
+		font-size: 12px;
+		letter-spacing: 7px;
+		@include background-transition(0.2s);
+		margin-top: 3px;
+		&:hover
+		{
+			background-image: url("img/logo2color2.png");
+		}
+	}
+	> ul
+	{
+		float: left;
+		display: inline;
+		height: 50px;
+		 > li
+		{
+			display: inline-block;
+			> a
+			{
+				font-size: 12px;
+				color: $headerText-color;
+				font-family: education;
+			}
+		}
+	}
+	a.userIco
+	{
+		display: inline-block;
+		float: right;
+		width: 50px;
+		height: 50px;
+		margin-top: 0px;
+		background: $third-color url("img/userIco.png") no-repeat center center;
+		@include background-transition(0.2s);
+		&:hover
+		{
+			background: $secondary-color url("img/userIco.png") no-repeat center center;
+		}
+		&.selected
+		{
+			background-color: $primary-color-light;
+		}
+	}
+}
+
+.subHeader
+{
+	clear: both;
+	width: 100%;
+	display: flex;
+	background: #459eb4; /* Old browsers */
+	background: -moz-linear-gradient(top,  #459eb4 0%, #459eb4 34%, #31859a 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#459eb4), color-stop(34%,#459eb4), color-stop(100%,#31859a)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #459eb4 0%,#459eb4 34%,#31859a 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #459eb4 0%,#459eb4 34%,#31859a 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #459eb4 0%,#459eb4 34%,#31859a 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #459eb4 0%,#459eb4 34%,#31859a 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#459eb4', endColorstr='#31859a',GradientType=0 ); /* IE6-9 */
+	/*padding-left: 100%;
+	margin-left: -100%;*/
+	.subMenuContainer, .userSubContainer, .searchFilter
+	{
+		display: inline;
+		width: 960px;
+		ul
+		{
+			margin-top: 15px;
+			margin-bottom: 15px;
+			padding: 0 23px 0 23px;
+			display: inline-block;
+			float: left;
+			 li
+			{
+				margin: 0;
+				&.selected
+				{
+					background: url("img/rightIco.png") left center no-repeat;
+					padding-left: 15px;
+					> a
+					{
+						color: $secondary-color;
+					}
+				}
+				 a
+				{
+					color: $headerText-color;
+					font-family: education;
+					font-size: 14px;
+					@include color-transition(0.1s);
+					line-height: 20px;
+					margin: 0 15px 0 0;
+					min-width: 200px;
+					display: table-cell;
+					&:hover
+					{
+						color: $secondary-color;
+					}
+					&.math
+					{
+						background: url("img/mathIco16.png") left center no-repeat;
+						padding-left: 20px;
+					}
+				}
+			}
+		}
+		ul.subMenu + ul.subMenu
+		{
+			border-left: 1px dotted $third-color;
+			max-width: 640px;
+			li
+			{
+				float: left;
+			}
+		}
+		ul + ul +ul
+		{
+			padding: 0;
+		}
+	}
+	.userSubContainer
+	> .subMenu
+	{
+		border-left: 0;
+		float: right;
+		padding: 0 20px 0 0 ;
+		a
+		{
+			margin: 0;
+			float: right;
+			text-align: right;
+		}
+	}
+}
+
+
+.header .learn
+{
+	display: inline;
+	float: left;
+	background: url("img/bookIco.png") 50% 5px no-repeat;
+	width: 70px;
+	height: 0;
+	margin-top: 0;
+	padding-top: 35px;
+	padding-bottom: 15px;
+	color: $fourth-color;
+	text-align: center;
+	@include color-background-transition(0.1s);
+	&:hover
+	{
+		background-image: url("img/bookIcoOver.png");
+		@include color-background-transition(0.1s);
+		background-color: $primary-color-light;
+		color: $secondary-color;
+	}
+	&.selected
+	{
+		background-color: $primary-color-light;
+		@include color-background-transition(0.1s);
+	}
+}
+.header .teach
+{
+	display: inline;
+	float: left;
+	background:  url("img/teachIco.png") 50% 0 no-repeat;
+	width: 70px;
+	height: 0;
+	margin-top: 0;
+	padding-top: 35px;
+	padding-bottom: 15px;
+	color: $fourth-color;
+	text-align: center;
+	@include color-background-transition(0.1s);
+	&:hover
+	{
+		background-image: url("img/teachIcoOver.png");
+		@include color-background-transition(0.1s);
+		background-color: $primary-color-light;
+		color: $secondary-color;
+	}
+	&.selected
+	{
+		background-color: $primary-color-light;
+		@include color-background-transition(0.1s);
+	}
+}
+
+.topSearch.search
+{
+	display: inline-block;
+	float: left;
+	margin-left: 122px;
+	padding: 0 20px 8px 20px;
+	@include color-background-transition(0.1s);
+	&.selected
+	{
+		background-color: $primary-color-light;
+		@include color-background-transition(0.1s);
+	}
+	.input
+	{
+		margin: 8px 0 0 0 ;
+		display: block;
+		input
+		{
+			line-height: 24px;
+			padding-left: 8px;
+			padding-right: 8px;
+		}
+		input[type="text"]
+		{
+			color: $font-color;
+			font-size: 18px;
+			font-family: education;
+			font-weight: bold;
+			padding-left: 12px;
+			margin-right: 0;
+			width: 290px;
+			@include border-radius(0);
+			-moz-border-radius-topleft: 16px;
+			border-top-left-radius: 16px;
+			padding-right: 30px;
+			background-color: $primary-color-very-light;
+			&:focus
+			{ 
+				outline: none;
+				background-color: $fourth-color;
+			}
+		}
+		input[type="submit"]
+		{
+			@include background-transition(0.2s);
+			cursor: pointer;
+			background: transparent url("img/find2.png") center center no-repeat;
+			color: transprent;
+			font-size: 18px;
+			width: 30px;
+			@include border-radius(0);
+			margin-left: -30px;
+			&:hover
+			{
+				background-color: $secondary-color;
+				background-image: url("img/find.png");
+				border-color: $secondary-color;
+			}
+			&:focus
+			{ 
+				outline: none;
+				border-color: transparent;
+			}
+		}
+	}
+}
+
+.searchFilter
+{
+	ul.col
+	{
+		border-left: transparent;
+		padding-left: 10px;
+		> li > a
+		{
+			width: 292px;
+			line-height: 24px;
+			cursor: default;
+			input
+			{
+				float: right;
+				font-size: 14px; 
+				font-weight: bold;
+				font-family: education;
+				background-color: $primary-color-very-light;
+				color: $font-color;
+				&:focus
+				{
+					background: $fourth-color;
+				}
+				&.half
+				{
+					width: 85px;
+				}
+				&[type="text"]
+				{
+					float: left;
+				}
+			}
+			div.rating
+			{
+				display: inline;
+				float: right;
+			}
+			#hide {
+				display:none;
+			}
+			.rating input {
+				position:absolute;
+				filter:alpha(opacity=0);
+				-moz-opacity:0;
+				-khtml-opacity:0;
+				opacity:0;
+				cursor:pointer;
+				width:17px;
+			}
+			.rating span {
+				width:24px;
+				height:16px;
+				line-height:16px;
+				padding:1px 22px 1px 0; /* 1px FireFox fix */
+				background:url(img/stars.png) no-repeat 0 0;
+			}
+			.rating input:checked ~ span {
+				background-position: 0 0;
+			}
+			.rating input:checked + span {
+				background-position: -22px 0;
+			}
+			
+		}
+	}
+	a.closeFilter
+	{
+		float: right;
+		display: block;
+		height: 20px;
+		width: 20px;
+		background: url('img/close-top-menu.png') no-repeat top center;
+		&:hover
+		{
+			background-position: bottom center;
+			@include color-background-transition(0.2s);
+		}
+	}
+	a.clearFilter
+	{
+		text-align: right;
+		font-size: 65%;
+		cursor: pointer;
+		display: block;
+		float: right;
+		color: $fourth-color;
+		font-family: arial;
+		font-weight: bold;
+		font-size: 12px;
+		line-height: 20px;
+		margin-right: 5px;
+	}
+	ul.typeSelector
+	{
+		border: 0;
+		width: 960px;
+		margin: 0 auto;
+		overflow: hidden;
+		height: 30px;
+		padding-left: 0;
+		li
+		{
+			width: 319px;
+			padding: 0;
+			margin: 0;
+			height: 30px;
+			line-height: 30px;
+			background-color: $folder-color;
+			display: inline-block; 
+			text-align: center;
+			font-family: education;
+			color: $headerText-color;
+			cursor: pointer;
+			background-repeat: no-repeat;
+			background-position: center right;
+			background-color: transparent;
+			border-left: 1px solid transparent;
+		}
+		input:checked ~ li {
+			background-color: transparent;
+		}
+		input:checked + li {
+			background-color: $folder-color;
+			border-left: 1px solid $folder-color;
+		}
+		input ~ input:checked + li {
+			background-color: $lesson-color;
+			border-left: 1px solid transparent;
+		}
+		input:checked ~ input:checked + li {
+			border-left: 1px solid $fourth-color;
+		}
+		input ~ input ~ input:checked + li {
+			background-color: $test-color;
+			border-left: 1px solid transparent;
+		}
+		input:checked ~ input ~ input:checked + li {
+			background-color: $test-color;
+			border-left: 1px solid transparent;
+		}
+		input ~ input:checked ~ input:checked + li {
+			border-left: 1px solid $fourth-color;
+		}
+	
+		input[type="checkbox"]
+		{
+			position:absolute;
+			filter:alpha(opacity=0);
+			-moz-opacity:0;
+			-khtml-opacity:0;
+			opacity:0;
+			cursor:pointer;
+			width:310px;
+			height: 30px;
+			margin: 0;
+			padding: 0;
+			&:hover + li
+			{
+				@include ease-transition(0.1s);
+			}
+		}
+	}
+}
+

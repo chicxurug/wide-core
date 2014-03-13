@@ -1,0 +1,115 @@
+
+
+.left > div > ul, .right > div > ul, .secondContent, .mainPageShadow:before, .mainPageShadow:after
+{
+	@include fadeIn(1s);
+}
+
+.firstContent
+{
+	display: none;
+}
+.welcome
+{
+	.topSearch.search, .header > div a.logo, .left > div > ul, .right > div > ul, .secondContent, .mainPageShadow:before, .mainPageShadow:after
+	{
+		display: none;
+		opacity: 0;
+	}
+	.firstContent
+	{
+		display: block;
+	}
+	background: url('img/bg.jpg') repeat top center;
+	.main
+	{
+		background: transparent;
+	}
+	.footer
+	{
+		height: 50px;
+		&.fixed
+		{
+			position: fixed;
+			width: 100%;
+			bottom: 0;
+		}
+	}
+	
+	.main .search
+	{
+		width: 450px;
+		margin: 0 auto;
+		display: block;
+		padding-top: 250px;
+		.searchLogo
+		{
+			background: url("img/logoMedium2.png") center center no-repeat;
+			width: 300px;
+			height: 126px;
+			margin-bottom: 20px;
+			margin: 0 auto;
+		}
+		@include color-background-transition(0.1s);
+		.input
+		{
+			margin: 8px 0 0 0 ;
+			display: block;
+			input
+			{
+				line-height: 24px;
+				padding-left: 8px;
+				padding-right: 8px;
+			}
+			input[type="text"]
+			{
+				color: $font-color;
+				font-size: 18px;
+				font-family: education;
+				font-weight: bold;
+				padding-left: 12px;
+				margin-right: 0;
+				width: 400px;
+				@include border-radius(0);
+				-moz-border-radius-topleft: 16px;
+				border-top-left-radius: 16px;
+				padding-right: 30px;
+				background-color: $fourth-color;
+				&:focus
+				{ 
+					outline: none;
+					background-color: $fourth-color;
+				}
+				&.default
+				{
+					color: #aaa !important;
+				}
+			}
+			input[type="submit"]
+			{
+				@include background-transition(0.2s);
+				cursor: pointer;
+				background: transparent url("img/find2.png") center center no-repeat;
+				color: transprent;
+				font-size: 18px;
+				width: 30px;
+				@include border-radius(0);
+				margin-left: -30px;
+				color: $fourth-color;
+				&:hover
+				{
+					background-color: $secondary-color;
+					background-image: url("img/find.png");
+					color: $secondary-color;
+					border-color: $secondary-color;
+				}
+				&:focus
+				{ 
+					outline: none;
+					color: $secondary-color;
+					border-color: transparent;
+				}
+			}
+		}
+	}
+}

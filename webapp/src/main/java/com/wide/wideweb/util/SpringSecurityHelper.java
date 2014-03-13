@@ -76,7 +76,7 @@ public class SpringSecurityHelper implements Serializable {
     /**
      * Log out the User.
      */
-    public void unauthenticate() {
+    public static void unauthenticate() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null) {
             auth.setAuthenticated(false);

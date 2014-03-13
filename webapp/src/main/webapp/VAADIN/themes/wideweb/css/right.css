@@ -1,0 +1,8 @@
+.right
+{
+	> div > ul.ads > li > a
+	{
+		font-size: 12px;
+		font-family: arial;
+	}
+}

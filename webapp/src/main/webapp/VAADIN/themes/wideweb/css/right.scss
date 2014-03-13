@@ -1,0 +1,21 @@
+.right
+{
+	> div > ul.ads > li 
+	{
+		margin-bottom: 15px;
+			line-height: 11px; 
+			cursor: pointer !important;
+		> a
+		{
+			font-size: 11px;
+			font-family: Tahoma;
+			color: #333;
+			display: inline-block;
+			min-height: 140px;
+		}
+		img
+		{
+			cursor: pointer !important;
+		}
+	}
+}

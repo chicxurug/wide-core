@@ -1,0 +1,24 @@
+.left
+{
+	> div > ul.breadcrumb > li 
+	{
+		margin-bottom: 5px;
+		cursor: pointer !important;
+		overflow: hidden;
+		> a
+		{
+			font-size: 14px;
+			font-family: education;
+			display: inline-block;
+			padding: 8px 10px;
+			color: $fourth-color;
+			background: $folder-color;
+			width: 125px;
+			&:hover
+			{
+				border-left: 6px solid $secondary-color;
+				@include ease-transition(0.3s);
+			}
+		}
+	}
+}

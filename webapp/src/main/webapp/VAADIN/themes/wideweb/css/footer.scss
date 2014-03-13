@@ -1,0 +1,114 @@
+.footer	> div > a
+{
+	color: $footerLink-color;
+	@include color-transition(0.2s);
+	line-height: 50px;
+	display: inline-block;
+	font-family: education;
+	&:hover
+	{
+		color: $secondary-color;
+	}
+}
+
+
+.footer	> div > ul
+{
+	display: inline;
+	float: right;
+	 > li
+	{
+		display: inline-block;
+		> a
+		{
+			overflow: hidden;
+			font-size: 12px;
+			color: $headerText-color;
+		}
+		> ul > li
+		{
+			display: none;
+		}
+	}
+}
+
+
+.footerIcons li
+{
+		margin-left: 1px;
+}
+.footerIcons a
+{
+	display: inline;
+	overflow: hidden;
+	float: left;
+	width: 25px;
+	height: 0;
+	margin-top: 11px;
+	padding-top: 28px;
+	margin-bottom: 10px;
+	color: $third-color;
+	text-align: center;
+	@include color-background-transition(0.1s);
+	&:hover
+	{
+		background-color: $secondary-color;
+		color: $secondary-color;
+	}
+}
+
+.footerIcons .donate
+{
+	background: $third-color url("img/donateIco.png") 50% 50% no-repeat;
+}
+.footerIcons .aboutUs
+{
+	background: $third-color url("img/aboutIco.png") 50% 50% no-repeat;
+}
+
+
+.socialIcons
+{
+	margin-right: 15px;
+}
+
+.socialIcons li
+{
+		margin-left: 5px !important;
+}
+
+.socialIcons a
+{
+	display: inline;
+	float: left;
+	width: 22px;
+	height: 0;
+	margin-top: 14px;
+	padding-top: 22px;
+	margin-bottom: 10px;
+	color: $third-color;
+	text-align: center;
+	@include color-background-transition(0.1s);
+	&:hover
+	{
+		background-color: $secondary-color;
+		color: $secondary-color;
+	}
+}
+
+.socialIcons .fbIco
+{
+	background: $third-color url("img/fbIco.png") 50% 50% no-repeat;
+}
+.socialIcons .gIco
+{
+	background: $third-color url("img/gIco.png") 50% 50% no-repeat;
+}
+.socialIcons .twIco
+{
+	background: $third-color url("img/twIco.png") 50% 50% no-repeat;
+}
+.socialIcons .ytIco
+{
+	background: $third-color url("img/ytIco.png") 50% 50% no-repeat;
+}
