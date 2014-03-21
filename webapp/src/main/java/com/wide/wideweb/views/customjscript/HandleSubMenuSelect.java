@@ -30,6 +30,10 @@ public class HandleSubMenuSelect implements JavaScriptFunction {
         try {
             Thread.sleep(arguments.getInt(1));
             Category selectedCategory = ":current:".equals(arguments.getString(0)) ? MainView.current : this.cache.getCategoryByName(arguments.getString(0));
+            if (selectedCategory.getName() == null) {
+                // Return because it is probably a test or an exercise which will be handled in a later development phase
+                return;
+            }
             MainView.current = selectedCategory;
             boolean menu = arguments.getBoolean(2);
             boolean lesson = arguments.getBoolean(3);

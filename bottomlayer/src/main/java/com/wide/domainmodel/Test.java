@@ -1,12 +1,13 @@
 package com.wide.domainmodel;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -15,19 +16,23 @@ public class Test extends Solvable {
 
     private String description;
     // Exercise point map
-    Map<Exercise, Point> exercises;
+    private List<ExercisePoint> exercises;
 
     public Test() {
 
     }
 
-    @ManyToMany
-    @JoinTable(name = "ExercisePoints")
-    public Map<Exercise, Point> getExercises() {
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "TestExercises",
+            joinColumns = @JoinColumn(name = "test_id"),
+            inverseJoinColumns = @JoinColumn(name = "execisepoint_id")
+            )
+            public List<ExercisePoint> getExercises() {
         return this.exercises;
     }
 
-    public void setExercises(Map<Exercise, Point> exercises) {
+    public void setExercises(List<ExercisePoint> exercises) {
         this.exercises = exercises;
     }
 
@@ -39,7 +44,7 @@ public class Test extends Solvable {
         this.description = description;
     }
 
-    public List<Exercise> generateExerciseList() {
-        return new ArrayList<Exercise>(this.exercises.keySet());
+    public List<ExercisePoint> generateExerciseList() {
+        return this.exercises;
     }
 }

@@ -78,7 +78,7 @@ window.$( ".subMenu.first > div > li" ).click(function() {
         window.$( ".left" ).click(function() { if ($closeOnClick == 1) { closeSubHeader(); deselectTopMenuItem(); } });
         window.$( ".right" ).click(function() { if ($closeOnClick == 1) { closeSubHeader(); deselectTopMenuItem(); } });
         window.$( ".breadcrumb > div > li + li + li + li" ).hide();
-        window.$( ".filterList > li" ).click(function() {       
+        window.$( ".filterList > li.folder" ).click(function() {       
           com.wide.wideweb.subMenuSelect(window.$(this).children().eq(1).text(), 500, window.$("input[name='typeCategory']").prop('checked'), window.$("input[name='typeLesson']").prop('checked'), window.$("input[name='typeTest']").prop('checked'));
           window.$(this).animate({"margin-left": "-=950"}, 300);
           window.$(this).hide(300);

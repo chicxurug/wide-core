@@ -17,6 +17,7 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.Label;
 import com.wide.domainmodel.Category;
 import com.wide.domainmodel.Exercise;
+import com.wide.domainmodel.Test;
 
 /**
  * 
@@ -63,10 +64,16 @@ public class ViewUtils {
         for (Category mainCategory : mainCategories) {
             sb.append("\t");
             sb.append("<li>");
+            if (mainCategory.getParent().getName().isEmpty() && cache.getCategories().get(mainCategory).isEmpty()) {
+                sb.append("<strike>");
+            }
             if ("Maths".equals(mainCategory.getName())) {
                 sb.append("<a href=\"#\" class=\"math\" target=\"\">" + mainCategory.getName() + "</a>");
             } else {
                 sb.append("<a href=\"#\" target=\"\">" + mainCategory.getName() + "</a>");
+            }
+            if (mainCategory.getParent().getName().isEmpty() && cache.getCategories().get(mainCategory).isEmpty()) {
+                sb.append("</strike>");
             }
             sb.append("</li>\n");
         }
@@ -112,7 +119,7 @@ public class ViewUtils {
                         + "         <div class=\"title\">" + cat.getName() + "</div>\n"
                         + "         <div class=\"subfolders\">Subcategories: <b>" + cache.getCategories().get(cat).size() + "</b></div>\n"
                         + "         <div class=\"lessons\">Lessons: <b>" + cache.getExerciseByCategory(cat).size() + "</b></div>\n"
-                        + "         <div class=\"tests\">Tests: <b>NA</b></div>\n"
+                        + "         <div class=\"tests\">Tests: <b>" + cache.getTestsByCategory(cat).size() + "</b></div>\n"
                         + "</li>\n");
             }
 
@@ -130,9 +137,17 @@ public class ViewUtils {
                         + "         </li>\n");
             }
 
-//            if (filter.isFiltered(test)) {
-//                continue;
-//            }
+            final Collection<Test> tests = cache.getTestsByCategory(category);
+            for (Test t : tests) {
+                if (filter.isFiltered(t)) {
+                    continue;
+                }
+                sb.append("<li class=\"test\">"
+                        + "         <img class=\"icon\" src=\"" + basepath + "/layouts/example/3.jpg\" />"
+                        + "         <div class=\"title\">" + t.getDescription() + "</div>"
+                        + "         <div class=\"lessons\">Lessons: <b>" + t.getExercises().size() + "</b></div>\n"
+                        + "         </li>\n");
+            }
 
             return new Label(sb.toString() + "</ul>", ContentMode.HTML);
         }

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityManagerFactory;
@@ -25,6 +26,9 @@ import com.google.common.collect.Multimap;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.wide.domainmodel.Category;
+import com.wide.domainmodel.Exercise;
+import com.wide.domainmodel.ExercisePoint;
+import com.wide.domainmodel.Test;
 import com.wide.service.WideService;
 
 public class WideDefaultsInitiator {
@@ -136,7 +140,21 @@ public class WideDefaultsInitiator {
         this.service.createCategory(root);
         for (Category category : categoryList) {
             this.service.createCategory(category);
+            generateRandomExercises(category);
         }
+    }
+
+    private void generateRandomExercises(Category category) {
+        List<ExercisePoint> exs = new ArrayList<ExercisePoint>();
+        Test t = new Test();
+        for (int i = 1; i < 6; i++) {
+            Exercise ex = new Exercise("Exercise" + category.getName() + i, i, i, "Author" + category.getName() + i,
+                    Exercise.SCHOOL_LEVELS.COLLEGE, "Title" + category.getName() + i, category, null);
+            exs.add(new ExercisePoint(ex, new Long(i)));
+        }
+        t.setDescription("Test" + category.getName());
+        t.setExercises(exs);
+        this.service.saveOrUpdateTest(t);
     }
 
     public static void main(String[] args) throws Exception {

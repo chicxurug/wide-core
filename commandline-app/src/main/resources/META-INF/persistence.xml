@@ -7,6 +7,10 @@
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		
 		<class>com.wide.domainmodel.Category</class>
+		<class>com.wide.domainmodel.Exercise</class>
+		<class>com.wide.domainmodel.Feature</class>
+		<class>com.wide.domainmodel.Test</class>
+		<class>com.wide.domainmodel.ExercisePoint</class>
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		
 		<properties>

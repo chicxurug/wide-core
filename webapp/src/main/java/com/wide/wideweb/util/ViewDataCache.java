@@ -1,15 +1,19 @@
 package com.wide.wideweb.util;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.Set;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import com.wide.domainmodel.Category;
 import com.wide.domainmodel.Exercise;
+import com.wide.domainmodel.Test;
 import com.wide.persistence.PersistenceListener;
 import com.wide.service.WideService;
 
@@ -26,11 +30,13 @@ public final class ViewDataCache implements Serializable {
 
     public void doAllInit() {
         initCategories();
+        initTests();
     }
 
     private Category rootCategory;
     private Multimap<Category, Category> categories = ArrayListMultimap.create();
     private Multimap<Category, Exercise> exercises = ArrayListMultimap.create();
+    private List<Test> tests = new ArrayList<Test>();
 
     public void initCategories() {
         this.categories.clear();
@@ -48,6 +54,11 @@ public final class ViewDataCache implements Serializable {
             List<Category> subCategories = this.service.getCategoriesByParent(category);
             queue.addAll(subCategories);
         }
+    }
+
+    private void initTests() {
+        this.tests.clear();
+        this.tests.addAll(this.service.getTests());
     }
 
     public Category getRootCategory() {
@@ -73,6 +84,16 @@ public final class ViewDataCache implements Serializable {
         }
 
         return this.exercises.get(category);
+    }
+
+    public Collection<Test> getTestsByCategory(Category category) {
+        Collection<Exercise> exs = getExerciseByCategory(category);
+        Set<Test> affectedTests = new HashSet<Test>();
+        for (Exercise e : exs) {
+            affectedTests.addAll(this.service.getTestsByExercise(e));
+        }
+
+        return affectedTests;
     }
 
     public static synchronized ViewDataCache getInstance() {
