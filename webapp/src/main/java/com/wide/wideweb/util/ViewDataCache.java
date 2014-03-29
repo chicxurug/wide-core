@@ -38,6 +38,8 @@ public final class ViewDataCache implements Serializable {
     private Multimap<Category, Exercise> exercises = ArrayListMultimap.create();
     private List<Test> tests = new ArrayList<Test>();
 
+    private String username;
+
     public void initCategories() {
         this.categories.clear();
         Queue<Category> queue = new LinkedList<Category>();
@@ -94,6 +96,14 @@ public final class ViewDataCache implements Serializable {
         }
 
         return affectedTests;
+    }
+
+    public String getUsername() {
+        return this.username;
+    }
+
+    public void setUserName(String username) {
+        this.username = username;
     }
 
     public static synchronized ViewDataCache getInstance() {

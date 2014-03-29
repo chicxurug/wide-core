@@ -29,6 +29,7 @@ public class ViewUtils {
     public static final String LOGIN = "login";
     public static final String REGISTER = "register";
     public static final String MAIN = "";
+    public static final String CREATE_EXERCISE = "createExercise";
     public static final String ERROR = "error";
 
     public static void navigateToErrorView(VaadinSession session, ViewChangeEvent event, Exception e) {

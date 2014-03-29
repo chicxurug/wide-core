@@ -87,6 +87,9 @@ window.$( ".subMenu.first > div > li" ).click(function() {
         window.$( ".breadcrumb > div > li").click(function() {
           com.wide.wideweb.subMenuSelect(window.$(this).text(), 0, window.$("input[name='typeCategory']").prop('checked'), window.$("input[name='typeLesson']").prop('checked'), window.$("input[name='typeTest']").prop('checked'));
         });
+        window.$( ".donate").click(function() {
+            com.wide.wideweb.createExercise(window.$(this).text());
+        });
         window.$(".searchFilter.reset .filled, .topSearch.reset .filled, .main .search .filled").each(function() {
           var actualInput = this;
           var default_value = actualInput.name;

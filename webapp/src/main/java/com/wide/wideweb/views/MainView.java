@@ -24,6 +24,7 @@ import com.wide.domainmodel.Category;
 import com.wide.wideweb.util.SpringSecurityHelper;
 import com.wide.wideweb.util.ViewDataCache;
 import com.wide.wideweb.util.ViewUtils;
+import com.wide.wideweb.views.customjscript.HandleCreateExcersize;
 import com.wide.wideweb.views.customjscript.HandleFilterCategory;
 import com.wide.wideweb.views.customjscript.HandleLogin;
 import com.wide.wideweb.views.customjscript.HandleMenuSelect;
@@ -77,6 +78,7 @@ public class MainView extends Panel implements View
     {
 
         JavaScript.getCurrent().addFunction("com.wide.wideweb.loginSelect", new HandleLogin(event.getNavigator()));
+        JavaScript.getCurrent().addFunction("com.wide.wideweb.createExercise", new HandleCreateExcersize(event.getNavigator()));
 
         if (SpringSecurityHelper.isAuthenticated()) {
             User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -88,9 +90,11 @@ public class MainView extends Panel implements View
 
             this.usernameLabel.setValue(user.getUsername());
             this.rolesLabel.setValue(StringUtils.join(roles, ","));
+            this.cache.setUserName(user.getUsername());
         } else {
             this.usernameLabel.setValue("Guest");
             this.rolesLabel.setValue("");
+            this.cache.setUserName("Guest");
         }
     }
 }
