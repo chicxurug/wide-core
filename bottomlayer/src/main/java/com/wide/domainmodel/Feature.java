@@ -11,7 +11,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name = "Feature")
 public class Feature {
 
-    public enum FEATURE_TYPES {
+    public enum FeatureType {
         SHORT_TEXT,
         LONG_TEXT,
         VERIFYABLE_STEP,
@@ -21,13 +21,13 @@ public class Feature {
     private Long id;
     private String name;
     private String value;
-    private FEATURE_TYPES type;
+    private FeatureType type;
 
     public Feature() {
 
     }
 
-    public Feature(String name, String value, FEATURE_TYPES type) {
+    public Feature(String name, String value, FeatureType type) {
         this.name = name;
         this.value = value;
         this.type = type;
@@ -60,11 +60,11 @@ public class Feature {
         this.value = value;
     }
 
-    public FEATURE_TYPES getType() {
+    public FeatureType getType() {
         return this.type;
     }
 
-    public void setType(FEATURE_TYPES type) {
+    public void setType(FeatureType type) {
         this.type = type;
     }
 }

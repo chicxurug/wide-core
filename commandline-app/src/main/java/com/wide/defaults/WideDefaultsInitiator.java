@@ -149,7 +149,7 @@ public class WideDefaultsInitiator {
         Test t = new Test();
         for (int i = 1; i < 6; i++) {
             Exercise ex = new Exercise("Exercise" + category.getName() + i, i, i, "Author" + category.getName() + i,
-                    Exercise.SCHOOL_LEVELS.COLLEGE, "Title" + category.getName() + i, category, null);
+                    Exercise.SchoolLevel.COLLEGE, "Title" + category.getName() + i, category, null);
             exs.add(new ExercisePoint(ex, new Long(i)));
         }
         t.setDescription("Test" + category.getName());

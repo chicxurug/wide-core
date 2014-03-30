@@ -16,7 +16,7 @@ import javax.persistence.Table;
 @Table(name = "Exercise")
 public class Exercise extends Solvable {
 
-    public enum SCHOOL_LEVELS {
+    public enum SchoolLevel {
         ELEMENTARY,
         HIGHSCHOOL,
         COLLEGE
@@ -26,7 +26,7 @@ public class Exercise extends Solvable {
     private Integer difficulty;
     private Integer score;
     private String author;
-    private SCHOOL_LEVELS level;
+    private SchoolLevel level;
     private String publisher;
     private String book_title;
     private Boolean test_member;
@@ -38,7 +38,7 @@ public class Exercise extends Solvable {
 
     }
 
-    public Exercise(String title, Integer difficulty, Integer score, String author, SCHOOL_LEVELS level, String book_title, Category category,
+    public Exercise(String title, Integer difficulty, Integer score, String author, SchoolLevel level, String book_title, Category category,
             List<Feature> features) {
         this.title = title;
         this.difficulty = difficulty;
@@ -112,11 +112,11 @@ public class Exercise extends Solvable {
     }
 
     @Column(nullable = false)
-    public SCHOOL_LEVELS getLevel() {
+    public SchoolLevel getLevel() {
         return this.level;
     }
 
-    public void setLevel(SCHOOL_LEVELS level) {
+    public void setLevel(SchoolLevel level) {
         this.level = level;
     }
 

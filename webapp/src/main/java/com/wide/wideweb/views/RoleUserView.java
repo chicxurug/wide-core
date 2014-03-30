@@ -91,9 +91,9 @@ public class RoleUserView extends Panel implements View
                 WideService service = new WideService(PersistenceListener.getEntityManagerFactory());
                 Category sample = service.getOrCreateCategory("sample", null);
                 List<Feature> features = new ArrayList<Feature>();
-                features.add(service.saveOrUpdateFeature(new Feature("aa", "bb", Feature.FEATURE_TYPES.SHORT_TEXT)));
-                features.add(service.saveOrUpdateFeature(new Feature("aa2", "bb2", Feature.FEATURE_TYPES.LONG_TEXT)));
-                service.saveOrUpdateExercise(new Exercise(title.getValue(), Integer.parseInt(diff.getValue()), 0, "", Exercise.SCHOOL_LEVELS.ELEMENTARY, "",
+                features.add(service.saveOrUpdateFeature(new Feature("aa", "bb", Feature.FeatureType.SHORT_TEXT)));
+                features.add(service.saveOrUpdateFeature(new Feature("aa2", "bb2", Feature.FeatureType.LONG_TEXT)));
+                service.saveOrUpdateExercise(new Exercise(title.getValue(), Integer.parseInt(diff.getValue()), 0, "", Exercise.SchoolLevel.ELEMENTARY, "",
                         sample, features));
             }
         });
