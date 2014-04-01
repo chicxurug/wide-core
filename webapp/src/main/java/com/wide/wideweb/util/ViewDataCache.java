@@ -44,6 +44,8 @@ public final class ViewDataCache implements Serializable {
         this.categories.clear();
         Queue<Category> queue = new LinkedList<Category>();
 
+        // creating category->subcategory mapping with
+        // depth-first search algorithm, starting from the root category
         this.rootCategory = this.service.getOrCreateCategory("", null);
         // this.categories.put(null, this.rootCategory);
         queue.add(this.rootCategory);
@@ -52,9 +54,28 @@ public final class ViewDataCache implements Serializable {
             Category category = queue.poll();
             if (category.getParent() != null) {
                 this.categories.put(category.getParent(), category);
+                // category.setPath(category.getParent().getPath() + " / " + category.getName());
+                // } else {
+                // category.setPath(category.getName());
             }
             List<Category> subCategories = this.service.getCategoriesByParent(category);
             queue.addAll(subCategories);
+        }
+
+        // filling (transient) path values
+        this.rootCategory.setPath("");
+        StringBuilder categoryText = new StringBuilder();
+        Category parent = null;
+        for (final Category category : this.categories.values()) {
+            categoryText.append(category.getName());
+            parent = category.getParent();
+            while (parent != null && !parent.equals(this.rootCategory)) {
+                categoryText.insert(0, " / ");
+                categoryText.insert(0, parent.getName());
+                parent = parent.getParent();
+            }
+            category.setPath(categoryText.toString());
+            categoryText.setLength(0);
         }
     }
 

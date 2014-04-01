@@ -1,6 +1,7 @@
 package com.wide.domainmodel;
 
 import java.util.List;
+import java.util.Random;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,20 +17,66 @@ import javax.persistence.Table;
 @Table(name = "Exercise")
 public class Exercise extends Solvable {
 
-    public enum SchoolLevel {
-        ELEMENTARY,
-        HIGHSCHOOL,
-        COLLEGE
+    public enum DifficultyLevel {
+        D1_EASY(1, "Easy to solve"),
+        D2_AVERAGE(2, "Average"),
+        D3_FAIR(3, "Fair"),
+        D4_CHALLENGING(4, "Challenging"),
+        D5_HARD(5, "Hard to solve");
+
+        private final int difficulty;
+        private final String description;
+
+        DifficultyLevel(int difficulty, String description) {
+            this.difficulty = difficulty;
+            this.description = description;
+        }
+
+        public int getDifficulty() {
+            return this.difficulty;
+        }
+
+        public String getDescription() {
+            return this.description;
+        }
+
+        @Override
+        public String toString() {
+            return this.difficulty + " - " + this.description;
+        }
+
+        public static DifficultyLevel randomDifficulty() {
+            return values()[new Random().nextInt(values().length)];
+        }
+
     }
 
+    public enum SchoolLevel {
+        ELEMENTARY("Elementary"),
+        HIGHSCHOOL("High School"),
+        COLLEGE("University"),
+        OTHER("Other");
+
+        private final String description;
+
+        SchoolLevel(String description) {
+            this.description = description;
+        }
+
+        public String getDescription() {
+            return this.description;
+        }
+    }
+
+    private String language;
     private String title;
-    private Integer difficulty;
+    private DifficultyLevel difficulty;
     private Integer score;
     private String author;
     private SchoolLevel level;
     private String publisher;
-    private String book_title;
-    private Boolean test_member;
+    private String bookTitle;
+    private Boolean testMember;
     private Integer numberOfSubmits;
     private Category category;
     private List<Feature> features;
@@ -38,18 +85,29 @@ public class Exercise extends Solvable {
 
     }
 
-    public Exercise(String title, Integer difficulty, Integer score, String author, SchoolLevel level, String book_title, Category category,
+    public Exercise(String language, String title, DifficultyLevel difficulty, Integer score, String author, SchoolLevel level, String bookTitle,
+            Category category,
             List<Feature> features) {
+        this.language = language;
         this.title = title;
         this.difficulty = difficulty;
         this.score = score;
         this.author = author;
         this.level = level;
-        this.book_title = book_title;
-        this.test_member = false;
+        this.bookTitle = bookTitle;
+        this.testMember = false;
         this.numberOfSubmits = 0;
         this.category = category;
         this.features = features;
+    }
+
+    @Column(nullable = false)
+    public String getLanguage() {
+        return this.language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
     }
 
     @Column(nullable = false)
@@ -62,11 +120,11 @@ public class Exercise extends Solvable {
     }
 
     @Column(nullable = false)
-    public Integer getDifficulty() {
+    public DifficultyLevel getDifficulty() {
         return this.difficulty;
     }
 
-    public void setDifficulty(Integer difficulty) {
+    public void setDifficulty(DifficultyLevel difficulty) {
         this.difficulty = difficulty;
     }
 
@@ -93,7 +151,7 @@ public class Exercise extends Solvable {
         this.features = features;
     }
 
-    @Column(nullable = false)
+    // @Column(nullable = false)
     public Integer getScore() {
         return this.score;
     }
@@ -102,7 +160,7 @@ public class Exercise extends Solvable {
         this.score = score;
     }
 
-    @Column(nullable = false)
+    // @Column(nullable = false)
     public String getAuthor() {
         return this.author;
     }
@@ -111,7 +169,7 @@ public class Exercise extends Solvable {
         this.author = author;
     }
 
-    @Column(nullable = false)
+    // @Column(nullable = false)
     public SchoolLevel getLevel() {
         return this.level;
     }
@@ -128,21 +186,21 @@ public class Exercise extends Solvable {
         this.publisher = publisher;
     }
 
-    @Column(nullable = false)
-    public String getBook_title() {
-        return this.book_title;
+    // @Column(nullable = false)
+    public String getBookTitle() {
+        return this.bookTitle;
     }
 
-    public void setBook_title(String book_title) {
-        this.book_title = book_title;
+    public void setBookTitle(String bookTitle) {
+        this.bookTitle = bookTitle;
     }
 
-    public Boolean getTest_member() {
-        return this.test_member;
+    public Boolean getTestMember() {
+        return this.testMember;
     }
 
-    public void setTest_member(Boolean test_member) {
-        this.test_member = test_member;
+    public void setTestMember(Boolean testMember) {
+        this.testMember = testMember;
     }
 
     public Integer getNumberOfSubmits() {

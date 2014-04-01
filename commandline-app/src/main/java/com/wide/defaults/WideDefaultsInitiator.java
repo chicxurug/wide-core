@@ -27,6 +27,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.wide.domainmodel.Category;
 import com.wide.domainmodel.Exercise;
+import com.wide.domainmodel.Exercise.DifficultyLevel;
 import com.wide.domainmodel.ExercisePoint;
 import com.wide.domainmodel.Test;
 import com.wide.service.WideService;
@@ -147,9 +148,9 @@ public class WideDefaultsInitiator {
     private void generateRandomExercises(Category category) {
         List<ExercisePoint> exs = new ArrayList<ExercisePoint>();
         Test t = new Test();
-        for (int i = 1; i < 6; i++) {
-            Exercise ex = new Exercise("Exercise" + category.getName() + i, i, i, "Author" + category.getName() + i,
-                    Exercise.SchoolLevel.COLLEGE, "Title" + category.getName() + i, category, null);
+        for (int i = 1; i < 4; i++) {
+            Exercise ex = new Exercise("English", "Exercise" + category.getName() + i, DifficultyLevel.randomDifficulty(), i,
+                    "Author" + category.getName() + i, Exercise.SchoolLevel.COLLEGE, "Title" + category.getName() + i, category, null);
             exs.add(new ExercisePoint(ex, new Long(i)));
         }
         t.setDescription("Test" + category.getName());

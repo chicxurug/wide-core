@@ -54,7 +54,7 @@ public class CompositeFilter implements ContentFilterInterface {
         if (!"Publisher".equals(this.publisher) && !ex.getPublisher().contains(this.publisher)) {
             return true;
         }
-        if (!"Book".equals(this.book) && !ex.getBook_title().contains(this.book)) {
+        if (!"Book".equals(this.book) && !ex.getBookTitle().contains(this.book)) {
             return true;
         }
         if (!"Title".equals(this.title) && !ex.getTitle().contains(this.title)) {

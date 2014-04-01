@@ -1,21 +1,27 @@
 package com.wide.domainmodel;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "Category")
-public class Category {
+public class Category implements Serializable {
+
+    private static final long serialVersionUID = -5945812111587043768L;
 
     private Long id;
     private String name;
     private Category parent;
+    private String path;
 
     public Category() {
 
@@ -45,7 +51,7 @@ public class Category {
         this.name = name;
     }
 
-    @OneToOne
+    @ManyToOne
     @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     public Category getParent() {
         return this.parent;
@@ -53,6 +59,15 @@ public class Category {
 
     public void setParent(Category parent) {
         this.parent = parent;
+    }
+
+    @Transient
+    public String getPath() {
+        return this.path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 
     @Override
@@ -91,6 +106,20 @@ public class Category {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Category [id=");
+        builder.append(this.id);
+        builder.append(", name=");
+        builder.append(this.name);
+        // parent attribute is skipped because of recursion
+        builder.append(", path=");
+        builder.append(this.path);
+        builder.append("]");
+        return builder.toString();
     }
 
 }

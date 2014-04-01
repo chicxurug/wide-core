@@ -1,7 +1,6 @@
 package com.wide.wideweb.views;
 
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.Arrays;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,12 +11,14 @@ import ru.xpoft.vaadin.VaadinView;
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
+import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.UserError;
 import com.vaadin.shared.ui.combobox.FilteringMode;
 import com.vaadin.ui.AbstractComponent;
+import com.vaadin.ui.AbstractSelect.ItemCaptionMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
@@ -32,6 +33,11 @@ import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.wide.domainmodel.Category;
+import com.wide.domainmodel.Exercise;
+import com.wide.domainmodel.Exercise.DifficultyLevel;
+import com.wide.domainmodel.Exercise.SchoolLevel;
+import com.wide.persistence.PersistenceListener;
+import com.wide.service.WideService;
 import com.wide.wideweb.beans.ExerciseBean;
 import com.wide.wideweb.util.ViewDataCache;
 import com.wide.wideweb.util.ViewUtils;
@@ -44,11 +50,13 @@ public class CreateExerciseView extends Panel implements View {
     private static final long serialVersionUID = -2022990984877322449L;
 
     private static final Logger logger = LoggerFactory.getLogger(CreateExerciseView.class);
+
+    private final WideService service = new WideService(PersistenceListener.getEntityManagerFactory());
     private final ViewDataCache cache = ViewDataCache.getInstance();
 
     // bean
     private ExerciseBean current = new ExerciseBean();
-    // Form for editing the bean
+    // form for editing the bean
     private final BeanFieldGroup<ExerciseBean> form = new BeanFieldGroup<ExerciseBean>(ExerciseBean.class);
 
     private Button createNewExerciseButton = new Button("Create");
@@ -69,11 +77,13 @@ public class CreateExerciseView extends Panel implements View {
         language.setRequired(true);
         language.setValue("English");
 
-        final ComboBox category = new ComboBox("Category");
-        // TODO [Csuki] Categoryba felvenni a path-t is vagy csinalni egy CategoryWrappert/CategoryBeant.
-        initCategoriesComboBox(category);
+        BeanItemContainer<Category> citems = new BeanItemContainer<Category>(Category.class, this.cache.getCategories().values());
+        citems.sort(new Object[] { "path" }, new boolean[] { true });
+        final ComboBox category = new ComboBox("Category", citems);
         this.editorLayout.addComponent(category);
-        // this.binder.bind(category, "category");
+        category.setItemCaptionMode(ItemCaptionMode.PROPERTY);
+        category.setItemCaptionPropertyId("path");
+        this.form.bind(category, "category");
         // category.setWidth("70%");
         category.setNullSelectionAllowed(false);
         category.setRequired(true);
@@ -118,12 +128,10 @@ public class CreateExerciseView extends Panel implements View {
         publisher.setNullRepresentation("");
         publisher.setWidth("70%");
 
-        final OptionGroup difficulty = new OptionGroup("Difficulity level"); // TODO item captions
-        difficulty.addItem("1 - Easy to solve");
-        difficulty.addItem("2 - Average");
-        difficulty.addItem("3 - Fair");
-        difficulty.addItem("4 - Challenging");
-        difficulty.addItem("5 - Hard to solve");
+        final OptionGroup difficulty = new OptionGroup("Difficulity level");
+        for (DifficultyLevel difficultyLevel : DifficultyLevel.values()) {
+            difficulty.addItem(difficultyLevel);
+        }
         this.editorLayout.addComponent(difficulty);
         this.form.bind(difficulty, "difficulty");
         difficulty.setNullSelectionAllowed(false);
@@ -134,11 +142,10 @@ public class CreateExerciseView extends Panel implements View {
         // difficulty.addValidator(new StringLengthValidator("The title should be at least 5 characters long.", 5, null, false));
         // difficulty.setValidationVisible(false);
 
-        final OptionGroup schoolLevel = new OptionGroup("School level");
-        schoolLevel.addItem("Elementary");
-        schoolLevel.addItem("High School");
-        schoolLevel.addItem("University");
-        schoolLevel.addItem("Other");
+        BeanItemContainer<SchoolLevel> slitems = new BeanItemContainer<SchoolLevel>(SchoolLevel.class, Arrays.asList(SchoolLevel.values()));
+        final OptionGroup schoolLevel = new OptionGroup("School level", slitems);
+        schoolLevel.setItemCaptionMode(ItemCaptionMode.PROPERTY);
+        schoolLevel.setItemCaptionPropertyId("description");
         this.editorLayout.addComponent(schoolLevel);
         this.form.bind(schoolLevel, "schoolLevel");
         schoolLevel.setNullSelectionAllowed(true);
@@ -207,8 +214,10 @@ public class CreateExerciseView extends Panel implements View {
                 // if there is no general error, we try to commit the changes
                 try {
                     CreateExerciseView.this.form.commit();
-                    Notification.show("Exercise created! You are awesome!");
                     logger.info("Exercise created: {}", CreateExerciseView.this.current);
+                    Exercise dbExercise = CreateExerciseView.this.current.convert(); // convert wrapper bean to DB entity
+                    CreateExerciseView.this.service.saveOrUpdateExercise(dbExercise);
+                    Notification.show("Exercise created! You are awesome!");
                 } catch (CommitException e) {
                     logger.error("Error during comminting newly created exercise.", e);
                     Notification.show("Fatal error. :(");
@@ -216,26 +225,6 @@ public class CreateExerciseView extends Panel implements View {
             }
 
         });
-    }
-
-    private void initCategoriesComboBox(ComboBox categoryComboBox) {
-        // Creating textual representation of categories
-        SortedSet<String> categoryTexts = new TreeSet<String>();
-        StringBuilder categoryText = new StringBuilder();
-        for (Category category : this.cache.getCategories().values()) {
-            categoryText.append(category.getName());
-            while (category.getParent() != null && !category.getParent().equals(this.cache.getRootCategory())) {
-                category = category.getParent();
-                categoryText.insert(0, " / ");
-                categoryText.insert(0, category.getName());
-            }
-            categoryTexts.add(categoryText.toString());
-            categoryText.setLength(0);
-        }
-        // adding the categories to the combo box
-        for (String categoryString : categoryTexts) {
-            categoryComboBox.addItem(categoryString);
-        }
     }
 
     @Override

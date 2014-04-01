@@ -1,8 +1,17 @@
 package com.wide.wideweb.beans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
 
 import com.wide.domainmodel.Category;
+import com.wide.domainmodel.Exercise;
+import com.wide.domainmodel.Exercise.DifficultyLevel;
+import com.wide.domainmodel.Exercise.SchoolLevel;
+import com.wide.domainmodel.Feature;
+import com.wide.wideweb.util.FeatureFactory;
 
 public class ExerciseBean implements Serializable {
 
@@ -11,12 +20,12 @@ public class ExerciseBean implements Serializable {
     private String language;
     private String title;
     private Category category;
-    private String uploader;
+    private String uploader; // TODO ?
     private String author;
     private String book;
-    private String publisher;
-    private String difficulty;
-    private String schoolLevel;
+    private String publisher; // TODO ?
+    private DifficultyLevel difficulty;
+    private SchoolLevel schoolLevel;
     private String tags;
     private String exerciseText;
     private String relatedLinks;
@@ -38,6 +47,30 @@ public class ExerciseBean implements Serializable {
         this.relatedLinks = null;
         this.shortAnswer = null;
         this.solutionText = null;
+    }
+
+    public Exercise convert() {
+        Exercise ret = new Exercise(this.language, this.title, this.difficulty, null, this.author, this.schoolLevel, this.book,
+                this.category, null);
+        List<Feature> features = new ArrayList<Feature>();
+        if (StringUtils.isNotBlank(this.tags)) {
+            Feature tags = FeatureFactory.createTags(this.tags);
+            features.add(tags);
+        }
+        Feature exerciseText = FeatureFactory.createExerciseText(this.exerciseText);
+        features.add(exerciseText);
+        if (StringUtils.isNotBlank(this.relatedLinks)) {
+            Feature relatedLinks = FeatureFactory.createReleatedLinks(this.relatedLinks);
+            features.add(relatedLinks);
+        }
+        Feature shortAnswer = FeatureFactory.createShortAnswer(this.shortAnswer);
+        features.add(shortAnswer);
+        if (StringUtils.isNotBlank(this.solutionText)) {
+            Feature solutionText = FeatureFactory.createSolutionText(this.solutionText);
+            features.add(solutionText);
+        }
+        ret.setFeatures(features);
+        return ret;
     }
 
     public String getLanguage() {
@@ -96,19 +129,19 @@ public class ExerciseBean implements Serializable {
         this.publisher = publisher;
     }
 
-    public String getDifficulty() {
+    public DifficultyLevel getDifficulty() {
         return this.difficulty;
     }
 
-    public void setDifficulty(String difficulty) {
+    public void setDifficulty(DifficultyLevel difficulty) {
         this.difficulty = difficulty;
     }
 
-    public String getSchoolLevel() {
+    public SchoolLevel getSchoolLevel() {
         return this.schoolLevel;
     }
 
-    public void setSchoolLevel(String schoolLevel) {
+    public void setSchoolLevel(SchoolLevel schoolLevel) {
         this.schoolLevel = schoolLevel;
     }
 

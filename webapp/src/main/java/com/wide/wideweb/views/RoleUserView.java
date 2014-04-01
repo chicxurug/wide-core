@@ -23,6 +23,7 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.wide.domainmodel.Category;
 import com.wide.domainmodel.Exercise;
+import com.wide.domainmodel.Exercise.DifficultyLevel;
 import com.wide.domainmodel.Feature;
 import com.wide.persistence.PersistenceListener;
 import com.wide.service.WideService;
@@ -93,8 +94,8 @@ public class RoleUserView extends Panel implements View
                 List<Feature> features = new ArrayList<Feature>();
                 features.add(service.saveOrUpdateFeature(new Feature("aa", "bb", Feature.FeatureType.SHORT_TEXT)));
                 features.add(service.saveOrUpdateFeature(new Feature("aa2", "bb2", Feature.FeatureType.LONG_TEXT)));
-                service.saveOrUpdateExercise(new Exercise(title.getValue(), Integer.parseInt(diff.getValue()), 0, "", Exercise.SchoolLevel.ELEMENTARY, "",
-                        sample, features));
+                service.saveOrUpdateExercise(new Exercise("English", title.getValue(), DifficultyLevel.D2_AVERAGE, 0, "",
+                        Exercise.SchoolLevel.ELEMENTARY, "", sample, features));
             }
         });
         layout.addComponent(button2);
