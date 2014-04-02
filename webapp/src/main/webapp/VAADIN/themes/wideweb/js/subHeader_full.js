@@ -140,3 +140,6 @@ window.$(window).resize(function(){
 window.$( ".userSubContainer > .subMenu > li" ).click(function() {
     com.wide.wideweb.loginSelect(window.$(this).text());
 });
+window.$( ".donate").click(function() {
+    com.wide.wideweb.createExercise(window.$(this).text());
+});

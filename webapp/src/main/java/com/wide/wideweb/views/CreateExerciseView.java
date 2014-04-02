@@ -15,6 +15,7 @@ import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.ExternalResource;
 import com.vaadin.server.UserError;
 import com.vaadin.shared.ui.combobox.FilteringMode;
 import com.vaadin.ui.AbstractComponent;
@@ -25,6 +26,7 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.FormLayout;
+import com.vaadin.ui.Link;
 import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.OptionGroup;
@@ -194,6 +196,7 @@ public class CreateExerciseView extends Panel implements View {
         // solutionText.setValidationVisible(false);
 
         this.editorLayout.addComponent(this.createNewExerciseButton);
+        this.editorLayout.addComponent(new Link("Go back", new ExternalResource("#" + ViewUtils.MAIN)));
         this.createNewExerciseButton.addClickListener(new ClickListener() {
 
             private static final long serialVersionUID = -5360404934227996076L;
@@ -218,6 +221,7 @@ public class CreateExerciseView extends Panel implements View {
                     Exercise dbExercise = CreateExerciseView.this.current.convert(); // convert wrapper bean to DB entity
                     CreateExerciseView.this.service.saveOrUpdateExercise(dbExercise);
                     Notification.show("Exercise created! You are awesome!");
+                    ViewDataCache.getInstance().doAllInit();
                 } catch (CommitException e) {
                     logger.error("Error during comminting newly created exercise.", e);
                     Notification.show("Fatal error. :(");

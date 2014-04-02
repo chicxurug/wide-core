@@ -45,7 +45,7 @@ public class RoleAdminView extends Panel implements View
         layout.addComponent(new Label("ROLE_ADMIN"));
         Image image = new Image("felejthetetlen:)", new ExternalResource("http://bestpicture.wbl.sk/funny.jpg"));
         layout.addComponent(image);
-        layout.addComponent(new Link("Go back", new ExternalResource("#!" + ViewUtils.MAIN)));
+        layout.addComponent(new Link("Go back", new ExternalResource("#" + ViewUtils.MAIN)));
 
         setContent(layout);
     }

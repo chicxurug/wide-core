@@ -154,6 +154,52 @@ public class ViewUtils {
         }
     }
 
+    public static Component searchAll(String searchText) {
+        ViewDataCache cache = ViewDataCache.getInstance();
+        String basepath = Page.getCurrent().getLocation().toString().replaceAll("#", "") + "VAADIN/themes/wideweb";
+        StringBuilder sb = new StringBuilder("<ul class=\"filterList\">\n");
+        final Collection<Category> mainCategories = cache.getCategories().values();
+        ContentFilterInterface filter = new AllFilter(searchText);
+
+        for (Category cat : mainCategories) {
+            if (filter.isFiltered(cat)) {
+                continue;
+            }
+            sb.append("<li class=\"folder\">\n"
+                    + "         <img class=\"icon\" src=\"" + basepath + "/layouts/example/1.jpg\" />\n"
+                    + "         <div class=\"title\">" + cat.getName() + "</div>\n"
+                    + "         <div class=\"subfolders\">Subcategories: <b>" + cache.getCategories().get(cat).size() + "</b></div>\n"
+                    + "         <div class=\"lessons\">Lessons: <b>" + cache.getExerciseByCategory(cat).size() + "</b></div>\n"
+                    + "         <div class=\"tests\">Tests: <b>" + cache.getTestsByCategory(cat).size() + "</b></div>\n"
+                    + "</li>\n");
+        }
+
+        final Collection<Exercise> exercises = cache.getExercisesBySearchText(searchText);
+        for (Exercise ex : exercises) {
+            sb.append("<li class=\"lesson\">"
+                    + "         <img class=\"icon\" src=\"" + basepath + "/layouts/example/2.jpg\" />"
+                    + "         <div class=\"title\"><div class=\"schoolLevel university\"></div>" + ex.getTitle() + "</div>"
+                    + "         <img class=\"level\" src=\"" + basepath + "/img/level2.png\" />"
+                    + "         <img class=\"rank\" src=\"" + basepath + "/img/rank4.png\" />"
+                    + "         <div class=\"author\">Author: <a href=\"#\">" + ex.getAuthor() + "</a></div>"
+                    + "         </li>\n");
+        }
+
+        final Collection<Test> tests = cache.getTestsBySearchText(searchText);
+        for (Test t : tests) {
+            if (filter.isFiltered(t)) {
+                continue;
+            }
+            sb.append("<li class=\"test\">"
+                    + "         <img class=\"icon\" src=\"" + basepath + "/layouts/example/3.jpg\" />"
+                    + "         <div class=\"title\">" + t.getDescription() + "</div>"
+                    + "         <div class=\"lessons\">Lessons: <b>" + t.getExercises().size() + "</b></div>\n"
+                    + "         </li>\n");
+        }
+
+        return new Label(sb.toString() + "</ul>", ContentMode.HTML);
+    }
+
     public static Component getBreadCrump(Category cat) {
         StringBuilder sb = new StringBuilder();
         ArrayList<String> crumbs = new ArrayList<String>();

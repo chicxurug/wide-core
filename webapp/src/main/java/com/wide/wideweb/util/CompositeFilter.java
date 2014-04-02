@@ -72,6 +72,9 @@ public class CompositeFilter implements ContentFilterInterface {
         if (!this.test) {
             return true;
         }
+        if (!"Enter search keywords here".equals(this.searchText) && !test.getDescription().contains(this.searchText)) {
+            return true;
+        }
         return false;
     }
 

@@ -85,7 +85,8 @@ public class Exercise extends Solvable {
 
     }
 
-    public Exercise(String language, String title, DifficultyLevel difficulty, Integer score, String author, SchoolLevel level, String bookTitle,
+    public Exercise(String language, String title, DifficultyLevel difficulty, Integer score, String author, SchoolLevel level, String publisher,
+            String bookTitle,
             Category category,
             List<Feature> features) {
         this.language = language;
@@ -94,6 +95,7 @@ public class Exercise extends Solvable {
         this.score = score;
         this.author = author;
         this.level = level;
+        this.publisher = publisher;
         this.bookTitle = bookTitle;
         this.testMember = false;
         this.numberOfSubmits = 0;

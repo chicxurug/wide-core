@@ -52,7 +52,7 @@ public class RoleUserView extends Panel implements View
         layout.setMargin(true);
 
         layout.addComponent(new Label("ROLE_USER"));
-        layout.addComponent(new Link("Go back", new ExternalResource("#!" + ViewUtils.MAIN)));
+        layout.addComponent(new Link("Go back", new ExternalResource("#" + ViewUtils.MAIN)));
 
         setContent(layout);
 
@@ -95,7 +95,7 @@ public class RoleUserView extends Panel implements View
                 features.add(service.saveOrUpdateFeature(new Feature("aa", "bb", Feature.FeatureType.SHORT_TEXT)));
                 features.add(service.saveOrUpdateFeature(new Feature("aa2", "bb2", Feature.FeatureType.LONG_TEXT)));
                 service.saveOrUpdateExercise(new Exercise("English", title.getValue(), DifficultyLevel.D2_AVERAGE, 0, "",
-                        Exercise.SchoolLevel.ELEMENTARY, "", sample, features));
+                        Exercise.SchoolLevel.ELEMENTARY, "", "", sample, features));
             }
         });
         layout.addComponent(button2);

@@ -50,7 +50,7 @@ public class ExerciseBean implements Serializable {
     }
 
     public Exercise convert() {
-        Exercise ret = new Exercise(this.language, this.title, this.difficulty, null, this.author, this.schoolLevel, this.book,
+        Exercise ret = new Exercise(this.language, this.title, this.difficulty, null, this.author, this.schoolLevel, this.publisher, this.book,
                 this.category, null);
         List<Feature> features = new ArrayList<Feature>();
         if (StringUtils.isNotBlank(this.tags)) {

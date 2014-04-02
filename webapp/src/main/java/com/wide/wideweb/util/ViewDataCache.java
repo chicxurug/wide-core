@@ -29,6 +29,7 @@ public final class ViewDataCache implements Serializable {
     }
 
     public void doAllInit() {
+        this.exercises.clear();
         initCategories();
         initTests();
     }
@@ -133,6 +134,14 @@ public final class ViewDataCache implements Serializable {
             instance.doAllInit();
         }
         return instance;
+    }
+
+    public Collection<Exercise> getExercisesBySearchText(String searchText) {
+        return this.service.getExercisesBySearchText(searchText);
+    }
+
+    public Collection<Test> getTestsBySearchText(String searchText) {
+        return this.service.getTestsBySearchText(searchText);
     }
 
 }

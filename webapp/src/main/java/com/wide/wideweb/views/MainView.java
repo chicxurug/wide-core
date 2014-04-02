@@ -26,6 +26,7 @@ import com.wide.wideweb.util.ViewDataCache;
 import com.wide.wideweb.util.ViewUtils;
 import com.wide.wideweb.views.customjscript.HandleCreateExcersize;
 import com.wide.wideweb.views.customjscript.HandleFilterCategory;
+import com.wide.wideweb.views.customjscript.HandleFilterWelcome;
 import com.wide.wideweb.views.customjscript.HandleLogin;
 import com.wide.wideweb.views.customjscript.HandleMenuSelect;
 import com.wide.wideweb.views.customjscript.HandleSubMenuSelect;
@@ -60,7 +61,7 @@ public class MainView extends Panel implements View
         JavaScript.getCurrent().execute("window.$(\"body\").addClass(\"welcome\");");
         layout.addComponent(ViewUtils.getCategoryList(this.cache.getRootCategory()), "mainMenuItems");
         layout.addComponent(ViewUtils.getCategoryList(this.cache.getRootCategory()), "subMenuItems");
-        layout.addComponent(new Label("<li><a href=\"#\">Math</a></li>", ContentMode.HTML), "crumb");
+        layout.addComponent(new Label("", ContentMode.HTML), "crumb");
         layout.addComponent(ViewUtils.getSecondaryLevel(this.cache.getRootCategory(), new com.wide.wideweb.util.EmptyFilter()), "secondaryLevel");
         layout.addComponent(this.usernameLabel, "auth_user");
         setContent(layout);
@@ -71,6 +72,8 @@ public class MainView extends Panel implements View
         JavaScript.getCurrent().addFunction("com.wide.wideweb.subMenuSelect", new HandleSubMenuSelect(layout));
 
         JavaScript.getCurrent().addFunction("com.wide.wideweb.filterCategory", new HandleFilterCategory(layout));
+
+        JavaScript.getCurrent().addFunction("com.wide.wideweb.filterWelcome", new HandleFilterWelcome(layout));
     }
 
     @Override

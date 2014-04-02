@@ -150,7 +150,7 @@ public class WideDefaultsInitiator {
         Test t = new Test();
         for (int i = 1; i < 4; i++) {
             Exercise ex = new Exercise("English", "Exercise" + category.getName() + i, DifficultyLevel.randomDifficulty(), i,
-                    "Author" + category.getName() + i, Exercise.SchoolLevel.COLLEGE, "Title" + category.getName() + i, category, null);
+                    "Author" + category.getName() + i, Exercise.SchoolLevel.COLLEGE, "Publisher", "Title" + category.getName() + i, category, null);
             exs.add(new ExercisePoint(ex, new Long(i)));
         }
         t.setDescription("Test" + category.getName());

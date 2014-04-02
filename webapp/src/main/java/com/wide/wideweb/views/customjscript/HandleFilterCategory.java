@@ -33,8 +33,11 @@ public class HandleFilterCategory implements JavaScriptFunction {
         boolean menu = arguments.getBoolean(6);
         boolean lesson = arguments.getBoolean(7);
         boolean test = arguments.getBoolean(8);
-        this.layout.replaceComponent(this.layout.getComponent("secondaryLevel"),
-                ViewUtils.getSecondaryLevel(MainView.current, new CompositeFilter(searchText, author, publisher, book, title, submitNo, menu, lesson, test)));
+        this.layout.replaceComponent(
+                this.layout.getComponent("secondaryLevel"),
+                MainView.current != null ? ViewUtils.getSecondaryLevel(MainView.current, new CompositeFilter(searchText, author, publisher, book, title,
+                        submitNo, menu, lesson, test)) :
+                        ViewUtils.searchAll(searchText));
         ViewUtils.injectJs("/VAADIN/themes/wideweb/js/subHeader_full.js");
     }
 

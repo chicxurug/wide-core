@@ -20,6 +20,7 @@ public class HandleCreateExcersize implements JavaScriptFunction {
     @Override
     public void call(JSONArray arguments) throws JSONException {
         this.navigator.navigateTo(ViewUtils.CREATE_EXERCISE);
+        ViewUtils.injectJs("/VAADIN/themes/wideweb/js/subHeader_full.js");
     }
 
 }

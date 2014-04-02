@@ -34,6 +34,10 @@ public class WideDAO extends BaseDAO {
         return findByQuery("from Exercise where category = ?1", category);
     }
 
+    public List<Exercise> getExercisesBySearchText(String searchText) {
+        return findByQuery("from Exercise where author like ?1 or title like ?1", "%" + searchText + "%");
+    }
+
     public List<Category> getCategories() {
         return findAll(Category.class);
     }
@@ -65,6 +69,10 @@ public class WideDAO extends BaseDAO {
             tests.add((Test) results[0]);
         }
         return tests;
+    }
+
+    public List<Test> getTestsBySearchText(String searchText) {
+        return findByQuery("from Test where description like ?1", "%" + searchText + "%");
     }
 
     public void createCategory(Category c) {

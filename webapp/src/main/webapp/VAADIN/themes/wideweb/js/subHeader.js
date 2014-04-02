@@ -137,8 +137,7 @@ window.$( ".subMenu.first > div > li" ).click(function() {
             window.$(".topSearch .searchInput").val(searchValue);
             window.$(".topSearch .searchInput").removeClass("default");
             window.$(".topSearch .searchInput").addClass("filled");
-            subHeaderAnimation(".searchFilter", ".topSearch");
-            window.$("body").removeClass("welcome");
+            com.wide.wideweb.filterWelcome(window.$("input[name='Enter search keywords here']").val());
           }
         });
         window.$(".welcome .search .text").keyup(enterkey = function(e){
