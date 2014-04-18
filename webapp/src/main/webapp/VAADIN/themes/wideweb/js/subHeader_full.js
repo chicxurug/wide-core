@@ -71,6 +71,9 @@ window.$( ".filterList > li.folder" ).click(function() {
       window.$( ".breadcrumb > div > li + li + li + li" ).delay(300).slideDown( 200 );
       com.wide.wideweb.folderSelect(window.$(this).children().eq(1).text());
 });
+window.$( ".filterList > li.lesson" ).click(function() {
+	com.wide.wideweb.openExercise(window.$(this).attr("id"));
+});
 window.$( ".breadcrumb > div > li").click(function() {
 	com.wide.wideweb.subMenuSelect(window.$(this).text(), 0, window.$("input[name='typeCategory']").prop('checked'), window.$("input[name='typeLesson']").prop('checked'), window.$("input[name='typeTest']").prop('checked'));
 });

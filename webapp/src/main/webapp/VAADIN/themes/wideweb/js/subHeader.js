@@ -84,6 +84,9 @@ window.$( ".subMenu.first > div > li" ).click(function() {
           window.$(this).hide(300);
           window.$( ".breadcrumb > div > li + li + li + li" ).delay(300).slideDown( 200 );          
         });
+        window.$( ".filterList > li.lesson" ).click(function() {
+        	com.wide.wideweb.openExercise(window.$(this).attr("id"));
+        });
         window.$( ".breadcrumb > div > li").click(function() {
           com.wide.wideweb.subMenuSelect(window.$(this).text(), 0, window.$("input[name='typeCategory']").prop('checked'), window.$("input[name='typeLesson']").prop('checked'), window.$("input[name='typeTest']").prop('checked'));
         });

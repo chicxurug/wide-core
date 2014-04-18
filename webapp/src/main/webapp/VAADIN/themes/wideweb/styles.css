@@ -156,8 +156,6 @@ input[type="text"], textarea {
       border-color: #62abff; }
     .main .filterList li.lesson {
       border-color: #e80c7a; }
-    .main .filterList li.test {
-      border-color: #ffc000; }
     .main .filterList li > img.icon {
       float: left;
       margin: 5px 15px 5px 5px;
@@ -211,6 +209,108 @@ input[type="text"], textarea {
       margin: 8px 5px 5px 5px;
       vertical-align: bottom; }
 
+/* display lesson */
+div.lesson {
+  width: 910px; }
+  div.lesson div.lessonHeader {
+    background-color: #e80c7a;
+    width: 896px;
+    padding: 7px;
+    font-family: education; }
+    div.lesson div.lessonHeader .schoolLevel {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      vertical-align: middle;
+      margin-right: 10px; }
+      div.lesson div.lessonHeader .schoolLevel.university {
+        background: #cccccc url("img/uni.png") center center no-repeat;
+        -webkit-border-radius: 20px;
+        -moz-border-radius: 20px;
+        -ms-border-radius: 20px;
+        -o-border-radius: 20px;
+        border-radius: 20px; }
+      div.lesson div.lessonHeader .schoolLevel.inTest {
+        background-color: #ffc000; }
+    div.lesson div.lessonHeader .title {
+      display: inline-block;
+      font-size: 18px;
+      font-weight: bold;
+      line-height: 20px;
+      color: white; }
+    div.lesson div.lessonHeader .author {
+      line-height: 20px;
+      margin-top: 9px;
+      margin-right: 9px;
+      float: right;
+      color: white; }
+      div.lesson div.lessonHeader .author a {
+        color: white; }
+  div.lesson .lessonDetails {
+    float: left;
+    width: 594px;
+    padding: 7px;
+    font-family: education;
+    background-color: #eeeeee;
+    float: left; }
+    div.lesson .lessonDetails .source {
+      background: url("img/source.png") left center no-repeat;
+      padding-left: 45px;
+      float: left; }
+    div.lesson .lessonDetails img {
+      float: right;
+      margin-left: 6px; }
+    div.lesson .lessonDetails .tags {
+      clear: both;
+      margin-top: 13px;
+      float: left; }
+      div.lesson .lessonDetails .tags li {
+        font-size: 75%;
+        display: inline; }
+        div.lesson .lessonDetails .tags li > a {
+          font-weight: bold;
+          color: #444444; }
+  div.lesson .solutionBar .yourSolution input[type="text"] {
+    margin-top: 14px;
+    font-size: 18px;
+    font-family: education;
+    font-weight: bold;
+    padding-left: 7px;
+    width: 280px;
+    line-height: 24px;
+    float: right;
+    border: 1px solid #cccccc;
+    color: #444444; }
+  div.lesson .solutionBar .yourSolution .buttons {
+    float: right; }
+    div.lesson .solutionBar .yourSolution .buttons input {
+      font-family: education;
+      font-size: 18px;
+      width: 93px;
+      margin-left: 1px;
+      margin-top: 11px;
+      padding: 5px 0;
+      cursor: pointer; }
+      div.lesson .solutionBar .yourSolution .buttons input:focus {
+        outline: 0; }
+      div.lesson .solutionBar .yourSolution .buttons input.submit {
+        background-color: #3eb535;
+        color: white; }
+  div.lesson .solutionBar .links {
+    margin-top: 10px;
+    float: right;
+    clear: right;
+    font-family: education;
+    color: #aaaaaa;
+    text-align: right; }
+    div.lesson .solutionBar .links a {
+      color: #62abff; }
+  div.lesson .theLesson {
+    float: left;
+    width: 601px;
+    padding: 12px 7px 12px 0;
+    font-family: education; }
+
 .right > div > ul.ads > li {
   margin-bottom: 15px;
   line-height: 11px;
@@ -224,11 +324,11 @@ input[type="text"], textarea {
   .right > div > ul.ads > li img {
     cursor: pointer !important; }
 
-.left > div > ul.breadcrumb > .v-label.v-widget.v-has-width > li {
+.left > div > ul.breadcrumb > div > li {
   margin-bottom: 5px;
   cursor: pointer !important;
   overflow: hidden; }
-  .left > div > ul.breadcrumb > .v-label.v-widget.v-has-width > li > a {
+  .left > div > ul.breadcrumb > div > li > a {
     font-size: 14px;
     font-family: education;
     display: inline-block;
@@ -236,7 +336,7 @@ input[type="text"], textarea {
     color: white;
     background: #62abff;
     width: 125px; }
-    .left > div > ul.breadcrumb > .v-label.v-widget.v-has-width > li > a:hover {
+    .left > div > ul.breadcrumb > div > li > a:hover {
       border-left: 6px solid #ffba00;
       -webkit-transition: all 0.3s ease;
       -moz-transition: all 0.3s ease;

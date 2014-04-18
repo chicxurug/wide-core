@@ -30,6 +30,7 @@ public class ViewUtils {
     public static final String REGISTER = "register";
     public static final String MAIN = "";
     public static final String CREATE_EXERCISE = "createExercise";
+    public static final String VIEW_EXERCISE = "viewExercise";
     public static final String ERROR = "error";
 
     public static void navigateToErrorView(VaadinSession session, ViewChangeEvent event, Exception e) {
@@ -129,7 +130,7 @@ public class ViewUtils {
                 if (filter.isFiltered(ex)) {
                     continue;
                 }
-                sb.append("<li class=\"lesson\">"
+                sb.append("<li id=" + ex.getId() + " class=\"lesson\">"
                         + "         <img class=\"icon\" src=\"" + basepath + "/layouts/example/2.jpg\" />"
                         + "         <div class=\"title\"><div class=\"schoolLevel university\"></div>" + ex.getTitle() + "</div>"
                         + "         <img class=\"level\" src=\"" + basepath + "/img/level2.png\" />"
@@ -176,7 +177,7 @@ public class ViewUtils {
 
         final Collection<Exercise> exercises = cache.getExercisesBySearchText(searchText);
         for (Exercise ex : exercises) {
-            sb.append("<li class=\"lesson\">"
+            sb.append("<li id=" + ex.getId() + " class=\"lesson\">"
                     + "         <img class=\"icon\" src=\"" + basepath + "/layouts/example/2.jpg\" />"
                     + "         <div class=\"title\"><div class=\"schoolLevel university\"></div>" + ex.getTitle() + "</div>"
                     + "         <img class=\"level\" src=\"" + basepath + "/img/level2.png\" />"
@@ -210,6 +211,26 @@ public class ViewUtils {
         for (int i = crumbs.size() - 1; i >= 0; i--) {
             sb.append(crumbs.get(i));
         }
+        return new Label(sb.toString(), ContentMode.HTML);
+    }
+
+    public static Component getExerciseDetails(Exercise ex) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<img class=\"level\" src=\"../img/level2.png\" />\n");
+        sb.append("<img class=\"rank\" src=\"../img/rank4.png\" />\n");
+        sb.append("<ul class=\"source\">\n");
+        sb.append("<li>Szerző: <a href=\"#\">" + ex.getAuthor() + "</a></li>\n");
+        sb.append("<li>Könyv: <a href=\"#\">" + ex.getBookTitle() + "</a></li>\n");
+        sb.append("<li>Kiadó: <a href=\"#\">" + ex.getPublisher() + "</a></li>\n");
+        sb.append("</ul>\n");
+        sb.append("<ul class=\"tags\">Tags:"
+                + "     <li><a href=\"#\">this</a>,</li>"
+                + "     <li><a href=\"#\">is</a>,</li>"
+                + "     <li><a href=\"#\">how</a>,</li>"
+                + "     <li><a href=\"#\">the</a>,</li>"
+                + "     <li><a href=\"#\">bible</a>,</li>"
+                + "     <li><a href=\"#\">made</a>,</li>"
+                + "                            </ul>\n");
         return new Label(sb.toString(), ContentMode.HTML);
     }
 }

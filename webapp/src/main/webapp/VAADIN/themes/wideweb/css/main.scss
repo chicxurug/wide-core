@@ -116,6 +116,162 @@
 	}
 }
 
+/* display lesson */
+
+div.lesson
+{
+	width: 910px;
+	div.lessonHeader
+	{
+		background-color: $lesson-color;
+		width: 896px;
+		padding: 7px;
+		font-family: education;
+		.schoolLevel
+		{
+			display: inline-block;
+			width:40px;
+			height: 40px;
+			vertical-align: middle;
+			margin-right: 10px;
+			&.university
+			{
+				background: $fourth-dark-color url('img/uni.png') center center no-repeat;
+				@include border-radius(20px)
+			}
+			&.inTest
+			{
+				background-color: $test-color;
+			}
+		}
+		.title
+		{
+			display: inline-block;
+			font-size: 18px;
+			font-weight: bold;
+			line-height: 20px;
+			color: $fourth-color;
+		}
+		.author
+		{
+			line-height: 20px;
+			margin-top: 9px;
+			margin-right: 9px;
+			float: right;
+			color: $fourth-color;
+			& a
+			{
+				color: $fourth-color;
+			}
+		}
+	}
+	.lessonDetails
+	{
+		float: left;
+		width: 594px;
+		padding: 7px;
+		font-family: education;
+		background-color: $fourth-fade-color;
+		float: left;
+		.source
+		{
+			background: url('img/source.png') left center no-repeat;
+			padding-left: 45px;
+			float: left;
+			li 
+			{
+				> a
+				{
+				}
+			}
+		}
+		img
+		{
+			float: right;
+			margin-left: 6px;
+		}
+		.tags
+		{
+			clear: both;
+			margin-top: 13px;
+			float: left;
+			li 
+			{
+				font-size: 75%;
+				display: inline;
+				> a
+				{
+					font-weight: bold;
+					color: $font-color;
+				}
+			}
+		}
+	}
+	.solutionBar
+	{
+		.yourSolution
+		{
+			input[type="text"]
+			{
+				margin-top: 14px;
+				font-size: 18px;
+				font-family: education;
+				font-weight: bold;
+				padding-left: 7px;
+				width: 280px;
+				line-height: 24px;
+				float: right;
+				border: 1px solid $fourth-dark-color;
+				color: $font-color;
+			}
+			.buttons
+			{
+				
+				float: right;
+				input
+				{
+					font-family: education;
+					font-size: 18px;
+					width: 93px;
+					margin-left: 1px;
+					margin-top: 11px;
+					padding: 5px 0;
+					cursor: pointer;
+					&:focus
+					{
+						outline: 0;
+					}
+					&.submit
+					{
+						background-color: $submit-color;
+						color: $fourth-color;
+					}
+				}
+			}
+		}
+		.links
+		{
+			margin-top: 10px;
+			float: right;
+			clear: right;
+			font-family: education;
+			color: $font-light-color;
+			text-align: right;
+			a
+			{
+				color: $folder-color;
+			}
+		}
+	}
+	.theLesson
+	{
+		float: left;
+		width: 601px;
+		padding: 12px 7px 12px 0;
+		font-family: education;
+	}
+}
+
 
 
 

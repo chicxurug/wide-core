@@ -34,6 +34,10 @@ public class WideDAO extends BaseDAO {
         return findByQuery("from Exercise where category = ?1", category);
     }
 
+    public Exercise getExerciseById(long id) {
+        return findUniqueByQuery("from Exercise where id = ?1", id);
+    }
+
     public List<Exercise> getExercisesBySearchText(String searchText) {
         return findByQuery("from Exercise where author like ?1 or title like ?1", "%" + searchText + "%");
     }

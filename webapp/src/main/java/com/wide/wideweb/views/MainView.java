@@ -29,6 +29,7 @@ import com.wide.wideweb.views.customjscript.HandleFilterCategory;
 import com.wide.wideweb.views.customjscript.HandleFilterWelcome;
 import com.wide.wideweb.views.customjscript.HandleLogin;
 import com.wide.wideweb.views.customjscript.HandleMenuSelect;
+import com.wide.wideweb.views.customjscript.HandleOpenExcersize;
 import com.wide.wideweb.views.customjscript.HandleSubMenuSelect;
 
 /**
@@ -82,6 +83,7 @@ public class MainView extends Panel implements View
 
         JavaScript.getCurrent().addFunction("com.wide.wideweb.loginSelect", new HandleLogin(event.getNavigator()));
         JavaScript.getCurrent().addFunction("com.wide.wideweb.createExercise", new HandleCreateExcersize(event.getNavigator()));
+        JavaScript.getCurrent().addFunction("com.wide.wideweb.openExercise", new HandleOpenExcersize(event.getNavigator()));
 
         if (SpringSecurityHelper.isAuthenticated()) {
             User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

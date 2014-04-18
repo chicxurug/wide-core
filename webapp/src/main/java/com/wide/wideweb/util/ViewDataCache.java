@@ -144,4 +144,24 @@ public final class ViewDataCache implements Serializable {
         return this.service.getTestsBySearchText(searchText);
     }
 
+    public Exercise getExerciseByCategory(Category current, String exId) {
+        Exercise found = null;
+        Long id = Long.parseLong(exId);
+
+        // The id is coming from a global search
+        if (current == null) {
+            found = this.service.getExerciseById(id);
+        } else {
+            Collection<Exercise> possibleExercises = this.exercises.get(current);
+            for (Exercise e : possibleExercises) {
+                if (id.equals(e.getId())) {
+                    found = e;
+                    break;
+                }
+            }
+        }
+
+        return found;
+    }
+
 }
