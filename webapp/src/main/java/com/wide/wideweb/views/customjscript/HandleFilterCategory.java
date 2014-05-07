@@ -7,7 +7,6 @@ import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.JavaScriptFunction;
 import com.wide.wideweb.util.CompositeFilter;
 import com.wide.wideweb.util.ViewUtils;
-import com.wide.wideweb.views.MainView;
 
 public class HandleFilterCategory implements JavaScriptFunction {
 
@@ -35,7 +34,8 @@ public class HandleFilterCategory implements JavaScriptFunction {
         boolean test = arguments.getBoolean(8);
         this.layout.replaceComponent(
                 this.layout.getComponent("secondaryLevel"),
-                MainView.current != null ? ViewUtils.getSecondaryLevel(MainView.current, new CompositeFilter(searchText, author, publisher, book, title,
+                ViewUtils.getCurrentCategory() != null ? ViewUtils.getSecondaryLevel(ViewUtils.getCurrentCategory(), new CompositeFilter(searchText, author,
+                        publisher, book, title,
                         submitNo, menu, lesson, test)) :
                         ViewUtils.searchAll(searchText));
         ViewUtils.injectJs("/VAADIN/themes/wideweb/js/subHeader_full.js");

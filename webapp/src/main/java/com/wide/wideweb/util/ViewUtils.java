@@ -17,6 +17,7 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.Label;
 import com.wide.domainmodel.Category;
 import com.wide.domainmodel.Exercise;
+import com.wide.domainmodel.Feature;
 import com.wide.domainmodel.Test;
 
 /**
@@ -60,6 +61,10 @@ public class ViewUtils {
     }
 
     public static Label getCategoryList(Category cat) {
+        return getCategoryList(cat, "#");
+    }
+
+    public static Label getCategoryList(Category cat, String relURL) {
         ViewDataCache cache = ViewDataCache.getInstance();
         StringBuilder sb = new StringBuilder();
         final Collection<Category> mainCategories = cache.getCategories().get(cat);
@@ -70,9 +75,9 @@ public class ViewUtils {
                 sb.append("<strike>");
             }
             if ("Maths".equals(mainCategory.getName())) {
-                sb.append("<a href=\"#\" class=\"math\" target=\"\">" + mainCategory.getName() + "</a>");
+                sb.append("<a href=\"" + relURL + "\" class=\"math\" target=\"\">" + mainCategory.getName() + "</a>");
             } else {
-                sb.append("<a href=\"#\" target=\"\">" + mainCategory.getName() + "</a>");
+                sb.append("<a href=\"" + relURL + "\" target=\"\">" + mainCategory.getName() + "</a>");
             }
             if (mainCategory.getParent().getName().isEmpty() && cache.getCategories().get(mainCategory).isEmpty()) {
                 sb.append("</strike>");
@@ -84,7 +89,7 @@ public class ViewUtils {
 
     public static Component getSecondaryLevel(Category category, ContentFilterInterface filter) {
         ViewDataCache cache = ViewDataCache.getInstance();
-        String basepath = Page.getCurrent().getLocation().toString().replaceAll("#", "") + "VAADIN/themes/wideweb";
+        String basepath = getBasePath();
         if (category.getParent() == null) {
             return new Label("<ul class=\"filterList\">"
                     + "<li class=\"folder\">"
@@ -157,7 +162,7 @@ public class ViewUtils {
 
     public static Component searchAll(String searchText) {
         ViewDataCache cache = ViewDataCache.getInstance();
-        String basepath = Page.getCurrent().getLocation().toString().replaceAll("#", "") + "VAADIN/themes/wideweb";
+        String basepath = getBasePath();
         StringBuilder sb = new StringBuilder("<ul class=\"filterList\">\n");
         final Collection<Category> mainCategories = cache.getCategories().values();
         ContentFilterInterface filter = new AllFilter(searchText);
@@ -201,7 +206,7 @@ public class ViewUtils {
         return new Label(sb.toString() + "</ul>", ContentMode.HTML);
     }
 
-    public static Component getBreadCrump(Category cat) {
+    public static Component getBreadCrumb(Category cat) {
         StringBuilder sb = new StringBuilder();
         ArrayList<String> crumbs = new ArrayList<String>();
         while (cat.getParent() != null) {
@@ -215,22 +220,55 @@ public class ViewUtils {
     }
 
     public static Component getExerciseDetails(Exercise ex) {
+        String basepath = getBasePath();
         StringBuilder sb = new StringBuilder();
-        sb.append("<img class=\"level\" src=\"../img/level2.png\" />\n");
-        sb.append("<img class=\"rank\" src=\"../img/rank4.png\" />\n");
+        sb.append("<img class=\"level\" src=\"" + basepath + "/img/level2.png\" />\n");
+        sb.append("<img class=\"rank\" src=\"" + basepath + "/img/rank4.png\" />\n");
         sb.append("<ul class=\"source\">\n");
         sb.append("<li>Szerző: <a href=\"#\">" + ex.getAuthor() + "</a></li>\n");
         sb.append("<li>Könyv: <a href=\"#\">" + ex.getBookTitle() + "</a></li>\n");
         sb.append("<li>Kiadó: <a href=\"#\">" + ex.getPublisher() + "</a></li>\n");
         sb.append("</ul>\n");
-        sb.append("<ul class=\"tags\">Tags:"
-                + "     <li><a href=\"#\">this</a>,</li>"
-                + "     <li><a href=\"#\">is</a>,</li>"
-                + "     <li><a href=\"#\">how</a>,</li>"
-                + "     <li><a href=\"#\">the</a>,</li>"
-                + "     <li><a href=\"#\">bible</a>,</li>"
-                + "     <li><a href=\"#\">made</a>,</li>"
-                + "                            </ul>\n");
+        sb.append("<ul class=\"tags\">Tags:\n");
+        if (ex.getFeatures() != null) {
+            for (Feature f : ex.getFeatures()) {
+                if (FeatureFactory.TAGS.equals(f.getName())) {
+                    for (String tag : f.getValue().split(",")) {
+                        sb.append("<li><a href=\"#\">" + tag.trim() + "</a> , </li>");
+                    }
+                    sb.replace(sb.length() - 8, sb.length(), "</li>");
+                }
+            }
+        }
         return new Label(sb.toString(), ContentMode.HTML);
+    }
+
+    private static String getBasePath() {
+        return Page.getCurrent().getLocation().getScheme() + ":" + Page.getCurrent().getLocation().getSchemeSpecificPart() + "VAADIN/themes/wideweb";
+    }
+
+    public static void setCurrentCategory(Category c) {
+        VaadinSession.getCurrent().setAttribute(":current:", c);
+    }
+
+    public static Category getCurrentCategory() {
+        return (Category) VaadinSession.getCurrent().getAttribute(":current:");
+    }
+
+    public static void setCurrentExercise(Exercise e) {
+        VaadinSession.getCurrent().setAttribute(":exercise:", e);
+    }
+
+    public static Exercise getCurrentExercise() {
+        return (Exercise) VaadinSession.getCurrent().getAttribute(":exercise:");
+    }
+
+    public static String getFeatureValue(Exercise ex, String fName) {
+        for (Feature f : ex.getFeatures()) {
+            if (fName.equals(f.getName())) {
+                return f.getValue();
+            }
+        }
+        return "";
     }
 }

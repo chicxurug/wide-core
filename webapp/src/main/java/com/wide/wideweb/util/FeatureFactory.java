@@ -5,10 +5,11 @@ import com.wide.domainmodel.Feature.FeatureType;
 
 public class FeatureFactory {
 
-    private static final String EXERCISE_TEXT = "Exercise";
-    private static final String RELEATED_LINKS = "Releated links";
-    private static final String SHORT_ANSWER = "Answer";
-    private static final String SOLUTION_TEXT = "Solution";
+    public static final String EXERCISE_TEXT = "Exercise";
+    public static final String RELEATED_LINKS = "Releated links";
+    public static final String SHORT_ANSWER = "Answer";
+    public static final String SOLUTION_TEXT = "Solution";
+    public static final String TAGS = "Tags";
 
     public static Feature createExerciseText(String value) {
         return new Feature(EXERCISE_TEXT, value, FeatureType.LONG_TEXT);
@@ -27,7 +28,7 @@ public class FeatureFactory {
     }
 
     public static Feature createTags(String value) {
-        return new Feature("Tags", value, FeatureType.TAG);
+        return new Feature(TAGS, value, FeatureType.TAG);
     }
 
 }

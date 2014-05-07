@@ -5,24 +5,19 @@
 	<meta name="description" content="Wide">
     <meta name="Keywords" content="Wide">
     <title>WIDE</title>
-	<link rel="stylesheet" href="../styles.css">
-	<link rel="stylesheet" href="../css/welcome.css">
 	<meta http-equiv="refresh" content="2000">
-	<script type="text/javascript" src="../js/jquery-2.1.0.js"></script>
 	<script type="text/javascript">
-		$( document ).ready(function() {
-			/* welcome amination set to 1 */ $animation = 0;
+		window.$( document ).ready(function() {
+			/* welcome amination set to 1 */ window.$animation = 0;
 		});
 	</script>
-	<script type="text/javascript" src="../js/welcomeAnimation.js"></script>
-	<script type="text/javascript" src="../js/subHeader.js"></script>
 </head>
 <body class="">
 	<div class="header">
 		<div>
 			<ul class="menu">
-				<li><a href="#!viewExercise/" target="" class="learn">Learn</a></li>
-				<li><a href="#!viewExercise/" target="" class="teach">Teach</a></li>
+				<li><a href="#!viewExercise" target="" class="learn">Learn</a></li>
+				<li><a href="#!viewExercise" target="" class="teach">Teach</a></li>
 			</ul>
 			<div class="topSearch search reset">
 				<div class="input"><input class="searchInput default" type="text" value="Enter search keywords here" /><input class="filterIco" type="submit" value=" "/></div>
@@ -31,9 +26,9 @@
 			<a href="#" class="logo" title="WIDE"></a>
 			<div class="subHeader">
 				<div class="subMenuContainer">
-					<ul class="subMenu first">
+					<ul location="mainMenuItems" class="subMenu first">
 					</ul>
-					<ul class="subMenu second no6">
+					<ul location="subMenuItems" class="subMenu second no6">
 					</ul>
 				</div>
 				<div class="userSubContainer">
@@ -41,6 +36,8 @@
 						<li><a href="#" target="">Log in</a></li>
 						<li><a href="#" target="">Profile</a></li>
 						<li><a href="#" target="">Log out</a></li>
+						<li><a href="#!role_user" target="">User page</a></li>
+						<li><a href="#!role_admin" target="">Admin page</a></li>
 					</ul>
 				</div>
 				<div class="searchFilter reset">
@@ -124,11 +121,13 @@
 									<input type="submit" value="Solution" />
 								</div>
 							</div>
-							<ul class="links">Links:
-								<li><a href="#">www.google.com</a></li>
-								<li><a href="#">www.yahoo.com</a></li>
-								<li><a href="#">www.nottoolongurlname.com</a></li>
-							</ul>
+							<div location="links">
+								<ul class="links">Links:
+									<li><a href="#">www.google.com</a></li>
+									<li><a href="#">www.yahoo.com</a></li>
+									<li><a href="#">www.nottoolongurlname.com</a></li>
+								</ul>
+							</div>
 						</div>
 						<div location="lessonDesc" class="theLesson">
 							Lelepleztek egy hatmilliárd forintnyi édességgel kereskedő bűnszervezetet. Tagjait különösen nagy vagyoni hátrányt okozó költségvetési csalással gyanúsítják - közölte a Nemzeti Adó- és Vámhivatal (NAV) szerdán az MTI-vel.

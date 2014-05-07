@@ -156,6 +156,8 @@ input[type="text"], textarea {
       border-color: #62abff; }
     .main .filterList li.lesson {
       border-color: #e80c7a; }
+    .main .filterList li.test {
+      border-color: #ffc000; }
     .main .filterList li > img.icon {
       float: left;
       margin: 5px 15px 5px 5px;

@@ -20,7 +20,6 @@ import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.JavaScript;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
-import com.wide.domainmodel.Category;
 import com.wide.wideweb.util.SpringSecurityHelper;
 import com.wide.wideweb.util.ViewDataCache;
 import com.wide.wideweb.util.ViewUtils;
@@ -52,7 +51,7 @@ public class MainView extends Panel implements View
     private Label usernameLabel = new Label("Guest");
     private Label rolesLabel = new Label();
 
-    public static Category current;
+    // public static Category current;
 
     @PostConstruct
     public void PostConstruct()
@@ -68,22 +67,28 @@ public class MainView extends Panel implements View
         setContent(layout);
         ViewUtils.injectJs("/VAADIN/themes/wideweb/js/welcomeAnimation.js", "/VAADIN/themes/wideweb/js/subHeader.js");
 
-        JavaScript.getCurrent().addFunction("com.wide.wideweb.menuSelect", new HandleMenuSelect(layout));
+        JavaScript.getCurrent().removeFunction("com_wide_wideweb_menuSelect");
+        JavaScript.getCurrent().removeFunction("com_wide_wideweb_subMenuSelect");
+        JavaScript.getCurrent().removeFunction("com_wide_wideweb_filterCategory");
+        JavaScript.getCurrent().removeFunction("com_wide_wideweb_filterWelcome");
 
-        JavaScript.getCurrent().addFunction("com.wide.wideweb.subMenuSelect", new HandleSubMenuSelect(layout));
-
-        JavaScript.getCurrent().addFunction("com.wide.wideweb.filterCategory", new HandleFilterCategory(layout));
-
-        JavaScript.getCurrent().addFunction("com.wide.wideweb.filterWelcome", new HandleFilterWelcome(layout));
+        JavaScript.getCurrent().addFunction("com_wide_wideweb_menuSelect", new HandleMenuSelect(layout));
+        JavaScript.getCurrent().addFunction("com_wide_wideweb_subMenuSelect", new HandleSubMenuSelect(layout));
+        JavaScript.getCurrent().addFunction("com_wide_wideweb_filterCategory", new HandleFilterCategory(layout));
+        JavaScript.getCurrent().addFunction("com_wide_wideweb_filterWelcome", new HandleFilterWelcome(layout));
     }
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event)
     {
 
-        JavaScript.getCurrent().addFunction("com.wide.wideweb.loginSelect", new HandleLogin(event.getNavigator()));
-        JavaScript.getCurrent().addFunction("com.wide.wideweb.createExercise", new HandleCreateExcersize(event.getNavigator()));
-        JavaScript.getCurrent().addFunction("com.wide.wideweb.openExercise", new HandleOpenExcersize(event.getNavigator()));
+        JavaScript.getCurrent().removeFunction("com_wide_wideweb_loginSelect");
+        JavaScript.getCurrent().removeFunction("com_wide_wideweb_createExercise");
+        JavaScript.getCurrent().removeFunction("com_wide_wideweb_openExercise");
+
+        JavaScript.getCurrent().addFunction("com_wide_wideweb_loginSelect", new HandleLogin(event.getNavigator()));
+        JavaScript.getCurrent().addFunction("com_wide_wideweb_createExercise", new HandleCreateExcersize(event.getNavigator()));
+        JavaScript.getCurrent().addFunction("com_wide_wideweb_openExercise", new HandleOpenExcersize(event.getNavigator()));
 
         if (SpringSecurityHelper.isAuthenticated()) {
             User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

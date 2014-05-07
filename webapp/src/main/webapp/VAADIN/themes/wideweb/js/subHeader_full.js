@@ -33,13 +33,13 @@ window.$( ".menu a" ).click(function() {
 window.$( ".subMenu.first > div > li" ).click(function() {
     window.$( ".subMenu.first > div > li" ).removeClass("selected");
     window.$(this).addClass("selected");
-    com.wide.wideweb.menuSelect(window.$(this).text());
+    com_wide_wideweb_menuSelect(window.$(this).text());
     window.$( ".subMenu.no6" ).slideDown( 300 );
 });
 window.$( ".subMenu.second > div > li" ).click(function() {
     window.$( ".subMenu.second > div > li" ).removeClass("selected");
     window.$(this).addClass("selected");
-    com.wide.wideweb.subMenuSelect(window.$(this).text(), 0, window.$("input[name='typeCategory']").prop('checked'), window.$("input[name='typeLesson']").prop('checked'), window.$("input[name='typeTest']").prop('checked'));
+    com_wide_wideweb_subMenuSelect(window.$(this).text(), 0, window.$("input[name='typeCategory']").prop('checked'), window.$("input[name='typeLesson']").prop('checked'), window.$("input[name='typeTest']").prop('checked'));
     window.$( "body" ).removeClass("welcome");
     subHeaderAnimation(".searchFilter", ".topSearch");
 });
@@ -49,7 +49,7 @@ window.$( ".userIco" ).click(function() {
 });
 window.$( ".filterIco" ).click(function() {
     subHeaderAnimation(".searchFilter", ".topSearch");
-    com.wide.wideweb.filterCategory(window.$("input[name='Enter search keywords here']").val(),window.$("input[name='Author']").val(),window.$("input[name='Publisher']").val(),window.$("input[name='Book']").val(),window.$("input[name='Title']").val(),window.$("input[name='Submits No.']").val(),window.$("input[name='typeCategory']").prop('checked'), window.$("input[name='typeLesson']").prop('checked'), window.$("input[name='typeTest']").prop('checked'));
+    com_wide_wideweb_filterCategory(window.$("input[name='Enter search keywords here']").val(),window.$("input[name='Author']").val(),window.$("input[name='Publisher']").val(),window.$("input[name='Book']").val(),window.$("input[name='Title']").val(),window.$("input[name='Submits No.']").val(),window.$("input[name='typeCategory']").prop('checked'), window.$("input[name='typeLesson']").prop('checked'), window.$("input[name='typeTest']").prop('checked'));
 });
 window.$( ".searchInput" ).click(function() {
     subHeaderAnimation(".searchFilter", ".topSearch");
@@ -65,17 +65,16 @@ window.$( ".footer" ).click(function() { if ($closeOnClick == 1) { closeSubHeade
 window.$( ".left" ).click(function() { if ($closeOnClick == 1) { closeSubHeader(); deselectTopMenuItem(); } });
 window.$( ".right" ).click(function() { if ($closeOnClick == 1) { closeSubHeader(); deselectTopMenuItem(); } });
 window.$( ".filterList > li.folder" ).click(function() {
-      com.wide.wideweb.subMenuSelect(window.$(this).children().eq(1).text(), 500, window.$("input[name='typeCategory']").prop('checked'), window.$("input[name='typeLesson']").prop('checked'), window.$("input[name='typeTest']").prop('checked'));
+      com_wide_wideweb_subMenuSelect(window.$(this).children().eq(1).text(), 500, window.$("input[name='typeCategory']").prop('checked'), window.$("input[name='typeLesson']").prop('checked'), window.$("input[name='typeTest']").prop('checked'));
       window.$(this).animate({"margin-left": "-=950"}, 300);
       window.$(this).hide(300);
-      window.$( ".breadcrumb > div > li + li + li + li" ).delay(300).slideDown( 200 );
-      com.wide.wideweb.folderSelect(window.$(this).children().eq(1).text());
+      window.$( ".breadcrumb > div > li + li + li + li +li + li" ).delay(300).slideDown( 200 );      
 });
 window.$( ".filterList > li.lesson" ).click(function() {
-	com.wide.wideweb.openExercise(window.$(this).attr("id"));
+	com_wide_wideweb_openExercise(window.$(this).attr("id"));
 });
 window.$( ".breadcrumb > div > li").click(function() {
-	com.wide.wideweb.subMenuSelect(window.$(this).text(), 0, window.$("input[name='typeCategory']").prop('checked'), window.$("input[name='typeLesson']").prop('checked'), window.$("input[name='typeTest']").prop('checked'));
+	com_wide_wideweb_subMenuSelect(window.$(this).text(), 0, window.$("input[name='typeCategory']").prop('checked'), window.$("input[name='typeLesson']").prop('checked'), window.$("input[name='typeTest']").prop('checked'));
 });
 window.$(".searchFilter.reset .filled, .topSearch.reset .filled, .main .search .filled").each(function() {
 	var actualInput = this;
@@ -141,8 +140,24 @@ window.$(window).resize(function(){
     footerFix();
 });
 window.$( ".userSubContainer > .subMenu > li" ).click(function() {
-    com.wide.wideweb.loginSelect(window.$(this).text());
+    com_wide_wideweb_loginSelect(window.$(this).text());
 });
 window.$( ".donate").click(function() {
-    com.wide.wideweb.createExercise(window.$(this).text());
+    com_wide_wideweb_createExercise(window.$(this).text());
+});
+window.$( "input[value='Submit']" ).click(function() {
+	com_wide_wideweb_checkAnswer(window.$(".solutionBar .yourSolution > input").val());
+    window.$(".solutionBar .yourSolution > input").val($solutionDefaultText);
+    window.$(".solutionBar .yourSolution > input").removeClass("filled");
+    window.$(".solutionBar .yourSolution > input").addClass("default");
+});
+window.$( "input[value='Solution']" ).click(function() {
+	com_wide_wideweb_checkSolution(window.$(".solutionBar .yourSolution > input").val());    
+});
+window.$(".solutionBar .yourSolution > input").focus(function() {
+	if(this.value == $solutionDefaultText) {
+        this.value = "";
+        window.$(this).removeClass("default");
+        window.$(this).addClass("filled");
+    }
 });

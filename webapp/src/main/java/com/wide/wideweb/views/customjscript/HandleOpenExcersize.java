@@ -5,6 +5,7 @@ import org.json.JSONException;
 
 import com.vaadin.navigator.Navigator;
 import com.vaadin.ui.JavaScriptFunction;
+import com.wide.wideweb.util.ViewDataCache;
 import com.wide.wideweb.util.ViewUtils;
 
 public class HandleOpenExcersize implements JavaScriptFunction {
@@ -23,6 +24,8 @@ public class HandleOpenExcersize implements JavaScriptFunction {
     @Override
     public void call(JSONArray arguments) throws JSONException {
         String exId = arguments.getString(0);
-        this.navigator.navigateTo(ViewUtils.VIEW_EXERCISE + "/" + exId);
+        ViewDataCache cache = ViewDataCache.getInstance();
+        ViewUtils.setCurrentExercise(cache.getExerciseByCategory(ViewUtils.getCurrentCategory(), exId));
+        this.navigator.navigateTo(ViewUtils.VIEW_EXERCISE);
     }
 }
