@@ -5,6 +5,7 @@ import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import ru.xpoft.vaadin.VaadinView;
 
@@ -29,6 +30,7 @@ import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.Link;
 import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.OptionGroup;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.RichTextArea;
@@ -47,6 +49,7 @@ import com.wide.wideweb.util.ViewUtils;
 @org.springframework.stereotype.Component
 @Scope("prototype")
 @VaadinView(ViewUtils.CREATE_EXERCISE)
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class CreateExerciseView extends Panel implements View {
 
     private static final long serialVersionUID = -2022990984877322449L;
@@ -93,6 +96,53 @@ public class CreateExerciseView extends Panel implements View {
         category.setFilteringMode(FilteringMode.CONTAINS);
         category.setPageLength(20);
         category.setValidationVisible(false);
+
+        final TextField newCategory = new TextField("Add a new category");
+        this.editorLayout.addComponent(newCategory);
+        newCategory.setWidth("70%");
+        newCategory.setNullRepresentation("");
+        newCategory.setRequired(false);
+        newCategory.setRequiredError("The category's name cannot be empty.");
+        newCategory.addValidator(new StringLengthValidator("The category's name should be at least 3 characters long.", 3, null, false));
+        newCategory.setValidationVisible(false);
+        Button addCategoryButton = new Button("Add");
+        addCategoryButton.addClickListener(new Button.ClickListener() {
+
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void buttonClick(ClickEvent event) {
+                try {
+                    // check for bad values
+                    newCategory.validate();
+                    // if everything is OK, we create the new category
+                    Category parentCategory = (Category) category.getValue();
+                    Category brandNewCategory = new Category(newCategory.getValue(), parentCategory);
+                    // save it to the database
+                    CreateExerciseView.this.service.createCategory(brandNewCategory);
+                    // init again to fill the "path" field
+                    CreateExerciseView.this.cache.initCategories();
+                    // refresh "category" combobox
+                    BeanItemContainer<Category> citems = new BeanItemContainer<Category>(Category.class, CreateExerciseView.this.cache.getCategories().values());
+                    citems.sort(new Object[] { "path" }, new boolean[] { true });
+                    category.setContainerDataSource(citems);
+                    category.markAsDirty();
+                    // clear "new category" text field
+                    newCategory.setValue("");
+                    // set the new category as the selected one in the "category" combobox
+                    brandNewCategory = CreateExerciseView.this.cache.getCategoryById(brandNewCategory.getId());
+                    category.setValue(brandNewCategory);
+                    // notify the user about the new category
+                    String caption = brandNewCategory.getPath();
+                    logger.info("New category added: " + caption);
+                    Notification.show("New category added: " + caption);
+                } catch (InvalidValueException e) {
+                    Notification.show(e.getMessage(), Type.ERROR_MESSAGE);
+                }
+            }
+
+        });
+        this.editorLayout.addComponent(addCategoryButton);
 
         final TextField title = new TextField("Title");
         this.editorLayout.addComponent(title);

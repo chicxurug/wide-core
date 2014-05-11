@@ -98,6 +98,19 @@ public final class ViewDataCache implements Serializable {
         return this.rootCategory;
     }
 
+    public Category getCategoryById(Long id) {
+        for (Category c : this.categories.values()) {
+            if (id.equals(c.getId())) {
+                return c;
+            }
+        }
+        if (id.equals(this.rootCategory.getId())) {
+            return this.rootCategory;
+        } else {
+            return null;
+        }
+    }
+
     public Multimap<Category, Category> getCategories() {
         return this.categories;
     }
