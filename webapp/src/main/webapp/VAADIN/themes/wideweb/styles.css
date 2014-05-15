@@ -193,8 +193,29 @@ input[type="text"], textarea {
       height: 40px;
       vertical-align: middle;
       margin-right: 10px; }
-      .main .filterList li .schoolLevel.university {
-        background: #cccccc url("img/uni.png") center center no-repeat;
+      .main .filterList li .schoolLevel.University {
+        background: url("img/university.png") center center no-repeat;
+        -webkit-border-radius: 20px;
+        -moz-border-radius: 20px;
+        -ms-border-radius: 20px;
+        -o-border-radius: 20px;
+        border-radius: 20px; }
+      .main .filterList li .schoolLevel.Elementary {
+        background: url("img/elementary.png") center center no-repeat;
+        -webkit-border-radius: 20px;
+        -moz-border-radius: 20px;
+        -ms-border-radius: 20px;
+        -o-border-radius: 20px;
+        border-radius: 20px; }
+      .main .filterList li .schoolLevel.High_School {
+        background: url("img/high_school.png") center center no-repeat;
+        -webkit-border-radius: 20px;
+        -moz-border-radius: 20px;
+        -ms-border-radius: 20px;
+        -o-border-radius: 20px;
+        border-radius: 20px; }
+      .main .filterList li .schoolLevel.Other {
+        background: url("img/other.png") center center no-repeat;
         -webkit-border-radius: 20px;
         -moz-border-radius: 20px;
         -ms-border-radius: 20px;

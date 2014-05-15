@@ -137,9 +137,10 @@ public class ViewUtils {
                 }
                 sb.append("<li id=" + ex.getId() + " class=\"lesson\">"
                         + "         <img class=\"icon\" src=\"" + basepath + "/layouts/example/2.jpg\" />"
-                        + "         <div class=\"title\"><div class=\"schoolLevel university\"></div>" + ex.getTitle() + "</div>"
-                        + "         <img class=\"level\" src=\"" + basepath + "/img/level2.png\" />"
-                        + "         <img class=\"rank\" src=\"" + basepath + "/img/rank4.png\" />"
+                        + "         <div class=\"title\"><div class=\"schoolLevel " + ex.getLevel().getDescription().replaceAll(" ", "_") + "\"></div>"
+                        + ex.getTitle() + "</div>"
+                        + "         <img class=\"level\" src=\"" + getImgPath(ex, "difficulty") + "\" width=24 height=16/>"
+                        + "         <img class=\"rank\" src=\"" + getImgPath(ex, "score") + "\" width=92 height=16/>"
                         + "         <div class=\"author\">Author: <a href=\"#\">" + ex.getAuthor() + "</a></div>"
                         + "         </li>\n");
             }
@@ -184,9 +185,10 @@ public class ViewUtils {
         for (Exercise ex : exercises) {
             sb.append("<li id=" + ex.getId() + " class=\"lesson\">"
                     + "         <img class=\"icon\" src=\"" + basepath + "/layouts/example/2.jpg\" />"
-                    + "         <div class=\"title\"><div class=\"schoolLevel university\"></div>" + ex.getTitle() + "</div>"
-                    + "         <img class=\"level\" src=\"" + basepath + "/img/level2.png\" />"
-                    + "         <img class=\"rank\" src=\"" + basepath + "/img/rank4.png\" />"
+                    + "         <div class=\"title\"><div class=\"schoolLevel " + ex.getLevel().getDescription().replaceAll(" ", "_") + "\"></div>"
+                    + ex.getTitle() + "</div>"
+                    + "         <img class=\"level\" src=\"" + getImgPath(ex, "difficulty") + "\"  width=24 height=16/>"
+                    + "         <img class=\"rank\" src=\"" + getImgPath(ex, "score") + "\" width=92 height=16/>"
                     + "         <div class=\"author\">Author: <a href=\"#\">" + ex.getAuthor() + "</a></div>"
                     + "         </li>\n");
         }
@@ -220,10 +222,9 @@ public class ViewUtils {
     }
 
     public static Component getExerciseDetails(Exercise ex) {
-        String basepath = getBasePath();
         StringBuilder sb = new StringBuilder();
-        sb.append("<img class=\"level\" src=\"" + basepath + "/img/level2.png\" />\n");
-        sb.append("<img class=\"rank\" src=\"" + basepath + "/img/rank4.png\" />\n");
+        sb.append("<img class=\"level\" src=\"" + getImgPath(ex, "difficulty") + "\"  width=24 height=16/>\n");
+        sb.append("<img class=\"rank\" src=\"" + getImgPath(ex, "score") + "\" width=92 height=16/>\n");
         sb.append("<ul class=\"source\">\n");
         sb.append("<li>Szerző: <a href=\"#\">" + ex.getAuthor() + "</a></li>\n");
         sb.append("<li>Könyv: <a href=\"#\">" + ex.getBookTitle() + "</a></li>\n");
@@ -245,6 +246,19 @@ public class ViewUtils {
 
     private static String getBasePath() {
         return Page.getCurrent().getLocation().getScheme() + ":" + Page.getCurrent().getLocation().getSchemeSpecificPart() + "VAADIN/themes/wideweb";
+    }
+
+    private static String getImgPath(Exercise e, String type) {
+        String path = Page.getCurrent().getLocation().getScheme() + ":" + Page.getCurrent().getLocation().getSchemeSpecificPart()
+                + "VAADIN/themes/wideweb/img/" + type;
+        if ("difficulty".equals(type)) {
+            return path + e.getDifficulty().getDifficulty() + ".png";
+        }
+        if ("score".equals(type)) {
+            return path + (e.getScore() == null ? "0" : e.getScore()) + ".png";
+        }
+
+        return "";
     }
 
     public static void setCurrentCategory(Category c) {

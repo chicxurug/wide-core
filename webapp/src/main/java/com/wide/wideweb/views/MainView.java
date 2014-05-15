@@ -81,7 +81,7 @@ public class MainView extends Panel implements View
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event)
     {
-
+        System.out.println(event.getParameters());
         JavaScript.getCurrent().removeFunction("com_wide_wideweb_loginSelect");
         JavaScript.getCurrent().removeFunction("com_wide_wideweb_createExercise");
         JavaScript.getCurrent().removeFunction("com_wide_wideweb_openExercise");
