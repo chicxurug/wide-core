@@ -7,6 +7,7 @@ import javax.persistence.Lob;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.beans.BeanUtils;
 
 @Entity
 @Table(name = "Feature")
@@ -32,6 +33,10 @@ public class Feature {
         this.name = name;
         this.value = value;
         this.type = type;
+    }
+
+    public Feature(Feature feature) {
+        BeanUtils.copyProperties(feature, this);
     }
 
     @Id

@@ -2,7 +2,10 @@ package com.wide.wideweb.beans;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -49,7 +52,41 @@ public class ExerciseBean implements Serializable {
         this.solutionText = null;
     }
 
+    public ExerciseBean(Exercise currentExercise) {
+        this.language = currentExercise.getLanguage();
+        this.title = currentExercise.getTitle();
+        this.category = currentExercise.getCategory();
+        this.uploader = null;
+        this.author = currentExercise.getAuthor();
+        this.book = currentExercise.getBookTitle();
+        this.publisher = currentExercise.getPublisher();
+        this.difficulty = currentExercise.getDifficulty();
+        this.schoolLevel = currentExercise.getLevel();
+        for (Feature feature : currentExercise.getFeatures()) {
+            switch (feature.getName()) {
+                case FeatureFactory.TAGS:
+                    this.tags = feature.getValue();
+                    break;
+                case FeatureFactory.EXERCISE_TEXT:
+                    this.exerciseText = feature.getValue();
+                    break;
+                case FeatureFactory.RELEATED_LINKS:
+                    this.relatedLinks = feature.getValue();
+                    break;
+                case FeatureFactory.SHORT_ANSWER:
+                    this.shortAnswer = feature.getValue();
+                    break;
+                case FeatureFactory.SOLUTION_TEXT:
+                    this.solutionText = feature.getValue();
+                    break;
+                default:
+                    throw new IllegalStateException("Unrecognized feature name: " + feature.getName());
+            }
+        }
+    }
+
     public Exercise convert() {
+        // TODO maybe this can be replaced by -> return convertFromPrevious(new Exercise());
         Exercise ret = new Exercise(this.language, this.title, this.difficulty, null, this.author, this.schoolLevel, this.publisher, this.book,
                 this.category, null);
         List<Feature> features = new ArrayList<Feature>();
@@ -70,6 +107,82 @@ public class ExerciseBean implements Serializable {
             features.add(solutionText);
         }
         ret.setFeatures(features);
+        return ret;
+    }
+
+    public Exercise convertFromPrevious(Exercise prev) {
+        final Exercise ret = new Exercise(prev);
+        ret.setLanguage(this.language);
+        ret.setTitle(this.title);
+        ret.setDifficulty(this.difficulty);
+        ret.setAuthor(this.author);
+        ret.setLevel(this.schoolLevel);
+        ret.setPublisher(this.publisher);
+        ret.setBookTitle(this.book);
+        ret.setCategory(this.category);
+        final List<Feature> features = ret.getFeatures();
+        // iterate through old exercise's features and remove those features which were cleared, or update them accordingly.
+        Set<String> featurekinds = new HashSet<>(FeatureFactory.FEATUREKINDS);
+        for (Iterator<Feature> iterator = features.iterator(); iterator.hasNext();) {
+            final Feature feature = iterator.next();
+            switch (feature.getName()) {
+                case FeatureFactory.TAGS:
+                    featurekinds.remove(FeatureFactory.TAGS);
+                    if (StringUtils.isNotBlank(this.tags)) {
+                        feature.setValue(this.tags);
+                    } else {
+                        iterator.remove();
+                    }
+                    break;
+                case FeatureFactory.EXERCISE_TEXT:
+                    featurekinds.remove(FeatureFactory.EXERCISE_TEXT);
+                    feature.setValue(this.exerciseText);
+                    break;
+                case FeatureFactory.RELEATED_LINKS:
+                    featurekinds.remove(FeatureFactory.RELEATED_LINKS);
+                    if (StringUtils.isNotBlank(this.relatedLinks)) {
+                        feature.setValue(this.relatedLinks);
+                    } else {
+                        iterator.remove();
+                    }
+                    break;
+                case FeatureFactory.SHORT_ANSWER:
+                    featurekinds.remove(FeatureFactory.SHORT_ANSWER);
+                    feature.setValue(this.shortAnswer);
+                    break;
+                case FeatureFactory.SOLUTION_TEXT:
+                    featurekinds.remove(FeatureFactory.SOLUTION_TEXT);
+                    if (StringUtils.isNotBlank(this.solutionText)) {
+                        feature.setValue(this.solutionText);
+                    } else {
+                        iterator.remove();
+                    }
+                    break;
+                default:
+                    throw new IllegalStateException("Unrecognized feature name: " + feature.getName());
+            }
+        }
+        // check for new attributes, which are not set yet.
+        if (featurekinds.contains(FeatureFactory.TAGS) && StringUtils.isNotBlank(this.tags)) {
+            Feature tags = FeatureFactory.createTags(this.tags);
+            features.add(tags);
+        }
+        if (featurekinds.contains(FeatureFactory.EXERCISE_TEXT)) {
+            Feature exerciseText = FeatureFactory.createExerciseText(this.exerciseText);
+            features.add(exerciseText);
+        }
+        if (featurekinds.contains(FeatureFactory.RELEATED_LINKS) && StringUtils.isNotBlank(this.relatedLinks)) {
+            Feature relatedLinks = FeatureFactory.createReleatedLinks(this.relatedLinks);
+            features.add(relatedLinks);
+        }
+        if (featurekinds.contains(FeatureFactory.SHORT_ANSWER)) {
+            Feature shortAnswer = FeatureFactory.createShortAnswer(this.shortAnswer);
+            features.add(shortAnswer);
+        }
+        if (featurekinds.contains(FeatureFactory.SOLUTION_TEXT) && StringUtils.isNotBlank(this.solutionText)) {
+            Feature solutionText = FeatureFactory.createSolutionText(this.solutionText);
+            features.add(solutionText);
+        }
         return ret;
     }
 

@@ -1,5 +1,6 @@
 package com.wide.wideweb.util;
 
+import com.google.common.collect.ImmutableSet;
 import com.wide.domainmodel.Feature;
 import com.wide.domainmodel.Feature.FeatureType;
 
@@ -10,6 +11,8 @@ public class FeatureFactory {
     public static final String SHORT_ANSWER = "Answer";
     public static final String SOLUTION_TEXT = "Solution";
     public static final String TAGS = "Tags";
+
+    public static final ImmutableSet<String> FEATUREKINDS = ImmutableSet.of(EXERCISE_TEXT, RELEATED_LINKS, SHORT_ANSWER, SOLUTION_TEXT, TAGS);
 
     public static Feature createExerciseText(String value) {
         return new Feature(EXERCISE_TEXT, value, FeatureType.LONG_TEXT);

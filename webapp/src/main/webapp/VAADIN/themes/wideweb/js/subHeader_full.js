@@ -145,6 +145,9 @@ window.$( ".userSubContainer > .subMenu > li" ).click(function() {
 window.$( ".donate").click(function() {
     com_wide_wideweb_createExercise(window.$(this).text());
 });
+window.$( ".aboutUs").click(function() {
+    com_wide_wideweb_editExercise(window.$(this).text());
+});
 window.$( "input[value='Submit']" ).click(function() {
 	com_wide_wideweb_checkAnswer(window.$(".solutionBar .yourSolution > input").val());
     window.$(".solutionBar .yourSolution > input").val($solutionDefaultText);

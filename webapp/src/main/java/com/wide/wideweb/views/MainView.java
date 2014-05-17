@@ -24,6 +24,7 @@ import com.wide.wideweb.util.SpringSecurityHelper;
 import com.wide.wideweb.util.ViewDataCache;
 import com.wide.wideweb.util.ViewUtils;
 import com.wide.wideweb.views.customjscript.HandleCreateExcersize;
+import com.wide.wideweb.views.customjscript.HandleEditExcersize;
 import com.wide.wideweb.views.customjscript.HandleFilterCategory;
 import com.wide.wideweb.views.customjscript.HandleFilterWelcome;
 import com.wide.wideweb.views.customjscript.HandleLogin;
@@ -88,6 +89,7 @@ public class MainView extends Panel implements View
 
         JavaScript.getCurrent().addFunction("com_wide_wideweb_loginSelect", new HandleLogin(event.getNavigator()));
         JavaScript.getCurrent().addFunction("com_wide_wideweb_createExercise", new HandleCreateExcersize(event.getNavigator()));
+        JavaScript.getCurrent().addFunction("com_wide_wideweb_editExercise", new HandleEditExcersize(event.getNavigator()));
         JavaScript.getCurrent().addFunction("com_wide_wideweb_openExercise", new HandleOpenExcersize(event.getNavigator()));
 
         if (SpringSecurityHelper.isAuthenticated()) {

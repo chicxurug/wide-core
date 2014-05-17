@@ -31,6 +31,7 @@ public class ViewUtils {
     public static final String REGISTER = "register";
     public static final String MAIN = "";
     public static final String CREATE_EXERCISE = "createExercise";
+    public static final String EDIT_EXERCISE = "editExercise";
     public static final String VIEW_EXERCISE = "viewExercise";
     public static final String ERROR = "error";
 

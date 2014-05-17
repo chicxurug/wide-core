@@ -48,23 +48,24 @@ import com.wide.wideweb.util.ViewUtils;
 
 @org.springframework.stereotype.Component
 @Scope("prototype")
-@VaadinView(ViewUtils.CREATE_EXERCISE)
+@VaadinView(ViewUtils.EDIT_EXERCISE)
 @PreAuthorize("hasRole('ROLE_ADMIN')")
-public class CreateExerciseView extends Panel implements View {
+public class EditExerciseView extends Panel implements View {
 
     private static final long serialVersionUID = -2022990984877322449L;
 
-    private static final Logger logger = LoggerFactory.getLogger(CreateExerciseView.class);
+    private static final Logger logger = LoggerFactory.getLogger(EditExerciseView.class);
 
     private final WideService service = new WideService(PersistenceListener.getEntityManagerFactory());
     private final ViewDataCache cache = ViewDataCache.getInstance();
 
     // bean
     private ExerciseBean current = new ExerciseBean();
+    private Exercise previous;
     // form for editing the bean
     private final BeanFieldGroup<ExerciseBean> form = new BeanFieldGroup<ExerciseBean>(ExerciseBean.class);
 
-    private Button createNewExerciseButton = new Button("Create");
+    private Button editExerciseButton = new Button("Save");
     private FormLayout editorLayout = new FormLayout();
 
     protected void init() {
@@ -119,18 +120,18 @@ public class CreateExerciseView extends Panel implements View {
                     Category parentCategory = (Category) category.getValue();
                     Category brandNewCategory = new Category(newCategory.getValue(), parentCategory);
                     // save it to the database
-                    CreateExerciseView.this.service.createCategory(brandNewCategory);
+                    EditExerciseView.this.service.createCategory(brandNewCategory);
                     // init again to fill the "path" field
-                    CreateExerciseView.this.cache.initCategories();
+                    EditExerciseView.this.cache.initCategories();
                     // refresh "category" combobox
-                    BeanItemContainer<Category> citems = new BeanItemContainer<Category>(Category.class, CreateExerciseView.this.cache.getCategories().values());
+                    BeanItemContainer<Category> citems = new BeanItemContainer<Category>(Category.class, EditExerciseView.this.cache.getCategories().values());
                     citems.sort(new Object[] { "path" }, new boolean[] { true });
                     category.setContainerDataSource(citems);
                     category.markAsDirty();
                     // clear "new category" text field
                     newCategory.setValue("");
                     // set the new category as the selected one in the "category" combobox
-                    brandNewCategory = CreateExerciseView.this.cache.getCategoryById(brandNewCategory.getId());
+                    brandNewCategory = EditExerciseView.this.cache.getCategoryById(brandNewCategory.getId());
                     category.setValue(brandNewCategory);
                     // notify the user about the new category
                     String caption = brandNewCategory.getPath();
@@ -245,16 +246,16 @@ public class CreateExerciseView extends Panel implements View {
         // solutionText.addValidator(new StringLengthValidator("The solution text should be at least 5 characters long.", 5, null, true));
         // solutionText.setValidationVisible(false);
 
-        this.editorLayout.addComponent(this.createNewExerciseButton);
-        this.editorLayout.addComponent(new Link("Go back", new ExternalResource("#" + ViewUtils.MAIN)));
-        this.createNewExerciseButton.addClickListener(new ClickListener() {
+        this.editorLayout.addComponent(this.editExerciseButton);
+        this.editorLayout.addComponent(new Link("Cancel", new ExternalResource("#" + ViewUtils.MAIN)));
+        this.editExerciseButton.addClickListener(new ClickListener() {
 
             private static final long serialVersionUID = -5360404934227996076L;
 
             @Override
             public void buttonClick(ClickEvent event) {
                 // check for invalid fields
-                for (Field<?> field : CreateExerciseView.this.form.getFields()) {
+                for (Field<?> field : EditExerciseView.this.form.getFields()) {
                     try {
                         field.validate();
                         ((AbstractComponent) field).setComponentError(null);
@@ -266,14 +267,15 @@ public class CreateExerciseView extends Panel implements View {
                 }
                 // if there is no general error, we try to commit the changes
                 try {
-                    CreateExerciseView.this.form.commit();
-                    logger.info("Exercise created: {}", CreateExerciseView.this.current);
-                    Exercise dbExercise = CreateExerciseView.this.current.convert(); // convert wrapper bean to DB entity
-                    CreateExerciseView.this.service.saveOrUpdateExercise(dbExercise);
-                    Notification.show("Exercise created! You are awesome!");
+                    EditExerciseView.this.form.commit();
+                    logger.info("Exercise created: {}", EditExerciseView.this.current);
+                    // convert wrapper bean to DB entity
+                    Exercise dbExercise = EditExerciseView.this.current.convertFromPrevious(EditExerciseView.this.previous);
+                    EditExerciseView.this.service.saveOrUpdateExercise(dbExercise);
+                    Notification.show("Exercise saved! You are awesome!");
                     ViewDataCache.getInstance().doAllInit();
                 } catch (CommitException e) {
-                    logger.error("Error during commiting newly created exercise.", e);
+                    logger.error("Error during commiting the newly edited exercise.", e);
                     Notification.show("Fatal error. :(");
                 }
             }
@@ -283,6 +285,8 @@ public class CreateExerciseView extends Panel implements View {
 
     @Override
     public void enter(ViewChangeEvent event) {
+        this.previous = ViewUtils.getCurrentExercise();
+        this.current = new ExerciseBean(this.previous);
         init();
     }
 

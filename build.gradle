@@ -46,8 +46,8 @@ task buildDist {
 
 subprojects {
     // change these to the appropriate version (Java convention: sourceCompatibility <= targetCompatibility)
-    sourceCompatibility = JavaVersion.VERSION_1_6
-    targetCompatibility = JavaVersion.VERSION_1_6
+    sourceCompatibility = JavaVersion.VERSION_1_7
+    targetCompatibility = JavaVersion.VERSION_1_7
     
     dependencies {
         // common dependencies for all projects - use with care

@@ -9,4 +9,5 @@ dependencies {
     compile libraries.hibernate_core
     compile libraries.hibernate_entitymanager
     compile libraries.postgresql
+    compile libraries.spring_beans
 }

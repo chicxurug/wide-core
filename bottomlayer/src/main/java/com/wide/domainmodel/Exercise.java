@@ -1,5 +1,6 @@
 package com.wide.domainmodel;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -12,6 +13,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.springframework.beans.BeanUtils;
 
 @Entity
 @Table(name = "Exercise")
@@ -86,9 +89,7 @@ public class Exercise extends Solvable {
     }
 
     public Exercise(String language, String title, DifficultyLevel difficulty, Integer score, String author, SchoolLevel level, String publisher,
-            String bookTitle,
-            Category category,
-            List<Feature> features) {
+            String bookTitle, Category category, List<Feature> features) {
         this.language = language;
         this.title = title;
         this.difficulty = difficulty;
@@ -101,6 +102,15 @@ public class Exercise extends Solvable {
         this.numberOfSubmits = 0;
         this.category = category;
         this.features = features;
+    }
+
+    // copy constructor
+    public Exercise(Exercise prev) {
+        BeanUtils.copyProperties(prev, this, new String[] { "features" });
+        this.features = new ArrayList<>();
+        for (Feature feature : prev.features) {
+            this.features.add(new Feature(feature));
+        }
     }
 
     @Column(nullable = false)
