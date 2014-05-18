@@ -1,7 +1,6 @@
 package com.wide.wideweb.beans;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -86,28 +85,7 @@ public class ExerciseBean implements Serializable {
     }
 
     public Exercise convert() {
-        // TODO maybe this can be replaced by -> return convertFromPrevious(new Exercise());
-        Exercise ret = new Exercise(this.language, this.title, this.difficulty, null, this.author, this.schoolLevel, this.publisher, this.book,
-                this.category, null);
-        List<Feature> features = new ArrayList<Feature>();
-        if (StringUtils.isNotBlank(this.tags)) {
-            Feature tags = FeatureFactory.createTags(this.tags);
-            features.add(tags);
-        }
-        Feature exerciseText = FeatureFactory.createExerciseText(this.exerciseText);
-        features.add(exerciseText);
-        if (StringUtils.isNotBlank(this.relatedLinks)) {
-            Feature relatedLinks = FeatureFactory.createReleatedLinks(this.relatedLinks);
-            features.add(relatedLinks);
-        }
-        Feature shortAnswer = FeatureFactory.createShortAnswer(this.shortAnswer);
-        features.add(shortAnswer);
-        if (StringUtils.isNotBlank(this.solutionText)) {
-            Feature solutionText = FeatureFactory.createSolutionText(this.solutionText);
-            features.add(solutionText);
-        }
-        ret.setFeatures(features);
-        return ret;
+        return convertFromPrevious(new Exercise());
     }
 
     public Exercise convertFromPrevious(Exercise prev) {

@@ -1,5 +1,6 @@
 package com.wide.domainmodel;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -18,7 +19,9 @@ import org.springframework.beans.BeanUtils;
 
 @Entity
 @Table(name = "Exercise")
-public class Exercise extends Solvable {
+public class Exercise extends Solvable implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     public enum DifficultyLevel {
         D1_EASY(1, "Easy to solve"),

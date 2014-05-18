@@ -7,6 +7,7 @@ import javax.persistence.Lob;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 import org.springframework.beans.BeanUtils;
 
 @Entity
@@ -59,6 +60,7 @@ public class Feature {
     }
 
     @Lob
+    @Type(type = "org.hibernate.type.TextType")
     public String getValue() {
         return this.value;
     }
