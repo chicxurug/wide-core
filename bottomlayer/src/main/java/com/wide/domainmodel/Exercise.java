@@ -15,8 +15,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.springframework.beans.BeanUtils;
-
 @Entity
 @Table(name = "Exercise")
 public class Exercise extends Solvable implements Serializable {
@@ -109,10 +107,24 @@ public class Exercise extends Solvable implements Serializable {
 
     // copy constructor
     public Exercise(Exercise prev) {
-        BeanUtils.copyProperties(prev, this, new String[] { "features" });
+        // BeanUtils.copyProperties(prev, this, new String[] { "features" });
+        this.id = prev.id;
+        this.language = prev.language;
+        this.title = prev.title;
+        this.difficulty = prev.difficulty;
+        this.score = prev.score;
+        this.author = prev.author;
+        this.level = prev.level;
+        this.publisher = prev.publisher;
+        this.bookTitle = prev.bookTitle;
+        this.testMember = prev.testMember;
+        this.numberOfSubmits = prev.numberOfSubmits;
+        this.category = prev.category;
         this.features = new ArrayList<>();
-        for (Feature feature : prev.features) {
-            this.features.add(new Feature(feature));
+        if (prev.features != null) {
+            for (Feature feature : prev.features) {
+                this.features.add(new Feature(feature));
+            }
         }
     }
 

@@ -49,7 +49,7 @@ window.$( ".userIco" ).click(function() {
 });
 window.$( ".filterIco" ).click(function() {
     subHeaderAnimation(".searchFilter", ".topSearch");
-    com_wide_wideweb_filterCategory(window.$("input[name='Enter search keywords here']").val(),window.$("input[name='Author']").val(),window.$("input[name='Publisher']").val(),window.$("input[name='Book']").val(),window.$("input[name='Title']").val(),window.$("input[name='Submits No.']").val(),window.$("input[name='typeCategory']").prop('checked'), window.$("input[name='typeLesson']").prop('checked'), window.$("input[name='typeTest']").prop('checked'));
+    com_wide_wideweb_filterCategory(window.$("input[name='Enter search keywords here']").val(),window.$("input[name='Author']").val(),window.$("input[name='Publisher']").val(),window.$("input[name='Book']").val(),window.$("input[name='Title']").val(),window.$("input[name='Submits No.']").val(),window.$("select[name='Language']").find(':selected').val(),window.$("input[name='typeCategory']").prop('checked'), window.$("input[name='typeLesson']").prop('checked'), window.$("input[name='typeTest']").prop('checked'));
 });
 window.$( ".searchInput" ).click(function() {
     subHeaderAnimation(".searchFilter", ".topSearch");
@@ -80,9 +80,9 @@ window.$(".searchFilter.reset .filled, .topSearch.reset .filled, .main .search .
 	var actualInput = this;
     var default_value = actualInput.name;
     window.$( ".clearFilter" ).click(function() {
-  	window.$(".searchFilter.reset input:checkbox").prop("checked", true);
+  	  window.$(".searchFilter.reset input:checkbox").prop("checked", true);
       window.$(actualInput).addClass("default");
-      actualInput.value = (default_value);
+      actualInput.value = (default_value);      
     });
     window.$(this).focus(function() {
       if(this.value == default_value) {
@@ -96,14 +96,20 @@ window.$(".searchFilter.reset .filled, .topSearch.reset .filled, .main .search .
         window.$(this).addClass("default");
         this.value = default_value;
       }
-    });
+    });    
+});
+window.$(".searchFilter.reset select").change(function() {
+	window.$(this).removeClass("default");
+    window.$(this).addClass("filled");
 });
 window.$( ".clearFilter" ).hover(function() {
     window.$( ".searchFilter ul.col > li > a input").css( "color", "red");
+    window.$( ".searchFilter ul.col > li > a select").css( "color", "red");
     window.$(".searchInput").css( "color", "red");
 });
 window.$( ".clearFilter" ).mouseleave(function() {
     window.$( ".searchFilter ul.col > li > a input").css( "color", "");
+    window.$( ".searchFilter ul.col > li > a select").css( "color", "");
     window.$( ".searchInput").css( "color", "");
 });
 window.$( ".logo" ).click(function() {
@@ -149,8 +155,7 @@ window.$( ".aboutUs").click(function() {
     com_wide_wideweb_editExercise(window.$(this).text());
 });
 window.$( "input[value='Submit']" ).click(function() {
-	com_wide_wideweb_checkAnswer(window.$(".solutionBar .yourSolution > input").val());
-    window.$(".solutionBar .yourSolution > input").val($solutionDefaultText);
+	com_wide_wideweb_checkAnswer(window.$(".solutionBar .yourSolution > input").val());    
     window.$(".solutionBar .yourSolution > input").removeClass("filled");
     window.$(".solutionBar .yourSolution > input").addClass("default");
 });
@@ -158,9 +163,16 @@ window.$( "input[value='Solution']" ).click(function() {
 	com_wide_wideweb_checkSolution(window.$(".solutionBar .yourSolution > input").val());    
 });
 window.$(".solutionBar .yourSolution > input").focus(function() {
-	if(this.value == $solutionDefaultText) {
+	if(window.$(this).hasClass("default")) {
         this.value = "";
         window.$(this).removeClass("default");
         window.$(this).addClass("filled");
+        window.$(this).removeAttr("style");
+    }
+});
+window.$(".solutionBar .yourSolution > input").blur(function() {
+	if(this.value == "") {
+        window.$(this).val($solutionDefaultText);
+        window.$(this).addClass("default");
     }
 });

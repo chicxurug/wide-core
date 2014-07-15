@@ -18,12 +18,13 @@
 			<ul class="menu">
 				<li><a href="#!viewExercise" target="" class="learn">Learn</a></li>
 				<li><a href="#!viewExercise" target="" class="teach">Teach</a></li>
+				<li><a href="#!main" location="auth_user"></a></li>
 			</ul>
 			<div class="topSearch search reset">
-				<div class="input"><input class="searchInput default" type="text" value="Enter search keywords here" /><input class="filterIco" type="submit" value=" "/></div>
+				<div class="input"><input class="searchInput filled default" type="text" value="Enter search keywords here" name="Enter search keywords here"/><input class="filterIco" type="submit" value=" "/></div>
 			</div>
 			<a href="#!viewExercise" class="userIco"></a>
-			<a href="#" class="logo" title="WIDE"></a>
+			<a href="" class="logo" title="WIDE"></a>
 			<div class="subHeader">
 				<div class="subMenuContainer">
 					<ul location="mainMenuItems" class="subMenu first">
@@ -33,17 +34,15 @@
 				</div>
 				<div class="userSubContainer">
 					<ul class="subMenu">
-						<li><a href="#" target="">Log in</a></li>
-						<li><a href="#" target="">Profile</a></li>
-						<li><a href="#" target="">Log out</a></li>
-						<li><a href="#!role_user" target="">User page</a></li>
-						<li><a href="#!role_admin" target="">Admin page</a></li>
+						<li><a href="#!viewExercise" target="">Log in</a></li>
+						<li><a href="#!viewExercise" target="">Profile</a></li>
+						<li><a href="#!viewExercise" target="">Log out</a></li>
 					</ul>
 				</div>
 				<div class="searchFilter reset">
 					<ul class="col">
 						<li><a href="#!viewExercise" target="">Difficulty level 1-5</a></li>
-						<li><a href="#!viewExercise" target=""><input type="text" class="default" value="Author" /></a></li>
+						<li><a href="#!viewExercise" target=""><input type="text" class="half filled default" value="Author" name="Author"/></a></li>
 						<li><a href="#!viewExercise" target="">School level</a></li>
 						<li><a href="#!viewExercise" target="">Type</a></li>
 					</ul>
@@ -58,13 +57,15 @@
 								</div>
 							</a>
 						</li>
-						<li><a href="#!viewExercise" target=""><input type="text" class="default" value="Publisher" /></a></li>
-						<li><a href="#!viewExercise" target=""><input type="text" class="default" value="Book" /></a></li>
-						<li><a href="#!viewExercise" target=""><input type="text" class="default" value="Title" /></a></li>
+						<li><a href="#!viewExercise" target=""><input type="text" class="half filled default" value="Publisher" name="Publisher"/></a></li>
+						<li><a href="#!viewExercise" target=""><input type="text" class="half filled default" value="Book" name="Book"/></a></li>
+						<li><a href="#!viewExercise" target=""><input type="text" class="half filled default" value="Title" name="Title"/></a></li>
 					</ul>
 					<ul class="col">					
 						<li><a href="#!viewExercise" target="">Test member yes/no</a></li>
-						<li><a href="#!viewExercise" target=""><input type="text" class="half default" value="Submits No." /></a></li>
+						<li><a href="#!viewExercise" target=""><input type="text" class="half filled default" value="Submits No." name="Submits No."/></a></li>
+						<li><a href="#!viewExercise" target="">Language</a></li>
+						<li><a href="#!viewExercise" target=""><select name="Language" class="filled default"><option selected disabled hidden value="Language">Please select...</option><option value="English">English</option><option value="Hungarian">Hungarian</option><option value="Serbian">Serbian</option></select></a></li>
 					</ul>
 					<a class="closeFilter" href="#!viewExercise"></a>
 					<a href="#!viewExercise" class="clearFilter">X</a>
@@ -114,7 +115,7 @@
 						</div>
 						<div class="solutionBar">
 							<div class="yourSolution">
-								<input type="text" class="default" value="Your solution comes here" />
+								<input type="text" class="default" value="Your solution comes here" />								
 								<div class="buttons">
 									<input type="submit" class="submit" value="Submit" />
 									<input type="submit" value="Hint" />

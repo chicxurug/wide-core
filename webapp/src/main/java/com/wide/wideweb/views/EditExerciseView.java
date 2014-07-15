@@ -12,6 +12,9 @@ import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.UserError;
 import com.vaadin.ui.AbstractComponent;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Notification;
 import com.wide.domainmodel.Exercise;
@@ -70,6 +73,33 @@ public class EditExerciseView extends AbstractExerciseView {
     @Override
     public String actionButtonLabel() {
         return "Save";
+    }
+
+    @Override
+    public boolean isViewProvideDelete() {
+        return true;
+    }
+
+    @Override
+    public Button getDeleteButton() {
+        Button deleteBtn = new Button("Delete");
+        deleteBtn.addClickListener(new ClickListener() {
+
+            /**
+             * 
+             */
+            private static final long serialVersionUID = 378489649077395275L;
+
+            @Override
+            public void buttonClick(ClickEvent event) {
+                EditExerciseView.this.service.removeExercise(EditExerciseView.this.previous);
+                Notification.show("Exercise removed! You are awesome!");
+                ViewDataCache.getInstance().doAllInit();
+            }
+
+        });
+
+        return deleteBtn;
     }
 
 }

@@ -18,6 +18,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.FormLayout;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Link;
 import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.Notification;
@@ -233,8 +234,14 @@ public abstract class AbstractExerciseView extends Panel implements View {
         // solutionText.addValidator(new StringLengthValidator("The solution text should be at least 5 characters long.", 5, null, true));
         // solutionText.setValidationVisible(false);
 
-        this.editorLayout.addComponent(this.actionExerciseButton);
-        this.editorLayout.addComponent(new Link(cancelButtonLabel(), new ExternalResource("#" + ViewUtils.MAIN)));
+        HorizontalLayout buttonLayout = new HorizontalLayout();
+        buttonLayout.addComponent(this.actionExerciseButton);
+        if (isViewProvideDelete()) {
+            buttonLayout.addComponent(getDeleteButton());
+        }
+
+        this.editorLayout.addComponent(buttonLayout);
+        this.editorLayout.addComponent(new Link(cancelButtonLabel(), new ExternalResource("#!" + ViewUtils.MAIN)));
         this.actionExerciseButton.addClickListener(new ClickListener() {
 
             private static final long serialVersionUID = 1L;
@@ -250,6 +257,10 @@ public abstract class AbstractExerciseView extends Panel implements View {
     public abstract void actionButtonClicked(AbstractExerciseView view);
 
     public abstract String actionButtonLabel();
+
+    public abstract boolean isViewProvideDelete();
+
+    public abstract Button getDeleteButton();
 
     public String cancelButtonLabel() {
         return "Go back";

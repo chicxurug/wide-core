@@ -26,7 +26,7 @@ public class HandleMenuSelect implements JavaScriptFunction {
     @Override
     public void call(JSONArray arguments) throws JSONException {
         Category selectedCategory = this.cache.getCategoryByName(arguments.getString(0));
-        this.layout.replaceComponent(this.layout.getComponent("subMenuItems"), ViewUtils.getCategoryList(selectedCategory));
+        this.layout.replaceComponent(this.layout.getComponent("subMenuItems"), ViewUtils.getCategoryList(selectedCategory, "#!" + ViewUtils.MAIN));
         ViewUtils.injectJs("/VAADIN/themes/wideweb/js/subHeader_full.js");
     }
 

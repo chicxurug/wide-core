@@ -30,7 +30,7 @@ public class BaseDAO {
         EntityManager em = this.entityManagerFactory.createEntityManager();
         EntityTransaction et = em.getTransaction();
         et.begin();
-        em.remove(entity);
+        em.remove(em.merge(entity));
         et.commit();
         em.close();
     }

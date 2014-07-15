@@ -15,7 +15,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-@Table(name = "Group")
+@Table(name = "WGroup")
 public class Group {
 
     private Long id;

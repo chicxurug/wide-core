@@ -173,6 +173,9 @@ public final class ViewDataCache implements Serializable {
                 }
             }
         }
+        if (found == null) {
+            found = this.service.getExerciseById(id);
+        }
 
         return found;
     }

@@ -246,8 +246,29 @@ div.lesson {
       height: 40px;
       vertical-align: middle;
       margin-right: 10px; }
-      div.lesson div.lessonHeader .schoolLevel.university {
-        background: #cccccc url("img/uni.png") center center no-repeat;
+      div.lesson div.lessonHeader .schoolLevel.University {
+        background: url("img/university.png") center center no-repeat;
+        -webkit-border-radius: 20px;
+        -moz-border-radius: 20px;
+        -ms-border-radius: 20px;
+        -o-border-radius: 20px;
+        border-radius: 20px; }
+      div.lesson div.lessonHeader .schoolLevel.Elementary {
+        background: url("img/elementary.png") center center no-repeat;
+        -webkit-border-radius: 20px;
+        -moz-border-radius: 20px;
+        -ms-border-radius: 20px;
+        -o-border-radius: 20px;
+        border-radius: 20px; }
+      div.lesson div.lessonHeader .schoolLevel.High_School {
+        background: url("img/high_school.png") center center no-repeat;
+        -webkit-border-radius: 20px;
+        -moz-border-radius: 20px;
+        -ms-border-radius: 20px;
+        -o-border-radius: 20px;
+        border-radius: 20px; }
+      div.lesson div.lessonHeader .schoolLevel.Other {
+        background: url("img/other.png") center center no-repeat;
         -webkit-border-radius: 20px;
         -moz-border-radius: 20px;
         -ms-border-radius: 20px;
@@ -359,6 +380,9 @@ div.lesson {
     color: white;
     background: #62abff;
     width: 125px; }
+    .left > div > ul.breadcrumb > div > li > a.exercise {
+      background: #e80c7a;
+    }
     .left > div > ul.breadcrumb > div > li > a:hover {
       border-left: 6px solid #ffba00;
       -webkit-transition: all 0.3s ease;
@@ -367,7 +391,7 @@ div.lesson {
       -ms-transition: all 0.3s ease;
       transition: all 0.3s ease; }
 
-input.default {
+input.default, select.default {
   color: #aaa !important; }
 
 .header > div {
@@ -457,7 +481,7 @@ input.default {
           padding-left: 15px; }
           .subHeader .subMenuContainer ul li.selected > a, .subHeader .userSubContainer ul li.selected > a, .subHeader .searchFilter ul li.selected > a {
             color: #ffba00; }
-        .subHeader .subMenuContainer ul li a, .subHeader .userSubContainer ul li a, .subHeader .searchFilter ul li a {
+        .subHeader .subMenuContainer ul li a, .subHeader .userSubContainer ul li a, .subHeader .searchFilter ul li a, .subHeader .searchFilter ul li a select {
           color: white;
           font-family: education;
           font-size: 14px;
@@ -635,7 +659,7 @@ input.default {
     width: 292px;
     line-height: 24px;
     cursor: default; }
-    .searchFilter ul.col > li > a input {
+    .searchFilter ul.col > li > a input, .searchFilter ul.col > li > a select {
       float: right;
       font-size: 14px;
       font-weight: bold;
@@ -646,7 +670,7 @@ input.default {
         background: white; }
       .searchFilter ul.col > li > a input.half {
         width: 85px; }
-      .searchFilter ul.col > li > a input[type="text"] {
+      .searchFilter ul.col > li > a input[type="text"], .searchFilter ul.col > li > a select {
         float: left; }
     .searchFilter ul.col > li > a div.rating {
       display: inline;

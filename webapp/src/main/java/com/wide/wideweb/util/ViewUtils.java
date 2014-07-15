@@ -29,7 +29,7 @@ public class ViewUtils {
 
     public static final String LOGIN = "login";
     public static final String REGISTER = "register";
-    public static final String MAIN = "";
+    public static final String MAIN = "main";
     public static final String CREATE_EXERCISE = "createExercise";
     public static final String EDIT_EXERCISE = "editExercise";
     public static final String VIEW_EXERCISE = "viewExercise";
@@ -209,17 +209,24 @@ public class ViewUtils {
         return new Label(sb.toString() + "</ul>", ContentMode.HTML);
     }
 
-    public static Component getBreadCrumb(Category cat) {
+    public static Component getBreadCrumb(Category cat, Exercise ex) {
         StringBuilder sb = new StringBuilder();
         ArrayList<String> crumbs = new ArrayList<String>();
         while (cat.getParent() != null) {
-            crumbs.add("\t<li><a href=\"#\">" + cat.getName() + "</a></li>\n");
+            crumbs.add("\t<li><a href=\"#!" + ViewUtils.MAIN + "\">" + cat.getName() + "</a></li>\n");
             cat = cat.getParent();
         }
         for (int i = crumbs.size() - 1; i >= 0; i--) {
             sb.append(crumbs.get(i));
         }
+        if (ex != null) {
+            sb.append("\t<li><a href=\"#!" + ViewUtils.VIEW_EXERCISE + "\" class=\"exercise\">" + ex.getTitle() + "</a></li>\n");
+        }
         return new Label(sb.toString(), ContentMode.HTML);
+    }
+
+    public static Component getBreadCrumb(Category cat) {
+        return getBreadCrumb(cat, null);
     }
 
     public static Component getExerciseDetails(Exercise ex) {

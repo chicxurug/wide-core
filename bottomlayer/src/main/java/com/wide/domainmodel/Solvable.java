@@ -12,7 +12,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Solvable {
 
-    private Long id;
+    protected Long id;
 
     @Id
     @GeneratedValue(generator = "increment")

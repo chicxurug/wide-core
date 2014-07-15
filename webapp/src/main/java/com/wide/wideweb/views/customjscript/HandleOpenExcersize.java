@@ -26,6 +26,9 @@ public class HandleOpenExcersize implements JavaScriptFunction {
         String exId = arguments.getString(0);
         ViewDataCache cache = ViewDataCache.getInstance();
         ViewUtils.setCurrentExercise(cache.getExerciseByCategory(ViewUtils.getCurrentCategory(), exId));
+        if (ViewUtils.getCurrentCategory() == null) {
+            ViewUtils.setCurrentCategory(ViewUtils.getCurrentExercise().getCategory());
+        }
         this.navigator.navigateTo(ViewUtils.VIEW_EXERCISE);
     }
 }

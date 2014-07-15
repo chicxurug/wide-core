@@ -18,6 +18,8 @@ import com.wide.wideweb.util.FeatureFactory;
 import com.wide.wideweb.util.ViewDataCache;
 import com.wide.wideweb.util.ViewUtils;
 import com.wide.wideweb.views.customjscript.HandleCheckSolution;
+import com.wide.wideweb.views.customjscript.HandleMenuSelect;
+import com.wide.wideweb.views.customjscript.HandleSubMenuSelectEx;
 
 @Component
 @Scope("prototype")
@@ -38,11 +40,13 @@ public class ExerciseView extends Panel implements View {
         }
         CustomLayout layout = new CustomLayout("3");
         layout.addComponent(ViewUtils.getBreadCrumb(currentEx.getCategory()), "crumb");
-        layout.addComponent(ViewUtils.getCategoryList(cache.getRootCategory(), "!#" + ViewUtils.VIEW_EXERCISE), "mainMenuItems");
-        layout.addComponent(ViewUtils.getCategoryList(cache.getRootCategory(), "!#" + ViewUtils.VIEW_EXERCISE), "subMenuItems");
-        layout.addComponent(new Label(
-                "<div class=\"title\"><div class=\"schoolLevel university inTest\"></div>" + currentEx.getTitle() + "</div>"
-                        + "<div class=\"author\">by: <a href=\"#\">" + currentEx.getAuthor() + "</a></div>", ContentMode.HTML), "lessonHeader");
+        layout.addComponent(ViewUtils.getCategoryList(cache.getRootCategory(), "#!" + ViewUtils.VIEW_EXERCISE), "mainMenuItems");
+        layout.addComponent(ViewUtils.getCategoryList(cache.getRootCategory(), "#!" + ViewUtils.VIEW_EXERCISE), "subMenuItems");
+        layout.addComponent(
+                new Label(
+                        "<div class=\"title\"><div class=\"schoolLevel " + currentEx.getLevel().getDescription().replaceAll(" ", "_") + "\"></div>"
+                                + currentEx.getTitle() + "</div>"
+                                + "<div class=\"author\">by: <a href=\"#\">" + currentEx.getAuthor() + "</a></div>", ContentMode.HTML), "lessonHeader");
         layout.addComponent(ViewUtils.getExerciseDetails(currentEx), "lessonDetails");
         String exDesc = currentEx.getTitle();
         StringBuilder sb = new StringBuilder("<ul class=\"links\">Links:");
@@ -53,7 +57,8 @@ public class ExerciseView extends Panel implements View {
                 }
                 if (FeatureFactory.RELEATED_LINKS.equals(f.getName())) {
                     for (String l : f.getValue().split("\n")) {
-                        sb.append("<li><a href=\"" + l + "\">" + l + "</a></li>");
+                        sb.append("<li><img src=\"http://www.google.com/s2/favicons?domain_url=" + l + "\"> <a href=\"" + l + "\" target=\"_blank\">" + l
+                                + "</a></li>");
                     }
                 }
             }
@@ -61,14 +66,19 @@ public class ExerciseView extends Panel implements View {
         sb.append("</ul>");
         layout.addComponent(new Label(exDesc, ContentMode.HTML), "lessonDesc");
         layout.addComponent(new Label(sb.toString(), ContentMode.HTML), "links");
+        layout.addComponent(new Label(cache.getUsername()), "auth_user");
 
         setContent(layout);
         ViewUtils.injectJs("/VAADIN/themes/wideweb/js/subHeader.js");
 
         JavaScript.getCurrent().removeFunction("com_wide_wideweb_checkAnswer");
         JavaScript.getCurrent().removeFunction("com_wide_wideweb_checkSolution");
+        JavaScript.getCurrent().removeFunction("com_wide_wideweb_subMenuSelect");
+        JavaScript.getCurrent().removeFunction("com_wide_wideweb_menuSelect");
 
         JavaScript.getCurrent().addFunction("com_wide_wideweb_checkAnswer", new HandleCheckSolution(layout, true));
         JavaScript.getCurrent().addFunction("com_wide_wideweb_checkSolution", new HandleCheckSolution(layout, false));
+        JavaScript.getCurrent().addFunction("com_wide_wideweb_subMenuSelect", new HandleSubMenuSelectEx(event.getNavigator(), layout));
+        JavaScript.getCurrent().addFunction("com_wide_wideweb_menuSelect", new HandleMenuSelect(layout));
     }
 }

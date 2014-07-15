@@ -95,4 +95,8 @@ public class WideDAO extends BaseDAO {
         return save(t);
     }
 
+    public void removeExercise(Exercise e) {
+        delete(e);
+    }
+
 }

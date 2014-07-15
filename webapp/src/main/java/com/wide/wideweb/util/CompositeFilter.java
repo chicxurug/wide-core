@@ -12,11 +12,13 @@ public class CompositeFilter implements ContentFilterInterface {
     private String book;
     private String title;
     private int submitNo;
+    private String language;
     private boolean menu;
     private boolean lesson;
     private boolean test;
 
-    public CompositeFilter(String searchText, String author, String publisher, String book, String title, String submitNo, boolean menu, boolean lesson,
+    public CompositeFilter(String searchText, String author, String publisher, String book, String title, String submitNo, String language, boolean menu,
+            boolean lesson,
             boolean test) {
         this.searchText = searchText;
         this.author = author;
@@ -24,6 +26,7 @@ public class CompositeFilter implements ContentFilterInterface {
         this.book = book;
         this.title = title;
         this.submitNo = "Submits No.".equals(submitNo) ? 0 : Integer.parseInt(submitNo);
+        this.language = language;
         this.menu = menu;
         this.lesson = lesson;
         this.test = test;
@@ -62,6 +65,9 @@ public class CompositeFilter implements ContentFilterInterface {
         }
         // TODO: add logic
         if (this.submitNo < 0) {
+            return true;
+        }
+        if (!"Language".equals(this.language) && !ex.getLanguage().contains(this.language)) {
             return true;
         }
         return false;

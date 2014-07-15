@@ -59,8 +59,11 @@ public class MainView extends Panel implements View
     {
         final CustomLayout layout = new CustomLayout("2");
 
-        JavaScript.getCurrent().execute("window.$(\"body\").addClass(\"welcome\");");
-        layout.addComponent(ViewUtils.getCategoryList(this.cache.getRootCategory()), "mainMenuItems");
+        if (ViewUtils.getCurrentExercise() == null) {
+            JavaScript.getCurrent().execute("window.$(\"body\").addClass(\"welcome\");");
+        }
+
+        layout.addComponent(ViewUtils.getCategoryList(this.cache.getRootCategory(), "#!" + ViewUtils.MAIN), "mainMenuItems");
         layout.addComponent(ViewUtils.getCategoryList(this.cache.getRootCategory()), "subMenuItems");
         layout.addComponent(new Label("", ContentMode.HTML), "crumb");
         layout.addComponent(ViewUtils.getSecondaryLevel(this.cache.getRootCategory(), new com.wide.wideweb.util.EmptyFilter()), "secondaryLevel");
@@ -77,12 +80,20 @@ public class MainView extends Panel implements View
         JavaScript.getCurrent().addFunction("com_wide_wideweb_subMenuSelect", new HandleSubMenuSelect(layout));
         JavaScript.getCurrent().addFunction("com_wide_wideweb_filterCategory", new HandleFilterCategory(layout));
         JavaScript.getCurrent().addFunction("com_wide_wideweb_filterWelcome", new HandleFilterWelcome(layout));
+
+        if (ViewUtils.getCurrentExercise() != null) {
+            ViewUtils.setCurrentExercise(null);
+            layout.replaceComponent(layout.getComponent("crumb"), ViewUtils.getBreadCrumb(ViewUtils.getCurrentCategory()));
+            layout.replaceComponent(layout.getComponent("secondaryLevel"), ViewUtils.getSecondaryLevel(ViewUtils.getCurrentCategory(),
+                    new com.wide.wideweb.util.EmptyFilter()));
+        }
+        ViewUtils.injectJs("/VAADIN/themes/wideweb/js/subHeader.js");
+
     }
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event)
     {
-        System.out.println(event.getParameters());
         JavaScript.getCurrent().removeFunction("com_wide_wideweb_loginSelect");
         JavaScript.getCurrent().removeFunction("com_wide_wideweb_createExercise");
         JavaScript.getCurrent().removeFunction("com_wide_wideweb_openExercise");

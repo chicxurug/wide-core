@@ -12,6 +12,7 @@ import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.UserError;
 import com.vaadin.ui.AbstractComponent;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Notification;
 import com.wide.domainmodel.Exercise;
@@ -63,6 +64,17 @@ public class CreateExerciseView extends AbstractExerciseView {
     @Override
     public String actionButtonLabel() {
         return "Create";
+    }
+
+    @Override
+    public boolean isViewProvideDelete() {
+        return false;
+    }
+
+    @Override
+    public Button getDeleteButton() {
+        // This call will never happen
+        return null;
     }
 
 }

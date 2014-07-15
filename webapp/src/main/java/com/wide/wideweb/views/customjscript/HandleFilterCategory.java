@@ -29,14 +29,15 @@ public class HandleFilterCategory implements JavaScriptFunction {
         String book = arguments.getString(3);
         String title = arguments.getString(4);
         String submitNo = arguments.getString(5);
-        boolean menu = arguments.getBoolean(6);
-        boolean lesson = arguments.getBoolean(7);
-        boolean test = arguments.getBoolean(8);
+        String language = arguments.getString(6);
+        boolean menu = arguments.getBoolean(7);
+        boolean lesson = arguments.getBoolean(8);
+        boolean test = arguments.getBoolean(9);
         this.layout.replaceComponent(
                 this.layout.getComponent("secondaryLevel"),
                 ViewUtils.getCurrentCategory() != null ? ViewUtils.getSecondaryLevel(ViewUtils.getCurrentCategory(), new CompositeFilter(searchText, author,
                         publisher, book, title,
-                        submitNo, menu, lesson, test)) :
+                        submitNo, language, menu, lesson, test)) :
                         ViewUtils.searchAll(searchText));
         ViewUtils.injectJs("/VAADIN/themes/wideweb/js/subHeader_full.js");
     }

@@ -8,12 +8,14 @@ import org.springframework.stereotype.Component;
 import com.vaadin.annotations.JavaScript;
 import com.vaadin.annotations.StyleSheet;
 import com.vaadin.annotations.Theme;
+import com.vaadin.navigator.Navigator;
 import com.vaadin.server.DefaultErrorHandler;
 import com.vaadin.server.ErrorHandler;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.UI;
 import com.wide.wideweb.core.NavigatorFactory;
+import com.wide.wideweb.util.ViewUtils;
 
 /**
  * 
@@ -40,8 +42,9 @@ public class WideWebAppUI extends UI implements ErrorHandler
     protected void init(final VaadinRequest request)
     {
         setSizeFull();
-        this.navigatorFactory.getNavigator(WideWebAppUI.this, WideWebAppUI.this);
+        Navigator navigator = this.navigatorFactory.getNavigator(WideWebAppUI.this, WideWebAppUI.this);
         VaadinSession.getCurrent().setErrorHandler(WideWebAppUI.this);
+        navigator.navigateTo(ViewUtils.MAIN);
     }
 
     /**
