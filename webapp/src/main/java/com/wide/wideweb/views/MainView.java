@@ -69,7 +69,6 @@ public class MainView extends Panel implements View
         layout.addComponent(ViewUtils.getSecondaryLevel(this.cache.getRootCategory(), new com.wide.wideweb.util.EmptyFilter()), "secondaryLevel");
         layout.addComponent(this.usernameLabel, "auth_user");
         setContent(layout);
-        ViewUtils.injectJs("/VAADIN/themes/wideweb/js/welcomeAnimation.js", "/VAADIN/themes/wideweb/js/subHeader.js");
 
         JavaScript.getCurrent().removeFunction("com_wide_wideweb_menuSelect");
         JavaScript.getCurrent().removeFunction("com_wide_wideweb_subMenuSelect");
@@ -87,8 +86,9 @@ public class MainView extends Panel implements View
             layout.replaceComponent(layout.getComponent("secondaryLevel"), ViewUtils.getSecondaryLevel(ViewUtils.getCurrentCategory(),
                     new com.wide.wideweb.util.EmptyFilter()));
         }
-        ViewUtils.injectJs("/VAADIN/themes/wideweb/js/subHeader.js");
 
+        ViewUtils.injectJs("/VAADIN/themes/wideweb/js/welcomeAnimation.js", "/VAADIN/themes/wideweb/js/subHeader.js");
+        JavaScript.getCurrent().execute("$guard=true;");
     }
 
     @Override

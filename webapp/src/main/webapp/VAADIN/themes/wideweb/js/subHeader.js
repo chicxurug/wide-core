@@ -1,4 +1,4 @@
-window.$(window).add("*").unbind();
+$guard;
 window.$( document ).ready(function() {
         function closeSubHeader(){
           window.$(".subMenuContainer").slideUp( 300 );

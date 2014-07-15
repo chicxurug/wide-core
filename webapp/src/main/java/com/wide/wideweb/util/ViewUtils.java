@@ -234,16 +234,16 @@ public class ViewUtils {
         sb.append("<img class=\"level\" src=\"" + getImgPath(ex, "difficulty") + "\"  width=24 height=16/>\n");
         sb.append("<img class=\"rank\" src=\"" + getImgPath(ex, "score") + "\" width=92 height=16/>\n");
         sb.append("<ul class=\"source\">\n");
-        sb.append("<li>Szerző: <a href=\"#\">" + ex.getAuthor() + "</a></li>\n");
-        sb.append("<li>Könyv: <a href=\"#\">" + ex.getBookTitle() + "</a></li>\n");
-        sb.append("<li>Kiadó: <a href=\"#\">" + ex.getPublisher() + "</a></li>\n");
+        sb.append("<li>Szerző: <a href=\"#!" + ViewUtils.VIEW_EXERCISE + "\">" + ex.getAuthor() + "</a></li>\n");
+        sb.append("<li>Könyv: <a href=\"#!" + ViewUtils.VIEW_EXERCISE + "\">" + ex.getBookTitle() + "</a></li>\n");
+        sb.append("<li>Kiadó: <a href=\"#!" + ViewUtils.VIEW_EXERCISE + "\">" + ex.getPublisher() + "</a></li>\n");
         sb.append("</ul>\n");
         sb.append("<ul class=\"tags\">Tags:\n");
         if (ex.getFeatures() != null) {
             for (Feature f : ex.getFeatures()) {
                 if (FeatureFactory.TAGS.equals(f.getName())) {
                     for (String tag : f.getValue().split(",")) {
-                        sb.append("<li><a href=\"#\">" + tag.trim() + "</a> , </li>");
+                        sb.append("<li><a href=\"#!" + ViewUtils.VIEW_EXERCISE + "\">" + tag.trim() + "</a> , </li>");
                     }
                     sb.replace(sb.length() - 8, sb.length(), "</li>");
                 }

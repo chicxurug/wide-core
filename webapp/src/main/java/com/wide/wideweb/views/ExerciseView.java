@@ -46,7 +46,8 @@ public class ExerciseView extends Panel implements View {
                 new Label(
                         "<div class=\"title\"><div class=\"schoolLevel " + currentEx.getLevel().getDescription().replaceAll(" ", "_") + "\"></div>"
                                 + currentEx.getTitle() + "</div>"
-                                + "<div class=\"author\">by: <a href=\"#\">" + currentEx.getAuthor() + "</a></div>", ContentMode.HTML), "lessonHeader");
+                                + "<div class=\"author\">by: <a href=\"#!" + ViewUtils.VIEW_EXERCISE + "\">" + currentEx.getAuthor() + "</a></div>",
+                        ContentMode.HTML), "lessonHeader");
         layout.addComponent(ViewUtils.getExerciseDetails(currentEx), "lessonDetails");
         String exDesc = currentEx.getTitle();
         StringBuilder sb = new StringBuilder("<ul class=\"links\">Links:");
@@ -57,7 +58,16 @@ public class ExerciseView extends Panel implements View {
                 }
                 if (FeatureFactory.RELEATED_LINKS.equals(f.getName())) {
                     for (String l : f.getValue().split("\n")) {
-                        sb.append("<li><img src=\"http://www.google.com/s2/favicons?domain_url=" + l + "\"> <a href=\"" + l + "\" target=\"_blank\">" + l
+                        String shortURL = l;
+                        String absoluteURL = l;
+                        if (l.length() > 45) {
+                            shortURL = l.substring(0, 45) + "...";
+                        }
+                        if (!absoluteURL.contains("//")) {
+                            absoluteURL = "http://" + absoluteURL;
+                        }
+                        sb.append("<li><img src=\"http://www.google.com/s2/favicons?domain_url=" + l + "\"> <a href=\"" + absoluteURL + "\" target=\"_blank\""
+                                + (l.equals(shortURL) ? "" : " title=\"" + l + "\"") + ">" + shortURL
                                 + "</a></li>");
                     }
                 }
