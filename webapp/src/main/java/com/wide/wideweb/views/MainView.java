@@ -15,6 +15,7 @@ import ru.xpoft.vaadin.VaadinView;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.server.Page;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.JavaScript;
@@ -52,38 +53,38 @@ public class MainView extends Panel implements View
     private Label usernameLabel = new Label("Guest");
     private Label rolesLabel = new Label();
 
-    // public static Category current;
+    private CustomLayout layout;
 
     @PostConstruct
     public void PostConstruct()
     {
-        final CustomLayout layout = new CustomLayout("2");
+        this.layout = new CustomLayout("2");
 
         if (ViewUtils.getCurrentExercise() == null) {
             JavaScript.getCurrent().execute("window.$(\"body\").addClass(\"welcome\");");
         }
 
-        layout.addComponent(ViewUtils.getCategoryList(this.cache.getRootCategory(), "#!" + ViewUtils.MAIN), "mainMenuItems");
-        layout.addComponent(ViewUtils.getCategoryList(this.cache.getRootCategory()), "subMenuItems");
-        layout.addComponent(new Label("", ContentMode.HTML), "crumb");
-        layout.addComponent(ViewUtils.getSecondaryLevel(this.cache.getRootCategory(), new com.wide.wideweb.util.EmptyFilter()), "secondaryLevel");
-        layout.addComponent(this.usernameLabel, "auth_user");
-        setContent(layout);
+        this.layout.addComponent(ViewUtils.getCategoryList(this.cache.getRootCategory(), "#!" + ViewUtils.MAIN), "mainMenuItems");
+        this.layout.addComponent(ViewUtils.getCategoryList(this.cache.getRootCategory()), "subMenuItems");
+        this.layout.addComponent(new Label("", ContentMode.HTML), "crumb");
+        this.layout.addComponent(ViewUtils.getSecondaryLevel(this.cache.getRootCategory(), new com.wide.wideweb.util.EmptyFilter()), "secondaryLevel");
+        this.layout.addComponent(this.usernameLabel, "auth_user");
+        setContent(this.layout);
 
         JavaScript.getCurrent().removeFunction("com_wide_wideweb_menuSelect");
         JavaScript.getCurrent().removeFunction("com_wide_wideweb_subMenuSelect");
         JavaScript.getCurrent().removeFunction("com_wide_wideweb_filterCategory");
         JavaScript.getCurrent().removeFunction("com_wide_wideweb_filterWelcome");
 
-        JavaScript.getCurrent().addFunction("com_wide_wideweb_menuSelect", new HandleMenuSelect(layout));
-        JavaScript.getCurrent().addFunction("com_wide_wideweb_subMenuSelect", new HandleSubMenuSelect(layout));
-        JavaScript.getCurrent().addFunction("com_wide_wideweb_filterCategory", new HandleFilterCategory(layout));
-        JavaScript.getCurrent().addFunction("com_wide_wideweb_filterWelcome", new HandleFilterWelcome(layout));
+        JavaScript.getCurrent().addFunction("com_wide_wideweb_menuSelect", new HandleMenuSelect(this.layout));
+        JavaScript.getCurrent().addFunction("com_wide_wideweb_subMenuSelect", new HandleSubMenuSelect(this.layout));
+        JavaScript.getCurrent().addFunction("com_wide_wideweb_filterCategory", new HandleFilterCategory(this.layout));
+        JavaScript.getCurrent().addFunction("com_wide_wideweb_filterWelcome", new HandleFilterWelcome(this.layout));
 
         if (ViewUtils.getCurrentExercise() != null) {
             ViewUtils.setCurrentExercise(null);
-            layout.replaceComponent(layout.getComponent("crumb"), ViewUtils.getBreadCrumb(ViewUtils.getCurrentCategory()));
-            layout.replaceComponent(layout.getComponent("secondaryLevel"), ViewUtils.getSecondaryLevel(ViewUtils.getCurrentCategory(),
+            this.layout.replaceComponent(this.layout.getComponent("crumb"), ViewUtils.getBreadCrumb(ViewUtils.getCurrentCategory()));
+            this.layout.replaceComponent(this.layout.getComponent("secondaryLevel"), ViewUtils.getSecondaryLevel(ViewUtils.getCurrentCategory(),
                     new com.wide.wideweb.util.EmptyFilter()));
         }
 
@@ -94,6 +95,13 @@ public class MainView extends Panel implements View
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event)
     {
+        if (event.getParameters() != null && !event.getParameters().isEmpty()) {
+            String params[] = event.getParameters().split("=");
+            this.layout.replaceComponent(this.layout.getComponent("secondaryLevel"), ViewUtils.searchExercisesByProperty(params[0], params[1]));
+            this.layout.addComponent(new Label("", ContentMode.HTML), "crumb");
+            Page.getCurrent().setUriFragment("!" + ViewUtils.MAIN, false);
+            ViewUtils.injectJs("/VAADIN/themes/wideweb/js/subHeader_full.js");
+        }
         JavaScript.getCurrent().removeFunction("com_wide_wideweb_loginSelect");
         JavaScript.getCurrent().removeFunction("com_wide_wideweb_createExercise");
         JavaScript.getCurrent().removeFunction("com_wide_wideweb_openExercise");

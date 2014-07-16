@@ -42,6 +42,25 @@ public class WideDAO extends BaseDAO {
         return findByQuery("from Exercise where author like ?1 or title like ?1", "%" + searchText + "%");
     }
 
+    public List<Exercise> getExercisesByProperty(String propName, String propVal) {
+        switch (propName) {
+            case "author":
+                return findByQuery("from Exercise where author = ?1", propVal);
+            case "booktitle":
+                return findByQuery("from Exercise where booktitle = ?1", propVal);
+            case "publisher":
+                return findByQuery("from Exercise where publisher = ?1", propVal);
+            case "tag":
+                return findByQuery(
+                        "select e from Exercise e left join e.features f where f.name = 'Tags' and ((f.value like ?1) or (f.value like ?2) or "
+                                + "(f.value like ?3) or (f.value like ?4) or (f.value like ?5) or (f.value like ?6) or "
+                                + "(f.value like ?7) or (f.value like ?8) or (f.value like ?9))", propVal, propVal + " %", propVal + ",%", "% " + propVal,
+                        "%," + propVal, "% " + propVal + " %", "% " + propVal + ",%", "%," + propVal + " %", "%," + propVal + ",%");
+            default:
+                return findByQuery("from Exercise where title = ?1", propVal);
+        }
+    }
+
     public List<Category> getCategories() {
         return findAll(Category.class);
     }

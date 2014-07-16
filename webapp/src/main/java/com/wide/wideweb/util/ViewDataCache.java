@@ -149,6 +149,10 @@ public final class ViewDataCache implements Serializable {
         return instance;
     }
 
+    public Collection<Exercise> getExercisesByProperty(String propName, String propValue) {
+        return this.service.getExercisesByProperty(propName, propValue);
+    }
+
     public Collection<Exercise> getExercisesBySearchText(String searchText) {
         return this.service.getExercisesBySearchText(searchText);
     }

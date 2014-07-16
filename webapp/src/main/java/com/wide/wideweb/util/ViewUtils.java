@@ -209,6 +209,26 @@ public class ViewUtils {
         return new Label(sb.toString() + "</ul>", ContentMode.HTML);
     }
 
+    public static Component searchExercisesByProperty(String propName, String propValue) {
+        ViewDataCache cache = ViewDataCache.getInstance();
+        String basepath = getBasePath();
+        StringBuilder sb = new StringBuilder("<ul class=\"filterList\">\n");
+
+        final Collection<Exercise> exercises = cache.getExercisesByProperty(propName, propValue);
+        for (Exercise ex : exercises) {
+            sb.append("<li id=" + ex.getId() + " class=\"lesson\">"
+                    + "         <img class=\"icon\" src=\"" + basepath + "/layouts/example/2.jpg\" />"
+                    + "         <div class=\"title\"><div class=\"schoolLevel " + ex.getLevel().getDescription().replaceAll(" ", "_") + "\"></div>"
+                    + ex.getTitle() + "</div>"
+                    + "         <img class=\"level\" src=\"" + getImgPath(ex, "difficulty") + "\"  width=24 height=16/>"
+                    + "         <img class=\"rank\" src=\"" + getImgPath(ex, "score") + "\" width=92 height=16/>"
+                    + "         <div class=\"author\">Author: <a href=\"#\">" + ex.getAuthor() + "</a></div>"
+                    + "         </li>\n");
+        }
+
+        return new Label(sb.toString() + "</ul>", ContentMode.HTML);
+    }
+
     public static Component getBreadCrumb(Category cat, Exercise ex) {
         StringBuilder sb = new StringBuilder();
         ArrayList<String> crumbs = new ArrayList<String>();
@@ -234,16 +254,16 @@ public class ViewUtils {
         sb.append("<img class=\"level\" src=\"" + getImgPath(ex, "difficulty") + "\"  width=24 height=16/>\n");
         sb.append("<img class=\"rank\" src=\"" + getImgPath(ex, "score") + "\" width=92 height=16/>\n");
         sb.append("<ul class=\"source\">\n");
-        sb.append("<li>Szerző: <a href=\"#!" + ViewUtils.VIEW_EXERCISE + "\">" + ex.getAuthor() + "</a></li>\n");
-        sb.append("<li>Könyv: <a href=\"#!" + ViewUtils.VIEW_EXERCISE + "\">" + ex.getBookTitle() + "</a></li>\n");
-        sb.append("<li>Kiadó: <a href=\"#!" + ViewUtils.VIEW_EXERCISE + "\">" + ex.getPublisher() + "</a></li>\n");
+        sb.append("<li>Szerző: <a href=\"#!" + ViewUtils.MAIN + "/author=" + ex.getAuthor() + "\">" + ex.getAuthor() + "</a></li>\n");
+        sb.append("<li>Könyv: <a href=\"#!" + ViewUtils.MAIN + "/booktitle=" + ex.getBookTitle() + "\">" + ex.getBookTitle() + "</a></li>\n");
+        sb.append("<li>Kiadó: <a href=\"#!" + ViewUtils.MAIN + "/publisher=" + ex.getPublisher() + "\">" + ex.getPublisher() + "</a></li>\n");
         sb.append("</ul>\n");
         sb.append("<ul class=\"tags\">Tags:\n");
         if (ex.getFeatures() != null) {
             for (Feature f : ex.getFeatures()) {
                 if (FeatureFactory.TAGS.equals(f.getName())) {
                     for (String tag : f.getValue().split(",")) {
-                        sb.append("<li><a href=\"#!" + ViewUtils.VIEW_EXERCISE + "\">" + tag.trim() + "</a> , </li>");
+                        sb.append("<li><a href=\"#!" + ViewUtils.MAIN + "/tag=" + tag.trim() + "\">" + tag.trim() + "</a> , </li>");
                     }
                     sb.replace(sb.length() - 8, sb.length(), "</li>");
                 }
