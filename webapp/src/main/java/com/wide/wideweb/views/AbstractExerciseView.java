@@ -198,6 +198,10 @@ public abstract class AbstractExerciseView extends Panel implements View {
         tags.setNullRepresentation("");
         tags.setWidth("70%");
 
+        Link latexEditor = new Link("Open external latex formula editor", new ExternalResource("http://www.codecogs.com/latex/eqneditor.php"));
+        latexEditor.setTargetName("_blank");
+        this.editorLayout.addComponent(latexEditor);
+
         final RichTextArea exerciseText = new RichTextArea("Exercise");
         this.editorLayout.addComponent(exerciseText);
         this.form.bind(exerciseText, "exerciseText");

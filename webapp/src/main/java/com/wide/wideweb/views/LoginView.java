@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import ru.xpoft.vaadin.VaadinView;
 
+import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.ExternalResource;
@@ -46,6 +47,7 @@ public class LoginView extends Panel implements View {
         final PasswordField pwd = new PasswordField("Password");
         Link lnk = new Link("register", new ExternalResource("#!" + ViewUtils.REGISTER));
         final Button btn = new Button("Login");
+        btn.setClickShortcut(KeyCode.ENTER);
 
         layout.addComponent(eml, "username");
         layout.addComponent(pwd, "password");

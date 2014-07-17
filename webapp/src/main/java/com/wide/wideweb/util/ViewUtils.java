@@ -254,9 +254,9 @@ public class ViewUtils {
         sb.append("<img class=\"level\" src=\"" + getImgPath(ex, "difficulty") + "\"  width=24 height=16/>\n");
         sb.append("<img class=\"rank\" src=\"" + getImgPath(ex, "score") + "\" width=92 height=16/>\n");
         sb.append("<ul class=\"source\">\n");
-        sb.append("<li>Szerző: <a href=\"#!" + ViewUtils.MAIN + "/author=" + ex.getAuthor() + "\">" + ex.getAuthor() + "</a></li>\n");
-        sb.append("<li>Könyv: <a href=\"#!" + ViewUtils.MAIN + "/booktitle=" + ex.getBookTitle() + "\">" + ex.getBookTitle() + "</a></li>\n");
-        sb.append("<li>Kiadó: <a href=\"#!" + ViewUtils.MAIN + "/publisher=" + ex.getPublisher() + "\">" + ex.getPublisher() + "</a></li>\n");
+        sb.append("<li>Szerző: " + getSeparatedLinks("author", ex.getAuthor()) + "</li>\n");
+        sb.append("<li>Könyv: " + getSeparatedLinks("booktitle", ex.getBookTitle()) + "</li>\n");
+        sb.append("<li>Kiadó: " + getSeparatedLinks("publisher", ex.getPublisher()) + "</li>\n");
         sb.append("</ul>\n");
         sb.append("<ul class=\"tags\">Tags:\n");
         if (ex.getFeatures() != null) {
@@ -270,6 +270,18 @@ public class ViewUtils {
             }
         }
         return new Label(sb.toString(), ContentMode.HTML);
+    }
+
+    public static String getSeparatedLinks(String prop, String propVal) {
+        if (propVal == null || propVal.isEmpty()) {
+            return "<a>-</a>";
+        }
+        String aHref = "";
+        String[] splitValues = propVal.split(",");
+        for (String val : splitValues) {
+            aHref += "<a href=\"#!" + ViewUtils.MAIN + "/" + prop + "=" + val.trim() + "\">" + val.trim() + "</a>, ";
+        }
+        return aHref.substring(0, aHref.length() - 2);
     }
 
     private static String getBasePath() {

@@ -45,11 +45,11 @@ public class WideDAO extends BaseDAO {
     public List<Exercise> getExercisesByProperty(String propName, String propVal) {
         switch (propName) {
             case "author":
-                return findByQuery("from Exercise where author = ?1", propVal);
+                return findByQuery("from Exercise where author like ?1", "%" + propVal + "%");
             case "booktitle":
-                return findByQuery("from Exercise where booktitle = ?1", propVal);
+                return findByQuery("from Exercise where booktitle like ?1", "%" + propVal + "%");
             case "publisher":
-                return findByQuery("from Exercise where publisher = ?1", propVal);
+                return findByQuery("from Exercise where publisher like ?1", "%" + propVal + "%");
             case "tag":
                 return findByQuery(
                         "select e from Exercise e left join e.features f where f.name = 'Tags' and ((f.value like ?1) or (f.value like ?2) or "
