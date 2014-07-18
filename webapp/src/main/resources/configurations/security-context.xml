@@ -20,6 +20,9 @@
             <user-service>
                 <user name="user" password="user" authorities="ROLE_USER" />
                 <user name="admin" password="admin" authorities="ROLE_ADMIN, ROLE_USER" />
+                <user name="diveki" password="diveki" authorities="ROLE_ADMIN, ROLE_USER" />
+                <user name="csuki" password="csuki" authorities="ROLE_ADMIN, ROLE_USER" />
+                <user name="hpeter" password="hpeter" authorities="ROLE_ADMIN, ROLE_USER" />
             </user-service>
         </authentication-provider>
     </authentication-manager>

@@ -46,7 +46,7 @@ public class ExerciseView extends Panel implements View {
                 new Label(
                         "<div class=\"title\"><div class=\"schoolLevel " + currentEx.getLevel().getDescription().replaceAll(" ", "_") + "\"></div>"
                                 + currentEx.getTitle() + "</div>"
-                                + "<div class=\"author\">by: " + ViewUtils.getSeparatedLinks("author", currentEx.getAuthor()) + "</div>", ContentMode.HTML),
+                                + "<div class=\"author\">by: " + ViewUtils.getSeparatedLinks("uploader", currentEx.getUploader()) + "</div>", ContentMode.HTML),
                 "lessonHeader");
         layout.addComponent(ViewUtils.getExerciseDetails(currentEx), "lessonDetails");
         String exDesc = currentEx.getTitle();

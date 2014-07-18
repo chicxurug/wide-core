@@ -43,16 +43,19 @@ public class LoginView extends Panel implements View {
         setSizeUndefined();
         CustomLayout layout = new CustomLayout("widelogin");
 
-        final TextField eml = new TextField("UserName");
-        final PasswordField pwd = new PasswordField("Password");
-        Link lnk = new Link("register", new ExternalResource("#!" + ViewUtils.REGISTER));
+        final TextField uname = new TextField("");
+        final PasswordField pwd = new PasswordField("");
+        Link lnk = new Link("Register", new ExternalResource("#!" + ViewUtils.ERROR));
         final Button btn = new Button("Login");
         btn.setClickShortcut(KeyCode.ENTER);
 
-        layout.addComponent(eml, "username");
+        layout.addComponent(uname, "username");
         layout.addComponent(pwd, "password");
-        layout.addComponent(lnk);
+        layout.addComponent(lnk, "reg_link");
         layout.addComponent(btn, "okbutton");
+
+        uname.focus();
+        getSession().setAttribute("unhandled.exception", new Exception("Registration is not supported yet."));
 
         btn.addClickListener(new Button.ClickListener() {
 
@@ -62,7 +65,7 @@ public class LoginView extends Panel implements View {
             public void buttonClick(ClickEvent cEvent) {
 
                 try {
-                    LoginView.this.authHelper.authenticate(eml.getValue(), pwd.getValue());
+                    LoginView.this.authHelper.authenticate(uname.getValue(), pwd.getValue());
                     event.getNavigator().navigateTo(ViewUtils.MAIN);
                 } catch (AuthenticationException e) {
                     Notification.show("Error", "bad credential", Notification.Type.ERROR_MESSAGE);

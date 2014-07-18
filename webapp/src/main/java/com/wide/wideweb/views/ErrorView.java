@@ -20,7 +20,7 @@ import com.wide.wideweb.util.ViewUtils;
  * 
  */
 @Component
-@Scope("SCOPE_PROTOTYPE")
+@Scope("prototype")
 @VaadinView(ViewUtils.ERROR)
 public class ErrorView extends VerticalLayout implements View {
 

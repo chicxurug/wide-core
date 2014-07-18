@@ -74,6 +74,7 @@ public class Exercise extends Solvable implements Serializable {
 
     private String language;
     private String title;
+    private String uploader;
     private DifficultyLevel difficulty;
     private Integer score;
     private String author;
@@ -89,10 +90,12 @@ public class Exercise extends Solvable implements Serializable {
 
     }
 
-    public Exercise(String language, String title, DifficultyLevel difficulty, Integer score, String author, SchoolLevel level, String publisher,
+    public Exercise(String language, String title, String uploader, DifficultyLevel difficulty, Integer score, String author, SchoolLevel level,
+            String publisher,
             String bookTitle, Category category, List<Feature> features) {
         this.language = language;
         this.title = title;
+        this.uploader = uploader;
         this.difficulty = difficulty;
         this.score = score;
         this.author = author;
@@ -111,6 +114,7 @@ public class Exercise extends Solvable implements Serializable {
         this.id = prev.id;
         this.language = prev.language;
         this.title = prev.title;
+        this.uploader = prev.uploader;
         this.difficulty = prev.difficulty;
         this.score = prev.score;
         this.author = prev.author;
@@ -236,5 +240,14 @@ public class Exercise extends Solvable implements Serializable {
 
     public void setNumberOfSubmits(Integer numberOfSubmits) {
         this.numberOfSubmits = numberOfSubmits;
+    }
+
+    @Column(nullable = false)
+    public String getUploader() {
+        return this.uploader;
+    }
+
+    public void setUploader(String uploader) {
+        this.uploader = uploader;
     }
 }

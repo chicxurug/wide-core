@@ -22,10 +22,10 @@ public class ExerciseBean implements Serializable {
     private String language;
     private String title;
     private Category category;
-    private String uploader; // TODO ?
+    private String uploader;
     private String author;
     private String book;
-    private String publisher; // TODO ?
+    private String publisher;
     private DifficultyLevel difficulty;
     private SchoolLevel schoolLevel;
     private String tags;
@@ -55,7 +55,7 @@ public class ExerciseBean implements Serializable {
         this.language = currentExercise.getLanguage();
         this.title = currentExercise.getTitle();
         this.category = currentExercise.getCategory();
-        this.uploader = null;
+        this.uploader = currentExercise.getUploader();
         this.author = currentExercise.getAuthor();
         this.book = currentExercise.getBookTitle();
         this.publisher = currentExercise.getPublisher();
@@ -92,6 +92,7 @@ public class ExerciseBean implements Serializable {
         final Exercise ret = new Exercise(prev);
         ret.setLanguage(this.language);
         ret.setTitle(this.title);
+        ret.setUploader(this.uploader);
         ret.setDifficulty(this.difficulty);
         ret.setAuthor(this.author);
         ret.setLevel(this.schoolLevel);

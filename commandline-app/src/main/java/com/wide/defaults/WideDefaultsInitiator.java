@@ -149,7 +149,7 @@ public class WideDefaultsInitiator {
         List<ExercisePoint> exs = new ArrayList<ExercisePoint>();
         Test t = new Test();
         for (int i = 1; i < 4; i++) {
-            Exercise ex = new Exercise("English", "Exercise" + category.getName() + i, DifficultyLevel.randomDifficulty(), i,
+            Exercise ex = new Exercise("English", "Exercise" + category.getName() + i, "generator", DifficultyLevel.randomDifficulty(), i,
                     "Author" + category.getName() + i, Exercise.SchoolLevel.COLLEGE, "Publisher", "Title" + category.getName() + i, category, null);
             exs.add(new ExercisePoint(ex, new Long(i)));
         }

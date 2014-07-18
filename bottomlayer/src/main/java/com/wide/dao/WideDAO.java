@@ -50,6 +50,8 @@ public class WideDAO extends BaseDAO {
                 return findByQuery("from Exercise where booktitle like ?1", "%" + propVal + "%");
             case "publisher":
                 return findByQuery("from Exercise where publisher like ?1", "%" + propVal + "%");
+            case "uploader":
+                return findByQuery("from Exercise where uploader like ?1", "%" + propVal + "%");
             case "tag":
                 return findByQuery(
                         "select e from Exercise e left join e.features f where f.name = 'Tags' and ((f.value like ?1) or (f.value like ?2) or "
