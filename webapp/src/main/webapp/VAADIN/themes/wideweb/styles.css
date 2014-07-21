@@ -432,14 +432,14 @@ input.default, select.default {
     width: 50px;
     height: 50px;
     margin-top: 0px;
-    background: #c0d7dd url("img/userIco.png") no-repeat center center;
+    background: #c0d7dd url("img/userIco.png") no-repeat center 1px;
     -o-transition: background 0.2s ease-in;
     -ms-transition: background 0.2s ease-in;
     -moz-transition: background 0.2s ease-in;
     -webkit-transition: background 0.2s ease-in;
     transition: background 0.2s ease-in; }
     .header > div a.userIco:hover {
-      background: #ffba00 url("img/userIco.png") no-repeat center center; }
+      background: #ffba00 url("img/userIco.png") no-repeat center 1px; }
     .header > div a.userIco.selected {
       background-color: #459eb4; }
 

@@ -50,7 +50,8 @@ public class MainView extends Panel implements View
     // TODO @Autowired?
     // private WideService service = new WideService(PersistenceListener.getEntityManagerFactory());
 
-    private Label usernameLabel = new Label("Guest");
+    private Label usernameLabel = new Label("<p style=\"padding-top:34px; color: white; text-align: center; font-family: education;\">Guest</p>",
+            ContentMode.HTML);
     private Label rolesLabel = new Label();
 
     private CustomLayout layout;
@@ -119,11 +120,12 @@ public class MainView extends Panel implements View
                 roles.add(grantedAuthority.getAuthority());
             }
 
-            this.usernameLabel.setValue(user.getUsername());
+            this.usernameLabel.setValue("<p style=\"padding-top:34px; color: white; text-align: center; font-family: education;\">" + user.getUsername()
+                    + "</p>");
             this.rolesLabel.setValue(StringUtils.join(roles, ","));
             this.cache.setUserName(user.getUsername());
         } else {
-            this.usernameLabel.setValue("Guest");
+            this.usernameLabel.setValue("<p style=\"padding-top:34px; color: white; text-align: center; font-family: education;\">Guest</p>");
             this.rolesLabel.setValue("");
             this.cache.setUserName("Guest");
         }

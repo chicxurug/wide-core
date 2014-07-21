@@ -76,7 +76,8 @@ public class ExerciseView extends Panel implements View {
         sb.append("</ul>");
         layout.addComponent(new Label(exDesc, ContentMode.HTML), "lessonDesc");
         layout.addComponent(new Label(sb.toString(), ContentMode.HTML), "links");
-        layout.addComponent(new Label(cache.getUsername()), "auth_user");
+        layout.addComponent(new Label("<p style=\"padding-top:34px; color: white; text-align: center; font-family: education;\">" + cache.getUsername()
+                + "</p>", ContentMode.HTML), "auth_user");
 
         setContent(layout);
         ViewUtils.injectJs("/VAADIN/themes/wideweb/js/subHeader.js");
