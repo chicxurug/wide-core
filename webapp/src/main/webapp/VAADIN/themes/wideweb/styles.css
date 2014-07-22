@@ -925,6 +925,8 @@ input.default, select.default {
         padding-left: 8px;
         padding-right: 8px; }
       .welcome .main .search .input input[type="text"] {
+        border-color: #c0d7dd;
+        border-width: 1px;
         color: #444444;
         font-size: 18px;
         font-family: education;
@@ -940,10 +942,9 @@ input.default, select.default {
         -moz-border-radius-topleft: 16px;
         border-top-left-radius: 16px;
         padding-right: 30px;
-        background-color: white; }
+        background-color: #eaf0f1; }
         .welcome .main .search .input input[type="text"]:focus {
-          outline: none;
-          background-color: white; }
+          outline: none; }
         .welcome .main .search .input input[type="text"].default {
           color: #aaa !important; }
       .welcome .main .search .input input[type="submit"] {
