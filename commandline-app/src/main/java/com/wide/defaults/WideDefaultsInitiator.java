@@ -115,7 +115,7 @@ public class WideDefaultsInitiator {
 
     }
 
-    private void initDefaultsFromMM(File mmFile) throws ParserConfigurationException, SAXException, IOException {
+    private void initDefaultsFromMM(File mmFile, boolean generateRandom) throws ParserConfigurationException, SAXException, IOException {
         Map<Node, Category> nodeCategories = new HashMap<Node, Category>();
         ArrayList<Category> categoryList = new ArrayList<Category>();
         Category root = null;
@@ -141,7 +141,9 @@ public class WideDefaultsInitiator {
         this.service.createCategory(root);
         for (Category category : categoryList) {
             this.service.createCategory(category);
-            generateRandomExercises(category);
+            if (generateRandom) {
+                generateRandomExercises(category);
+            }
         }
     }
 
@@ -167,7 +169,7 @@ public class WideDefaultsInitiator {
         if (args.length == 0) {
             main.initDefaults();
         } else {
-            main.initDefaultsFromMM(new File(args[0]));
+            main.initDefaultsFromMM(new File(args[0]), Boolean.parseBoolean(args[1]));
         }
         // Close at application end
         emf.close();
