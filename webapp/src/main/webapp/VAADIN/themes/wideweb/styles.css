@@ -281,7 +281,8 @@ div.lesson {
       font-size: 18px;
       font-weight: bold;
       line-height: 20px;
-      color: white; }
+      color: white;
+      word-break: break-all; }
     div.lesson div.lessonHeader .author {
       line-height: 20px;
       margin-top: 9px;
@@ -382,6 +383,9 @@ div.lesson {
     width: 125px; }
     .left > div > ul.breadcrumb > div > li > a.exercise {
       background: #e80c7a;
+      white-space: nowrap;
+  	  overflow: hidden;
+      text-overflow: ellipsis;
     }
     .left > div > ul.breadcrumb > div > li > a:hover {
       border-left: 6px solid #ffba00;

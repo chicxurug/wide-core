@@ -11,4 +11,6 @@ public interface ContentFilterInterface {
     public boolean isFiltered(Exercise ex);
 
     public boolean isFiltered(Test test);
+
+    public boolean isNoneFiltered();
 }

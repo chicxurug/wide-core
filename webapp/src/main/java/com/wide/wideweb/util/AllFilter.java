@@ -37,4 +37,9 @@ public class AllFilter implements ContentFilterInterface {
         return false;
     }
 
+    @Override
+    public boolean isNoneFiltered() {
+        return false;
+    }
+
 }

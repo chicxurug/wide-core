@@ -4,8 +4,11 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Queue;
 
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FileResource;
@@ -88,35 +91,58 @@ public class ViewUtils {
         return new Label(sb.toString(), ContentMode.HTML);
     }
 
-    public static Component getSecondaryLevel(Category category, ContentFilterInterface filter) {
+    public static Component getSecondaryLevel(Category category, ContentFilterInterface filter, boolean isRecursive) {
         ViewDataCache cache = ViewDataCache.getInstance();
         String basepath = getBasePath();
         if (category.getParent() == null) {
-            return new Label("<ul class=\"filterList\">"
-                    + "<li class=\"folder\">"
-                    + "         <img class=\"icon\" src=\"" + basepath + "/layouts/example/1.jpg\" />"
-                    + "         <div class=\"title\">This is a Mississippi long like subcategory name as you see</div>"
-                    + "         <div class=\"subfolders\">Subcategories: <b>82</b></div>"
-                    + "         <div class=\"lessons\">Lessons: <b>33</b></div>"
-                    + "         <div class=\"tests\">Tests: <b>12</b></div>"
-                    + "</li>"
-                    + "<li class=\"folder\">"
-                    + "         <img class=\"icon\" src=\"" + basepath + "/layouts/example/3.jpg\" />"
-                    + "         <div class=\"title\">This is a Mississippi long like subcategory name as you see</div>"
-                    + "         <div class=\"subfolders\">Subcategories: <b>82</b></div>"
-                    + "         <div class=\"lessons\">Lessons: <b>33</b></div>"
-                    + "         <div class=\"tests\">Tests: <b>12</b></div>"
-                    + "</li>"
-                    + "<li class=\"lesson\">"
-                    + "         <img class=\"icon\" src=\"" + basepath + "/layouts/example/2.jpg\" />"
-                    + "         <div class=\"title\"><div class=\"schoolLevel university\"></div>This is a Mississippi long like lesson name as you see</div>"
-                    + "         <img class=\"level\" src=\"" + basepath + "/img/level2.png\" />"
-                    + "         <img class=\"rank\" src=\"" + basepath + "/img/rank4.png\" />"
-                    + "         <div class=\"author\">Author: <a href=\"#\">Stephen Hawking</a></div>"
-                    + "</li>"
-                    + "</ul>", ContentMode.HTML);
+            return new Label(
+                    "<ul class=\"filterList\">"
+                            + "<li class=\"folder\">"
+                            + "         <img class=\"icon\" src=\""
+                            + basepath
+                            + "/layouts/example/1.jpg\" />"
+                            + "         <div class=\"title\" style=\"word-break: break-all;\">This is a Mississippi long like subcategory name as you see</div>"
+                            + "         <div class=\"subfolders\">Subcategories: <b>82</b></div>"
+                            + "         <div class=\"lessons\">Lessons: <b>33</b></div>"
+                            + "         <div class=\"tests\">Tests: <b>12</b></div>"
+                            + "</li>"
+                            + "<li class=\"folder\">"
+                            + "         <img class=\"icon\" src=\""
+                            + basepath
+                            + "/layouts/example/3.jpg\" />"
+                            + "         <div class=\"title\" style=\"word-break: break-all;\">This is a Mississippi long like subcategory name as you see</div>"
+                            + "         <div class=\"subfolders\">Subcategories: <b>82</b></div>"
+                            + "         <div class=\"lessons\">Lessons: <b>33</b></div>"
+                            + "         <div class=\"tests\">Tests: <b>12</b></div>"
+                            + "</li>"
+                            + "<li class=\"lesson\">"
+                            + "         <img class=\"icon\" src=\""
+                            + basepath
+                            + "/layouts/example/2.jpg\" />"
+                            + "         <div class=\"title\" style=\"word-break: break-all;\"><div class=\"schoolLevel university\"></div>This is a Mississippi long like lesson name as you see</div>"
+                            + "         <img class=\"level\" src=\"" + basepath + "/img/level2.png\" />"
+                            + "         <img class=\"rank\" src=\"" + basepath + "/img/rank4.png\" />"
+                            + "         <div class=\"author\">Author: <a href=\"#\">Stephen Hawking</a></div>"
+                            + "</li>"
+                            + "</ul>", ContentMode.HTML);
         } else {
-            final Collection<Category> mainCategories = cache.getCategories().get(category);
+            Collection<Category> mainCategories = new HashSet<Category>(cache.getCategories().get(category));
+            Collection<Exercise> exercises = new ArrayList<Exercise>(cache.getExerciseByCategory(category));
+            Collection<Test> tests = cache.getTestsByCategory(category);
+
+            if (isRecursive) {
+                Queue<Category> cats = new ArrayDeque<Category>(mainCategories);
+                while (!cats.isEmpty()) {
+                    Category cat = cats.remove();
+                    mainCategories.addAll(cache.getCategories().get(cat));
+                    cats.addAll(cache.getCategories().get(cat));
+                }
+                for (Category cat : mainCategories) {
+                    exercises.addAll(cache.getExerciseByCategory(cat));
+                    tests.addAll(cache.getTestsByCategory(cat));
+                }
+            }
+
             StringBuilder sb = new StringBuilder("<ul class=\"filterList\">\n");
             for (Category cat : mainCategories) {
                 if (filter.isFiltered(cat)) {
@@ -124,21 +150,21 @@ public class ViewUtils {
                 }
                 sb.append("<li class=\"folder\">\n"
                         + "         <img class=\"icon\" src=\"" + basepath + "/layouts/example/1.jpg\" />\n"
-                        + "         <div class=\"title\">" + cat.getName() + "</div>\n"
+                        + "         <div class=\"title\" style=\"word-break: break-all;\">" + cat.getName() + "</div>\n"
                         + "         <div class=\"subfolders\">Subcategories: <b>" + cache.getCategories().get(cat).size() + "</b></div>\n"
                         + "         <div class=\"lessons\">Lessons: <b>" + cache.getExerciseByCategory(cat).size() + "</b></div>\n"
                         + "         <div class=\"tests\">Tests: <b>" + cache.getTestsByCategory(cat).size() + "</b></div>\n"
                         + "</li>\n");
             }
 
-            final Collection<Exercise> exercises = cache.getExerciseByCategory(category);
             for (Exercise ex : exercises) {
                 if (filter.isFiltered(ex)) {
                     continue;
                 }
                 sb.append("<li id=" + ex.getId() + " class=\"lesson\">"
                         + "         <img class=\"icon\" src=\"" + basepath + "/layouts/example/2.jpg\" />"
-                        + "         <div class=\"title\"><div class=\"schoolLevel " + ex.getLevel().getDescription().replaceAll(" ", "_") + "\"></div>"
+                        + "         <div class=\"title\" style=\"word-break: break-all;\"><div class=\"schoolLevel "
+                        + ex.getLevel().getDescription().replaceAll(" ", "_") + "\"></div>"
                         + ex.getTitle() + "</div>"
                         + "         <img class=\"level\" src=\"" + getImgPath(ex, "difficulty") + "\" width=24 height=16/>"
                         + "         <img class=\"rank\" src=\"" + getImgPath(ex, "score") + "\" width=92 height=16/>"
@@ -146,14 +172,13 @@ public class ViewUtils {
                         + "         </li>\n");
             }
 
-            final Collection<Test> tests = cache.getTestsByCategory(category);
             for (Test t : tests) {
                 if (filter.isFiltered(t)) {
                     continue;
                 }
                 sb.append("<li class=\"test\">"
                         + "         <img class=\"icon\" src=\"" + basepath + "/layouts/example/3.jpg\" />"
-                        + "         <div class=\"title\">" + t.getDescription() + "</div>"
+                        + "         <div class=\"title\" style=\"word-break: break-all;\">" + t.getDescription() + "</div>"
                         + "         <div class=\"lessons\">Lessons: <b>" + t.getExercises().size() + "</b></div>\n"
                         + "         </li>\n");
             }
@@ -175,7 +200,7 @@ public class ViewUtils {
             }
             sb.append("<li class=\"folder\">\n"
                     + "         <img class=\"icon\" src=\"" + basepath + "/layouts/example/1.jpg\" />\n"
-                    + "         <div class=\"title\">" + cat.getName() + "</div>\n"
+                    + "         <div class=\"title\" style=\"word-break: break-all;\">" + cat.getName() + "</div>\n"
                     + "         <div class=\"subfolders\">Subcategories: <b>" + cache.getCategories().get(cat).size() + "</b></div>\n"
                     + "         <div class=\"lessons\">Lessons: <b>" + cache.getExerciseByCategory(cat).size() + "</b></div>\n"
                     + "         <div class=\"tests\">Tests: <b>" + cache.getTestsByCategory(cat).size() + "</b></div>\n"
@@ -186,7 +211,8 @@ public class ViewUtils {
         for (Exercise ex : exercises) {
             sb.append("<li id=" + ex.getId() + " class=\"lesson\">"
                     + "         <img class=\"icon\" src=\"" + basepath + "/layouts/example/2.jpg\" />"
-                    + "         <div class=\"title\"><div class=\"schoolLevel " + ex.getLevel().getDescription().replaceAll(" ", "_") + "\"></div>"
+                    + "         <div class=\"title\" style=\"word-break: break-all;\"><div class=\"schoolLevel "
+                    + ex.getLevel().getDescription().replaceAll(" ", "_") + "\"></div>"
                     + ex.getTitle() + "</div>"
                     + "         <img class=\"level\" src=\"" + getImgPath(ex, "difficulty") + "\"  width=24 height=16/>"
                     + "         <img class=\"rank\" src=\"" + getImgPath(ex, "score") + "\" width=92 height=16/>"
@@ -201,7 +227,7 @@ public class ViewUtils {
             }
             sb.append("<li class=\"test\">"
                     + "         <img class=\"icon\" src=\"" + basepath + "/layouts/example/3.jpg\" />"
-                    + "         <div class=\"title\">" + t.getDescription() + "</div>"
+                    + "         <div class=\"title\" style=\"word-break: break-all;\">" + t.getDescription() + "</div>"
                     + "         <div class=\"lessons\">Lessons: <b>" + t.getExercises().size() + "</b></div>\n"
                     + "         </li>\n");
         }
@@ -218,7 +244,8 @@ public class ViewUtils {
         for (Exercise ex : exercises) {
             sb.append("<li id=" + ex.getId() + " class=\"lesson\">"
                     + "         <img class=\"icon\" src=\"" + basepath + "/layouts/example/2.jpg\" />"
-                    + "         <div class=\"title\"><div class=\"schoolLevel " + ex.getLevel().getDescription().replaceAll(" ", "_") + "\"></div>"
+                    + "         <div class=\"title\" style=\"word-break: break-all;\"><div class=\"schoolLevel "
+                    + ex.getLevel().getDescription().replaceAll(" ", "_") + "\"></div>"
                     + ex.getTitle() + "</div>"
                     + "         <img class=\"level\" src=\"" + getImgPath(ex, "difficulty") + "\"  width=24 height=16/>"
                     + "         <img class=\"rank\" src=\"" + getImgPath(ex, "score") + "\" width=92 height=16/>"

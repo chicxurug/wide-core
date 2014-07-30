@@ -68,7 +68,7 @@ public class MainView extends Panel implements View
         this.layout.addComponent(ViewUtils.getCategoryList(this.cache.getRootCategory(), "#!" + ViewUtils.MAIN), "mainMenuItems");
         this.layout.addComponent(ViewUtils.getCategoryList(this.cache.getRootCategory()), "subMenuItems");
         this.layout.addComponent(new Label("", ContentMode.HTML), "crumb");
-        this.layout.addComponent(ViewUtils.getSecondaryLevel(this.cache.getRootCategory(), new com.wide.wideweb.util.EmptyFilter()), "secondaryLevel");
+        this.layout.addComponent(ViewUtils.getSecondaryLevel(this.cache.getRootCategory(), new com.wide.wideweb.util.EmptyFilter(), false), "secondaryLevel");
         this.layout.addComponent(this.usernameLabel, "auth_user");
         setContent(this.layout);
 
@@ -86,7 +86,7 @@ public class MainView extends Panel implements View
             ViewUtils.setCurrentExercise(null);
             this.layout.replaceComponent(this.layout.getComponent("crumb"), ViewUtils.getBreadCrumb(ViewUtils.getCurrentCategory()));
             this.layout.replaceComponent(this.layout.getComponent("secondaryLevel"), ViewUtils.getSecondaryLevel(ViewUtils.getCurrentCategory(),
-                    new com.wide.wideweb.util.EmptyFilter()));
+                    new com.wide.wideweb.util.EmptyFilter(), false));
         }
 
         ViewUtils.injectJs("/VAADIN/themes/wideweb/js/welcomeAnimation.js", "/VAADIN/themes/wideweb/js/subHeader.js");

@@ -6,6 +6,7 @@ import org.json.JSONException;
 import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.JavaScriptFunction;
 import com.wide.wideweb.util.CompositeFilter;
+import com.wide.wideweb.util.ContentFilterInterface;
 import com.wide.wideweb.util.ViewUtils;
 
 public class HandleFilterCategory implements JavaScriptFunction {
@@ -33,11 +34,10 @@ public class HandleFilterCategory implements JavaScriptFunction {
         boolean menu = arguments.getBoolean(7);
         boolean lesson = arguments.getBoolean(8);
         boolean test = arguments.getBoolean(9);
+        ContentFilterInterface filter = new CompositeFilter(searchText, author, publisher, book, title, submitNo, language, menu, lesson, test);
         this.layout.replaceComponent(
                 this.layout.getComponent("secondaryLevel"),
-                ViewUtils.getCurrentCategory() != null ? ViewUtils.getSecondaryLevel(ViewUtils.getCurrentCategory(), new CompositeFilter(searchText, author,
-                        publisher, book, title,
-                        submitNo, language, menu, lesson, test)) :
+                ViewUtils.getCurrentCategory() != null ? ViewUtils.getSecondaryLevel(ViewUtils.getCurrentCategory(), filter, !filter.isNoneFiltered()) :
                         ViewUtils.searchAll(searchText));
         ViewUtils.injectJs("/VAADIN/themes/wideweb/js/subHeader_full.js");
     }

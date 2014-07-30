@@ -21,4 +21,9 @@ public class EmptyFilter implements ContentFilterInterface {
         return false;
     }
 
+    @Override
+    public boolean isNoneFiltered() {
+        return true;
+    }
+
 }

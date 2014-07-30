@@ -40,7 +40,8 @@ public class HandleSubMenuSelect implements JavaScriptFunction {
             boolean test = arguments.getBoolean(3);
             this.layout.replaceComponent(this.layout.getComponent("crumb"), ViewUtils.getBreadCrumb(selectedCategory));
             this.layout.replaceComponent(this.layout.getComponent("secondaryLevel"), ViewUtils.getSecondaryLevel(selectedCategory,
-                    new CompositeFilter("Enter search keywords here", "Author", "Publisher", "Book", "Title", "Submits No.", "Language", menu, lesson, test)));
+                    new CompositeFilter("Enter search keywords here", "Author", "Publisher", "Book", "Title", "Submits No.", "Language", menu, lesson, test),
+                    false));
             ViewUtils.injectJs("/VAADIN/themes/wideweb/js/subHeader_full.js");
         } catch (InterruptedException e) {
             ViewUtils.injectJs("/VAADIN/themes/wideweb/js/subHeader_full.js");

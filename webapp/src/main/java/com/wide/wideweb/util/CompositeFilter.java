@@ -6,6 +6,14 @@ import com.wide.domainmodel.Test;
 
 public class CompositeFilter implements ContentFilterInterface {
 
+    public static final String DEF_SEARCH_TEXT = "Enter search keywords here";
+    public static final String DEF_AUTHOR = "Author";
+    public static final String DEF_PUBLISHER = "Publisher";
+    public static final String DEF_BOOK = "Book";
+    public static final String DEF_TITLE = "Title";
+    public static final String DEF_SUBMITNO = "Submits No.";
+    public static final String DEF_LANGUAGE = "Language";
+
     private String searchText;
     private String author;
     private String publisher;
@@ -25,7 +33,7 @@ public class CompositeFilter implements ContentFilterInterface {
         this.publisher = publisher;
         this.book = book;
         this.title = title;
-        this.submitNo = "Submits No.".equals(submitNo) ? 0 : Integer.parseInt(submitNo);
+        this.submitNo = DEF_SUBMITNO.equals(submitNo) ? 0 : Integer.parseInt(submitNo);
         this.language = language;
         this.menu = menu;
         this.lesson = lesson;
@@ -37,7 +45,7 @@ public class CompositeFilter implements ContentFilterInterface {
         if (!this.menu) {
             return true;
         }
-        if (!"Enter search keywords here".equals(this.searchText) && !cat.getName().contains(this.searchText)) {
+        if (!DEF_SEARCH_TEXT.equals(this.searchText) && !cat.getName().contains(this.searchText)) {
             return true;
         }
         return false;
@@ -48,26 +56,26 @@ public class CompositeFilter implements ContentFilterInterface {
         if (!this.lesson) {
             return true;
         }
-        if (!"Enter search keywords here".equals(this.searchText) && !ex.getTitle().contains(this.searchText)) {
+        if (!DEF_SEARCH_TEXT.equals(this.searchText) && !ex.getTitle().contains(this.searchText)) {
             return true;
         }
-        if (!"Author".equals(this.author) && !ex.getAuthor().contains(this.author)) {
+        if (!DEF_AUTHOR.equals(this.author) && !ex.getAuthor().contains(this.author)) {
             return true;
         }
-        if (!"Publisher".equals(this.publisher) && !ex.getPublisher().contains(this.publisher)) {
+        if (!DEF_PUBLISHER.equals(this.publisher) && !ex.getPublisher().contains(this.publisher)) {
             return true;
         }
-        if (!"Book".equals(this.book) && !ex.getBookTitle().contains(this.book)) {
+        if (!DEF_BOOK.equals(this.book) && !ex.getBookTitle().contains(this.book)) {
             return true;
         }
-        if (!"Title".equals(this.title) && !ex.getTitle().contains(this.title)) {
+        if (!DEF_TITLE.equals(this.title) && !ex.getTitle().contains(this.title)) {
             return true;
         }
         // TODO: add logic
         if (this.submitNo < 0) {
             return true;
         }
-        if (!"Language".equals(this.language) && !ex.getLanguage().contains(this.language)) {
+        if (!DEF_LANGUAGE.equals(this.language) && !ex.getLanguage().contains(this.language)) {
             return true;
         }
         return false;
@@ -78,10 +86,16 @@ public class CompositeFilter implements ContentFilterInterface {
         if (!this.test) {
             return true;
         }
-        if (!"Enter search keywords here".equals(this.searchText) && !test.getDescription().contains(this.searchText)) {
+        if (!DEF_SEARCH_TEXT.equals(this.searchText) && !test.getDescription().contains(this.searchText)) {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public boolean isNoneFiltered() {
+        return DEF_SEARCH_TEXT.equals(this.searchText) && DEF_AUTHOR.equals(this.author) && DEF_PUBLISHER.equals(this.publisher) && DEF_BOOK.equals(this.book)
+                && DEF_TITLE.equals(this.title) && DEF_LANGUAGE.equals(this.language) && (this.submitNo == 0);
     }
 
 }
