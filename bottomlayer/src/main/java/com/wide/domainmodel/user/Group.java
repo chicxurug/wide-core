@@ -1,5 +1,6 @@
 package com.wide.domainmodel.user;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -21,6 +22,15 @@ public class Group {
     private Long id;
     private String group_name;
     private List<User> members;
+
+    public Group() {
+
+    }
+
+    public Group(String group_name) {
+        this.group_name = group_name;
+        this.members = new ArrayList<User>();
+    }
 
     public String getGroup_name() {
         return this.group_name;

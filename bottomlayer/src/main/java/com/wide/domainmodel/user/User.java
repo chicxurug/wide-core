@@ -1,8 +1,11 @@
 package com.wide.domainmodel.user;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -15,6 +18,17 @@ public class User {
     private String username;
     private String password;
     private Boolean enabled;
+    private Profile profile;
+
+    public User() {
+        this.enabled = false;
+    }
+
+    public User(String name, String pwd, boolean enabled) {
+        this.username = name;
+        this.password = pwd;
+        this.enabled = enabled;
+    }
 
     public String getUsername() {
         return this.username;
@@ -49,6 +63,15 @@ public class User {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "account", cascade = CascadeType.ALL)
+    public Profile getProfile() {
+        return this.profile;
+    }
+
+    public void setProfile(Profile profile) {
+        this.profile = profile;
     }
 
 }

@@ -15,6 +15,7 @@
 <!--         <form-login login-page="/login/" authentication-failure-url="/login/?error=true"/> -->
     </http>
 
+	
     <authentication-manager alias="authenticationManager">
         <authentication-provider>
             <user-service>
@@ -25,6 +26,18 @@
                 <user name="hpeter" password="hpeter" authorities="ROLE_ADMIN, ROLE_USER" />
             </user-service>
         </authentication-provider>
+        <authentication-provider>
+        	<password-encoder hash="sha" />
+    		<jdbc-user-service data-source-ref="dataSource" users-by-username-query="select username,password,enabled from wuser where username=?" authorities-by-username-query="select u.username, r.group_name from wuser u, wgroup r, usergroups ug where u.id = ug.user_id and r.id = ug.group_id and u.username =?" />
+		</authentication-provider>
     </authentication-manager>
+    
+    
+    <beans:bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	    <beans:property name="driverClassName" value="org.postgresql.Driver" />
+	    <beans:property name="url" value="jdbc:postgresql://localhost:5433/wide" />
+	    <beans:property name="username" value="postgres" />
+	    <beans:property name="password" value="postgres" />
+	</beans:bean>
 
 </beans:beans>

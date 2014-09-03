@@ -2,9 +2,13 @@ package com.wide.domainmodel.user;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -19,9 +23,14 @@ public class Profile {
     private Date date_of_birth;
     private String edu_level;
     private String interests;
+    private User account;
 
     public Profile() {
 
+    }
+
+    public Profile(String name) {
+        this.name = name;
     }
 
     @Id
@@ -73,6 +82,16 @@ public class Profile {
 
     public void setInterests(String interests) {
         this.interests = interests;
+    }
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "frn_user_id")
+    public User getAccount() {
+        return this.account;
+    }
+
+    public void setAccount(User account) {
+        this.account = account;
     }
 
 }

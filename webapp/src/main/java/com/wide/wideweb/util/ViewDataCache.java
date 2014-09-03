@@ -14,6 +14,7 @@ import com.google.common.collect.Multimap;
 import com.wide.domainmodel.Category;
 import com.wide.domainmodel.Exercise;
 import com.wide.domainmodel.Test;
+import com.wide.domainmodel.user.User;
 import com.wide.persistence.PersistenceListener;
 import com.wide.service.WideService;
 
@@ -32,12 +33,14 @@ public final class ViewDataCache implements Serializable {
         this.exercises.clear();
         initCategories();
         initTests();
+        initUsers();
     }
 
     private Category rootCategory;
     private Multimap<Category, Category> categories = ArrayListMultimap.create();
     private Multimap<Category, Exercise> exercises = ArrayListMultimap.create();
     private List<Test> tests = new ArrayList<Test>();
+    private List<User> users = new ArrayList<User>();
 
     private String username;
 
@@ -83,6 +86,11 @@ public final class ViewDataCache implements Serializable {
     private void initTests() {
         this.tests.clear();
         this.tests.addAll(this.service.getTests());
+    }
+
+    public void initUsers() {
+        this.users.clear();
+        this.users.addAll(this.service.getUsers());
     }
 
     public Category getRootCategory() {
@@ -182,6 +190,10 @@ public final class ViewDataCache implements Serializable {
         }
 
         return found;
+    }
+
+    public List<User> getUsers() {
+        return this.users;
     }
 
 }

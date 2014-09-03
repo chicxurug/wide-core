@@ -11,6 +11,8 @@ import com.wide.domainmodel.Exercise;
 import com.wide.domainmodel.ExercisePoint;
 import com.wide.domainmodel.Feature;
 import com.wide.domainmodel.Test;
+import com.wide.domainmodel.user.Group;
+import com.wide.domainmodel.user.User;
 
 public class WideDAO extends BaseDAO {
 
@@ -22,12 +24,24 @@ public class WideDAO extends BaseDAO {
         return save(e);
     }
 
+    public User saveOrUpdateUser(User u) {
+        return save(u);
+    }
+
+    public Group saveOrUpdateGroup(Group g) {
+        return save(g);
+    }
+
     public List<Exercise> getExercises() {
         return findAll(Exercise.class);
     }
 
     public List<Test> getTests() {
         return findAll(Test.class);
+    }
+
+    public List<User> getUsers() {
+        return findAll(User.class);
     }
 
     public List<Exercise> getExercisesByCategory(Category category) {
@@ -77,6 +91,17 @@ public class WideDAO extends BaseDAO {
             result = findUniqueByQuery("from Category where name = ?1", name);
         } catch (NoResultException e) {
             result = new Category(name, parent);
+            create(result);
+        }
+        return result;
+    }
+
+    public Group getOrCreateGroup(String gname) {
+        Group result;
+        try {
+            result = findUniqueByQuery("from Group where group_name = ?1", gname);
+        } catch (NoResultException e) {
+            result = new Group(gname);
             create(result);
         }
         return result;
