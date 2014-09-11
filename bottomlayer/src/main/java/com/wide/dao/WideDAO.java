@@ -11,6 +11,7 @@ import com.wide.domainmodel.Exercise;
 import com.wide.domainmodel.ExercisePoint;
 import com.wide.domainmodel.Feature;
 import com.wide.domainmodel.Test;
+import com.wide.domainmodel.stat.LogEntry;
 import com.wide.domainmodel.user.Group;
 import com.wide.domainmodel.user.User;
 
@@ -145,4 +146,7 @@ public class WideDAO extends BaseDAO {
         delete(e);
     }
 
+    public LogEntry saveLog(LogEntry entry) {
+        return save(entry);
+    }
 }

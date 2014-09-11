@@ -22,6 +22,10 @@ import com.wide.domainmodel.Category;
 import com.wide.domainmodel.Exercise;
 import com.wide.domainmodel.Feature;
 import com.wide.domainmodel.Test;
+import com.wide.domainmodel.stat.LogEntry;
+import com.wide.domainmodel.stat.LogEntry.EntryType;
+import com.wide.persistence.PersistenceListener;
+import com.wide.service.WideService;
 
 /**
  * 
@@ -351,5 +355,37 @@ public class ViewUtils {
             }
         }
         return "";
+    }
+
+    public static void logEntry(EntryType type) {
+        ViewDataCache cache = ViewDataCache.getInstance();
+        WideService service = new WideService(PersistenceListener.getEntityManagerFactory());
+        switch (type) {
+            case VIEW_EXERCISE:
+            case CHECK_SOLUTION:
+                service.saveLog(new LogEntry(cache.getUser(), type, "EX_" + getCurrentExercise().getId()));
+                break;
+            default:
+                break;
+        }
+    }
+
+    public static void logEntry(EntryType type, String extra) {
+        ViewDataCache cache = ViewDataCache.getInstance();
+        WideService service = new WideService(PersistenceListener.getEntityManagerFactory());
+        switch (type) {
+            case SUBMIT_SOLUTION:
+                service.saveLog(new LogEntry(cache.getUser(), type, "EX_" + getCurrentExercise().getId()
+                        + (getFeatureValue(getCurrentExercise(), FeatureFactory.SHORT_ANSWER).equals(extra) ? "_SOLVED" : "_WRONG"), extra));
+                break;
+            case ADD_EXERCISE:
+            case MODIFY_EXERCISE:
+                service.saveLog(new LogEntry(cache.getUser(), type, "EX_" + extra));
+            case SEARCH_EXERCISE:
+                service.saveLog(new LogEntry(cache.getUser(), type, "SEARCH", extra));
+                break;
+            default:
+                break;
+        }
     }
 }

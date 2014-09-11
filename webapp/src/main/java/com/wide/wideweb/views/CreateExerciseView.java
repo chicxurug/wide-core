@@ -16,6 +16,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Notification;
 import com.wide.domainmodel.Exercise;
+import com.wide.domainmodel.stat.LogEntry.EntryType;
 import com.wide.wideweb.util.ViewDataCache;
 import com.wide.wideweb.util.ViewUtils;
 
@@ -52,9 +53,10 @@ public class CreateExerciseView extends AbstractExerciseView {
             view.form.commit();
             logger.info("Exercise created: {}", view.current);
             Exercise dbExercise = view.current.convert(); // convert wrapper bean to DB entity
-            view.service.saveOrUpdateExercise(dbExercise);
+            Long exId = view.service.saveOrUpdateExercise(dbExercise).getId();
             Notification.show("Exercise created! You are awesome!");
             ViewDataCache.getInstance().doAllInit();
+            ViewUtils.logEntry(EntryType.ADD_EXERCISE, exId.toString());
         } catch (CommitException e) {
             logger.error("Error during commiting newly created exercise.", e);
             Notification.show("Fatal error. :(");

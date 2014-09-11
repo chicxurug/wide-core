@@ -5,6 +5,7 @@ import org.json.JSONException;
 
 import com.vaadin.navigator.Navigator;
 import com.vaadin.ui.JavaScriptFunction;
+import com.wide.domainmodel.stat.LogEntry;
 import com.wide.wideweb.util.ViewDataCache;
 import com.wide.wideweb.util.ViewUtils;
 
@@ -30,5 +31,6 @@ public class HandleOpenExcersize implements JavaScriptFunction {
             ViewUtils.setCurrentCategory(ViewUtils.getCurrentExercise().getCategory());
         }
         this.navigator.navigateTo(ViewUtils.VIEW_EXERCISE);
+        ViewUtils.logEntry(LogEntry.EntryType.VIEW_EXERCISE);
     }
 }

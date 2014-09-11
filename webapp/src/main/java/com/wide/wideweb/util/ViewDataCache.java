@@ -3,9 +3,11 @@ package com.wide.wideweb.util;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
@@ -40,7 +42,7 @@ public final class ViewDataCache implements Serializable {
     private Multimap<Category, Category> categories = ArrayListMultimap.create();
     private Multimap<Category, Exercise> exercises = ArrayListMultimap.create();
     private List<Test> tests = new ArrayList<Test>();
-    private List<User> users = new ArrayList<User>();
+    private Map<String, User> users = new HashMap<String, User>();
 
     private String username;
 
@@ -90,7 +92,10 @@ public final class ViewDataCache implements Serializable {
 
     public void initUsers() {
         this.users.clear();
-        this.users.addAll(this.service.getUsers());
+        List<User> users = this.service.getUsers();
+        for (User u : users) {
+            this.users.put(u.getUsername(), u);
+        }
     }
 
     public Category getRootCategory() {
@@ -193,7 +198,13 @@ public final class ViewDataCache implements Serializable {
     }
 
     public List<User> getUsers() {
-        return this.users;
+        List<User> users = new ArrayList<User>();
+        users.addAll(this.users.values());
+        return users;
+    }
+
+    public User getUser() {
+        return this.users.get(this.username);
     }
 
 }

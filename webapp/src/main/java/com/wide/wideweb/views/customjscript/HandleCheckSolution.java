@@ -9,6 +9,7 @@ import com.vaadin.ui.JavaScript;
 import com.vaadin.ui.JavaScriptFunction;
 import com.vaadin.ui.Label;
 import com.wide.domainmodel.Exercise;
+import com.wide.domainmodel.stat.LogEntry;
 import com.wide.wideweb.util.FeatureFactory;
 import com.wide.wideweb.util.ViewUtils;
 
@@ -40,11 +41,13 @@ public class HandleCheckSolution implements JavaScriptFunction {
                     .execute(
                             "window.$(\".solutionBar .yourSolution > input\").val('" + answer + " - " + (shortAnswer.equals(answer) ? "Correct" : "Wrong")
                                     + "');");
+            ViewUtils.logEntry(LogEntry.EntryType.SUBMIT_SOLUTION, answer);
         } else {
             String solutionText = ViewUtils.getFeatureValue(currentEx, FeatureFactory.SOLUTION_TEXT);
             this.layout.addComponent(new Label(solutionText, ContentMode.HTML), "lessonDesc");
             this.layout.addComponent(ViewUtils.getBreadCrumb(currentEx.getCategory(), currentEx), "crumb");
             ViewUtils.injectJs("/VAADIN/themes/wideweb/js/subHeader_full.js");
+            ViewUtils.logEntry(LogEntry.EntryType.CHECK_SOLUTION);
         }
     }
 }

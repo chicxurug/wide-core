@@ -1,5 +1,7 @@
 package com.wide.domainmodel;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -11,7 +13,12 @@ import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "Feature")
-public class Feature {
+public class Feature implements Serializable {
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 8758934824728650210L;
 
     public enum FeatureType {
         SHORT_TEXT,

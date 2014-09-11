@@ -6,6 +6,7 @@ import org.json.JSONException;
 import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.JavaScript;
 import com.vaadin.ui.JavaScriptFunction;
+import com.wide.domainmodel.stat.LogEntry.EntryType;
 import com.wide.wideweb.util.ViewUtils;
 
 public class HandleFilterWelcome implements JavaScriptFunction {
@@ -27,5 +28,6 @@ public class HandleFilterWelcome implements JavaScriptFunction {
         this.layout.replaceComponent(this.layout.getComponent("secondaryLevel"), ViewUtils.searchAll(searchText));
         JavaScript.getCurrent().execute("window.$(\"body\").removeClass(\"welcome\");window.$( \".searchInput\" ).trigger(\"click\");");
         ViewUtils.injectJs("/VAADIN/themes/wideweb/js/subHeader_full.js");
+        ViewUtils.logEntry(EntryType.SEARCH_EXERCISE, searchText);
     }
 }
