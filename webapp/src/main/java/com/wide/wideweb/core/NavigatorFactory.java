@@ -133,5 +133,4 @@ public class NavigatorFactory implements ApplicationContextAware, InitializingBe
         return new ExceptionHandlingNavigator(wideWebAppUI, wideWebAppUI2);
 
     }
-
 }

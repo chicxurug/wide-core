@@ -284,6 +284,9 @@ public class ViewUtils {
         StringBuilder sb = new StringBuilder();
         sb.append("<img class=\"level\" src=\"" + getImgPath(ex, "difficulty") + "\"  width=24 height=16/>\n");
         sb.append("<img class=\"rank\" src=\"" + getImgPath(ex, "score") + "\" width=92 height=16/>\n");
+        sb.append("<img src=\"" + getImgPath(ex, "share") + "\" onclick=\"prompt('Your URL to this exercise is', '"
+                + Page.getCurrent().getLocation().getScheme() + ":" + Page.getCurrent().getLocation().getSchemeSpecificPart() +
+                "#!" + ViewUtils.VIEW_EXERCISE + "/" + ex.getId() + "');\" style=\"cursor: pointer; cursor: hand;\" width=16 height=16/>\n");
         sb.append("<ul class=\"source\">\n");
         sb.append("<li>Szerző: " + getSeparatedLinks("author", ex.getAuthor()) + "</li>\n");
         sb.append("<li>Könyv: " + getSeparatedLinks("booktitle", ex.getBookTitle()) + "</li>\n");
@@ -327,6 +330,9 @@ public class ViewUtils {
         }
         if ("score".equals(type)) {
             return path + (e.getScore() == null ? "0" : e.getScore()) + ".png";
+        }
+        if ("share".equals(type)) {
+            return path + ".png";
         }
 
         return "";

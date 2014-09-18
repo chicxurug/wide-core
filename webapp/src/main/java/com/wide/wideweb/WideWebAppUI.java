@@ -11,6 +11,7 @@ import com.vaadin.annotations.Theme;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.server.DefaultErrorHandler;
 import com.vaadin.server.ErrorHandler;
+import com.vaadin.server.Page;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.UI;
@@ -38,13 +39,31 @@ public class WideWebAppUI extends UI implements ErrorHandler
     @Autowired
     private NavigatorFactory navigatorFactory;
 
+    private Navigator navigator;
+
     @Override
     protected void init(final VaadinRequest request)
     {
         setSizeFull();
-        Navigator navigator = this.navigatorFactory.getNavigator(WideWebAppUI.this, WideWebAppUI.this);
+        this.navigator = this.navigatorFactory.getNavigator(WideWebAppUI.this, WideWebAppUI.this);
         VaadinSession.getCurrent().setErrorHandler(WideWebAppUI.this);
-        navigator.navigateTo(ViewUtils.MAIN);
+        String fragment = Page.getCurrent().getLocation().getFragment();
+        if (fragment != null && !fragment.isEmpty()) {
+            String[] fragParts = fragment.substring(1).split("/");
+            if (ViewUtils.VIEW_EXERCISE.equals(fragParts[0])) {
+                fragment = "/showExercise=" + fragParts[1];
+            } else {
+                fragment = "";
+            }
+        } else {
+            fragment = "";
+        }
+
+        ViewUtils.setCurrentCategory(null);
+        ViewUtils.setCurrentExercise(null);
+
+        this.navigator.navigateTo(ViewUtils.MAIN + fragment);
+        this.setNavigator(null);
     }
 
     /**
@@ -54,5 +73,12 @@ public class WideWebAppUI extends UI implements ErrorHandler
     public void error(com.vaadin.server.ErrorEvent event)
     {
         DefaultErrorHandler.doDefault(event);
+    }
+
+    @Override
+    public void doInit(VaadinRequest request, int uiId) {
+        // Workaround to get rid of the double navigation to the main view
+        super.doInit(request, uiId);
+        this.setNavigator(this.navigator);
     }
 }

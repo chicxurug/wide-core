@@ -7,6 +7,7 @@ import ru.xpoft.vaadin.VaadinView;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.Page;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.JavaScript;
@@ -14,6 +15,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
 import com.wide.domainmodel.Exercise;
 import com.wide.domainmodel.Feature;
+import com.wide.domainmodel.stat.LogEntry;
 import com.wide.wideweb.util.FeatureFactory;
 import com.wide.wideweb.util.ViewDataCache;
 import com.wide.wideweb.util.ViewUtils;
@@ -34,6 +36,15 @@ public class ExerciseView extends Panel implements View {
     @Override
     public void enter(ViewChangeEvent event) {
         ViewDataCache cache = ViewDataCache.getInstance();
+        if (event.getParameters() != null && !event.getParameters().isEmpty()) {
+            String exId = event.getParameters();
+            Page.getCurrent().setUriFragment("!" + ViewUtils.VIEW_EXERCISE, false);
+            ViewUtils.setCurrentExercise(cache.getExerciseByCategory(ViewUtils.getCurrentCategory(), exId));
+            if (ViewUtils.getCurrentCategory() == null) {
+                ViewUtils.setCurrentCategory(ViewUtils.getCurrentExercise().getCategory());
+            }
+            ViewUtils.logEntry(LogEntry.EntryType.VIEW_EXERCISE);
+        }
         Exercise currentEx = ViewUtils.getCurrentExercise();
         if (currentEx == null) {
             return;
@@ -81,6 +92,11 @@ public class ExerciseView extends Panel implements View {
 
         setContent(layout);
         ViewUtils.injectJs("/VAADIN/themes/wideweb/js/subHeader.js");
+        JavaScript.getCurrent().execute("window.$( \"body\" ).removeClass(\"welcome\");");
+        if (ViewDataCache.getInstance().getUser() == null) {
+            JavaScript.getCurrent().execute("window.$(\"input[value='Solution']\").attr(\"style\", \"color:#DF0101\"); + "
+                    + "window.$(\"input[value='Solution']\").attr(\"disabled\", \"disabled\");");
+        }
 
         JavaScript.getCurrent().removeFunction("com_wide_wideweb_checkAnswer");
         JavaScript.getCurrent().removeFunction("com_wide_wideweb_checkSolution");

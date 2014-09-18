@@ -96,13 +96,6 @@ public class MainView extends Panel implements View
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event)
     {
-        if (event.getParameters() != null && !event.getParameters().isEmpty()) {
-            String params[] = event.getParameters().split("=");
-            this.layout.replaceComponent(this.layout.getComponent("secondaryLevel"), ViewUtils.searchExercisesByProperty(params[0], params[1]));
-            this.layout.addComponent(new Label("", ContentMode.HTML), "crumb");
-            Page.getCurrent().setUriFragment("!" + ViewUtils.MAIN, false);
-            ViewUtils.injectJs("/VAADIN/themes/wideweb/js/subHeader_full.js");
-        }
         JavaScript.getCurrent().removeFunction("com_wide_wideweb_loginSelect");
         JavaScript.getCurrent().removeFunction("com_wide_wideweb_createExercise");
         JavaScript.getCurrent().removeFunction("com_wide_wideweb_openExercise");
@@ -129,5 +122,17 @@ public class MainView extends Panel implements View
             this.rolesLabel.setValue("");
             this.cache.setUserName("Guest");
         }
+        if (event.getParameters() != null && !event.getParameters().isEmpty()) {
+            String params[] = event.getParameters().split("=");
+            if ("showExercise".equals(params[0])) {
+                event.getNavigator().navigateTo(ViewUtils.VIEW_EXERCISE + "/" + params[1]);
+                return;
+            }
+            this.layout.replaceComponent(this.layout.getComponent("secondaryLevel"), ViewUtils.searchExercisesByProperty(params[0], params[1]));
+            this.layout.addComponent(new Label("", ContentMode.HTML), "crumb");
+            Page.getCurrent().setUriFragment("!" + ViewUtils.MAIN, false);
+            ViewUtils.injectJs("/VAADIN/themes/wideweb/js/subHeader_full.js");
+        }
+        ViewUtils.injectJs("/VAADIN/themes/wideweb/js/subHeader.js");
     }
 }
