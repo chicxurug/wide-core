@@ -154,6 +154,9 @@ window.$( ".donate").click(function() {
 window.$( ".aboutUs").click(function() {
     com_wide_wideweb_editExercise(window.$(this).text());
 });
+window.$( ".gIco").click(function() {
+    com_wide_wideweb_sendCart();
+});
 window.$( "input[value='Submit']" ).click(function() {
 	com_wide_wideweb_checkAnswer(window.$(".solutionBar .yourSolution > input").val());    
     window.$(".solutionBar .yourSolution > input").removeClass("filled");
@@ -174,5 +177,30 @@ window.$(".solutionBar .yourSolution > input").blur(function() {
 	if(this.value == "") {
         window.$(this).val($solutionDefaultText);
         window.$(this).addClass("default");
+    }
+});
+window.$( "#dialog-message" ).dialog({
+    autoOpen : false,
+    open: function() {
+        $(this).parents(".ui-dialog:first").find('.ui-dialog-titlebar').css('font-size','10pt');
+        $('.ui-dialog-buttonpane').find('button').css('font-size','10pt');
+        document.getElementById("share_url").select();
+        $(".ui-dialog-titlebar-close").hide();
+    },
+    modal: true,
+    resizable: false,
+    width: 500,
+    maxHeight: 400,
+    draggable: true,
+    show: 'fade',
+    hide: 'fade',
+    buttons: {
+        Add: function() {
+        	com_wide_wideweb_addCurExToCart();
+            $( this ).dialog( "close" );
+        },
+        Close: function() {
+            $( this ).dialog( "close" );
+        }
     }
 });

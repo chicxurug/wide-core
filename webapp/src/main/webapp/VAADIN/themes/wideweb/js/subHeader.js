@@ -42,7 +42,7 @@ window.$( document ).ready(function() {
           subHeaderAnimation(".subMenuContainer", this);
           $closeOnClick = 1;
         });
-window.$( ".subMenu.first > div > li" ).click(function() {
+        window.$( ".subMenu.first > div > li" ).click(function() {
           window.$( ".subMenu.first > div > li" ).removeClass("selected");
           window.$(this).addClass("selected");
           com_wide_wideweb_menuSelect(window.$(this).text());
@@ -90,10 +90,7 @@ window.$( ".subMenu.first > div > li" ).click(function() {
         });
         window.$( ".breadcrumb > div > li").click(function() {
           com_wide_wideweb_subMenuSelect(window.$(this).text(), 0, window.$("input[name='typeCategory']").prop('checked'), window.$("input[name='typeLesson']").prop('checked'), window.$("input[name='typeTest']").prop('checked'));
-        });
-        window.$( ".donate").click(function() {
-            com_wide_wideweb_createExercise(window.$(this).text());
-        });
+        });        
         window.$(".searchFilter.reset .filled, .topSearch.reset .filled, .main .search .filled").each(function() {
           var actualInput = this;
           var default_value = actualInput.name;
@@ -169,6 +166,9 @@ window.$( ".subMenu.first > div > li" ).click(function() {
         window.$( ".aboutUs").click(function() {
             com_wide_wideweb_editExercise(window.$(this).text());
         });
+        window.$( ".gIco").click(function() {
+            com_wide_wideweb_sendCart();
+        });
         window.$( "input[value='Submit']" ).click(function() {
         	com_wide_wideweb_checkAnswer(window.$(".solutionBar .yourSolution > input").val());            
             window.$(".solutionBar .yourSolution > input").removeClass("filled");
@@ -186,9 +186,34 @@ window.$( ".subMenu.first > div > li" ).click(function() {
           }
         });
         window.$(".solutionBar .yourSolution > input").blur(function() {
-        	if(this.value == "") {
+            if(this.value == "") {
                 window.$(this).val($solutionDefaultText);
                 window.$(this).addClass("default");
+            }
+        });
+        window.$( "#dialog-message" ).dialog({
+            autoOpen : false,
+            open: function() {
+                $(this).parents(".ui-dialog:first").find('.ui-dialog-titlebar').css('font-size','10pt');
+                $('.ui-dialog-buttonpane').find('button').css('font-size','10pt');
+                document.getElementById("share_url").select();
+                $(".ui-dialog-titlebar-close").hide();
+            },
+            modal: true,
+            resizable: false,
+            width: 500,
+            maxHeight: 400,
+            draggable: true,
+            show: 'fade',
+            hide: 'fade',
+            buttons: {
+                Add: function() {
+                	com_wide_wideweb_addCurExToCart();
+                    $( this ).dialog( "close" );
+                },
+                Close: function() {
+                    $( this ).dialog( "close" );
+                }
             }
         });
 });

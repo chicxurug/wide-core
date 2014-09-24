@@ -16,6 +16,7 @@ import com.google.common.collect.Multimap;
 import com.wide.domainmodel.Category;
 import com.wide.domainmodel.Exercise;
 import com.wide.domainmodel.Test;
+import com.wide.domainmodel.user.Group;
 import com.wide.domainmodel.user.User;
 import com.wide.persistence.PersistenceListener;
 import com.wide.service.WideService;
@@ -36,6 +37,7 @@ public final class ViewDataCache implements Serializable {
         initCategories();
         initTests();
         initUsers();
+        initGroups();
     }
 
     private Category rootCategory;
@@ -43,6 +45,8 @@ public final class ViewDataCache implements Serializable {
     private Multimap<Category, Exercise> exercises = ArrayListMultimap.create();
     private List<Test> tests = new ArrayList<Test>();
     private Map<String, User> users = new HashMap<String, User>();
+    private Map<User, List<Group>> groups = new HashMap<User, List<Group>>();
+    private Map<Exercise, String> cart = new HashMap<Exercise, String>();
 
     private String username;
 
@@ -95,6 +99,22 @@ public final class ViewDataCache implements Serializable {
         List<User> users = this.service.getUsers();
         for (User u : users) {
             this.users.put(u.getUsername(), u);
+        }
+    }
+
+    public void initGroups() {
+        this.groups.clear();
+        List<Group> group_list = this.service.getGroups();
+        for (Group g : group_list) {
+            for (User u : g.getMembers()) {
+                if (this.groups.get(u) == null) {
+                    List<Group> gl = new ArrayList<Group>();
+                    gl.add(g);
+                    this.groups.put(u, gl);
+                } else {
+                    this.groups.get(u).add(g);
+                }
+            }
         }
     }
 
@@ -205,6 +225,23 @@ public final class ViewDataCache implements Serializable {
 
     public User getUser() {
         return this.users.get(this.username);
+    }
+
+    public void addToCart(Exercise currentExercise, String url) {
+        this.cart.put(currentExercise, url);
+    }
+
+    public Map<Exercise, String> getCart() {
+        return this.cart;
+    }
+
+    public void clearCart() {
+        this.cart.clear();
+    }
+
+    public List<Group> getCurrentUserGroups() {
+        return this.groups.get(getUser());
+
     }
 
 }

@@ -37,6 +37,13 @@ table {
 a {
   cursor: pointer; }
 
+.v-window-outerheader {
+	padding: 12px 52px 0 14px;
+	height: 37px;
+	background: #62abff repeat-x;
+	background-position: left -1745px;
+}
+
 input[type="text"], textarea {
   cursor: text; }
 

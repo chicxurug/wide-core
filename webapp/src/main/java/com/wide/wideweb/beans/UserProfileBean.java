@@ -19,6 +19,7 @@ public class UserProfileBean implements Serializable {
     private String username;
     private String password;
     private String name;
+    private String email;
     private String gender;
     private Date date_of_birth;
     private SchoolLevel edu_level;
@@ -35,7 +36,7 @@ public class UserProfileBean implements Serializable {
         ShaPasswordEncoder passwordEncoder = new ShaPasswordEncoder();
         String encPassword = passwordEncoder.encodePassword(this.password, null);
         User newUser = new User(this.username, encPassword, true);
-        Profile newProfile = new Profile(this.name);
+        Profile newProfile = new Profile(this.name, this.gender.equals("Female"), this.email, this.date_of_birth, this.edu_level, this.interests);
         newProfile.setAccount(newUser);
         newUser.setProfile(newProfile);
         return newUser;
@@ -95,5 +96,13 @@ public class UserProfileBean implements Serializable {
 
     public void setInterests(String interests) {
         this.interests = interests;
+    }
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

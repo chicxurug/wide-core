@@ -4,11 +4,24 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 import java.util.Queue;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.NoSuchProviderException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FileResource;
@@ -18,12 +31,15 @@ import com.vaadin.server.VaadinSession;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
 import com.wide.domainmodel.Category;
 import com.wide.domainmodel.Exercise;
 import com.wide.domainmodel.Feature;
 import com.wide.domainmodel.Test;
 import com.wide.domainmodel.stat.LogEntry;
 import com.wide.domainmodel.stat.LogEntry.EntryType;
+import com.wide.domainmodel.user.Group;
+import com.wide.domainmodel.user.User;
 import com.wide.persistence.PersistenceListener;
 import com.wide.service.WideService;
 
@@ -284,9 +300,8 @@ public class ViewUtils {
         StringBuilder sb = new StringBuilder();
         sb.append("<img class=\"level\" src=\"" + getImgPath(ex, "difficulty") + "\"  width=24 height=16/>\n");
         sb.append("<img class=\"rank\" src=\"" + getImgPath(ex, "score") + "\" width=92 height=16/>\n");
-        sb.append("<img src=\"" + getImgPath(ex, "share") + "\" onclick=\"prompt('Your URL to this exercise is', '"
-                + Page.getCurrent().getLocation().getScheme() + ":" + Page.getCurrent().getLocation().getSchemeSpecificPart() +
-                "#!" + ViewUtils.VIEW_EXERCISE + "/" + ex.getId() + "');\" style=\"cursor: pointer; cursor: hand;\" width=16 height=16/>\n");
+        sb.append("<img src=\"" + getImgPath(ex, "share")
+                + "\" onclick=\"window.$('#dialog-message').dialog('open');\" style=\"cursor: pointer; cursor: hand;\" width=16 height=16/>\n");
         sb.append("<ul class=\"source\">\n");
         sb.append("<li>Szerző: " + getSeparatedLinks("author", ex.getAuthor()) + "</li>\n");
         sb.append("<li>Könyv: " + getSeparatedLinks("booktitle", ex.getBookTitle()) + "</li>\n");
@@ -393,5 +408,87 @@ public class ViewUtils {
             default:
                 break;
         }
+    }
+
+    public static void addToCart() {
+        ViewDataCache cache = ViewDataCache.getInstance();
+        cache.addToCart(getCurrentExercise(), getExURL(getCurrentExercise()));
+        Notification.show("Exercise is added to cart! You are awesome!");
+    }
+
+    public static String getShareTemplate() {
+        ViewDataCache cache = ViewDataCache.getInstance();
+        Map<Exercise, String> cart = cache.getCart();
+        StringBuffer msgBody = new StringBuffer();
+        msgBody.append("Dear $RCPT$,\n\n");
+        msgBody.append((cache.getUser().getProfile() == null ? cache.getUser().getUsername() : cache.getUser().getProfile().getName())
+                + " shared the following exercises with you:\n\n");
+        for (Exercise e : cart.keySet()) {
+            msgBody.append(e.getTitle() + "\n");
+            msgBody.append(cart.get(e) + "\n\n");
+        }
+        msgBody.append("Happy practicing!\n\n");
+        msgBody.append("The WIDE team");
+
+        return msgBody.toString();
+    }
+
+    public static List<Group> myGroups() {
+        ViewDataCache cache = ViewDataCache.getInstance();
+        return cache.getCurrentUserGroups();
+    }
+
+    public static String getExURL(Exercise currentEx) {
+        return Page.getCurrent().getLocation().getScheme() + ":" + Page.getCurrent().getLocation().getSchemeSpecificPart() +
+                "#!" + ViewUtils.VIEW_EXERCISE + "/" + currentEx.getId();
+    }
+
+    public static void sendCartByMail(final String msgTemplate, final Group recepients) {
+        Thread senMailThread = new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                ViewDataCache cache = ViewDataCache.getInstance();
+                final User currentUser = cache.getUser();
+
+                String host = "smtp.gmail.com";
+                int port = 465;
+                String username = "rf.user.123";
+                String password = "rf_pass_123";
+
+                Properties props = new Properties();
+                props.put("mail.smtps.auth", "true");
+
+                Session session = Session.getInstance(props);
+                try {
+                    for (User u : recepients.getMembers()) {
+                        if (currentUser.equals(u) || u.getProfile() == null || u.getProfile().getEmail() == null || u.getProfile().getEmail().isEmpty()) {
+                            continue;
+                        }
+                        Message msg = new MimeMessage(session);
+                        msg.setFrom(new InternetAddress("no-reply@wide.com"));
+                        msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(u.getProfile().getEmail()));
+                        msg.setSubject("WIDE exercise sharing");
+                        msg.setContent(msgTemplate.replace("$RCPT$", u.getProfile().getName()), "text/plain");
+                        Transport t = session.getTransport("smtps");
+                        t.connect(InetAddress.getByName(host).getCanonicalHostName(), port, username, password);
+                        t.sendMessage(msg, msg.getAllRecipients());
+                        t.close();
+                        System.out.println("E-mail sent to: " + u.getProfile().getEmail());
+                    }
+                    cache.clearCart();
+                } catch (NoSuchProviderException e) {
+                    e.printStackTrace();
+                } catch (MessagingException e) {
+                    e.printStackTrace();
+                } catch (UnknownHostException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        // Start mail sending in a separate thread
+        senMailThread.start();
+
     }
 }

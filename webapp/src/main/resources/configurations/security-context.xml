@@ -28,7 +28,7 @@
         </authentication-provider>
         <authentication-provider>
         	<password-encoder hash="sha" />
-    		<jdbc-user-service data-source-ref="dataSource" users-by-username-query="select username,password,enabled from wuser where username=?" authorities-by-username-query="select u.username, r.group_name from wuser u, wgroup r, usergroups ug where u.id = ug.user_id and r.id = ug.group_id and u.username =?" />
+    		<jdbc-user-service data-source-ref="dataSource" users-by-username-query="select username,password,enabled from wuser where username=?" authorities-by-username-query="select u.username, r.role from wuser u, wgroup g, usergroups ug, role r where u.id = ug.user_id and g.id = ug.group_id and r.group_id = g.id and u.username =?" />
 		</authentication-provider>
     </authentication-manager>
     

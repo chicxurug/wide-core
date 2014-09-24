@@ -19,6 +19,7 @@ import com.wide.domainmodel.stat.LogEntry;
 import com.wide.wideweb.util.FeatureFactory;
 import com.wide.wideweb.util.ViewDataCache;
 import com.wide.wideweb.util.ViewUtils;
+import com.wide.wideweb.views.customjscript.HandleAddToCart;
 import com.wide.wideweb.views.customjscript.HandleCheckSolution;
 import com.wide.wideweb.views.customjscript.HandleMenuSelect;
 import com.wide.wideweb.views.customjscript.HandleSubMenuSelectEx;
@@ -93,6 +94,8 @@ public class ExerciseView extends Panel implements View {
         setContent(layout);
         ViewUtils.injectJs("/VAADIN/themes/wideweb/js/subHeader.js");
         JavaScript.getCurrent().execute("window.$( \"body\" ).removeClass(\"welcome\");");
+        JavaScript.getCurrent().execute(
+                "window.$('#share_url').attr('value', '" + ViewUtils.getExURL(currentEx) + "');");
         if (ViewDataCache.getInstance().getUser() == null) {
             JavaScript.getCurrent().execute("window.$(\"input[value='Solution']\").attr(\"style\", \"color:#DF0101\"); + "
                     + "window.$(\"input[value='Solution']\").attr(\"disabled\", \"disabled\");");
@@ -102,10 +105,12 @@ public class ExerciseView extends Panel implements View {
         JavaScript.getCurrent().removeFunction("com_wide_wideweb_checkSolution");
         JavaScript.getCurrent().removeFunction("com_wide_wideweb_subMenuSelect");
         JavaScript.getCurrent().removeFunction("com_wide_wideweb_menuSelect");
+        JavaScript.getCurrent().removeFunction("com_wide_wideweb_addCurExToCart");
 
         JavaScript.getCurrent().addFunction("com_wide_wideweb_checkAnswer", new HandleCheckSolution(layout, true));
         JavaScript.getCurrent().addFunction("com_wide_wideweb_checkSolution", new HandleCheckSolution(layout, false));
         JavaScript.getCurrent().addFunction("com_wide_wideweb_subMenuSelect", new HandleSubMenuSelectEx(event.getNavigator(), layout));
         JavaScript.getCurrent().addFunction("com_wide_wideweb_menuSelect", new HandleMenuSelect(layout));
+        JavaScript.getCurrent().addFunction("com_wide_wideweb_addCurExToCart", new HandleAddToCart());
     }
 }

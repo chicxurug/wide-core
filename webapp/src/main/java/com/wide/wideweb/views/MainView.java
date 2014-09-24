@@ -31,6 +31,7 @@ import com.wide.wideweb.views.customjscript.HandleFilterWelcome;
 import com.wide.wideweb.views.customjscript.HandleLogin;
 import com.wide.wideweb.views.customjscript.HandleMenuSelect;
 import com.wide.wideweb.views.customjscript.HandleOpenExcersize;
+import com.wide.wideweb.views.customjscript.HandleSendCart;
 import com.wide.wideweb.views.customjscript.HandleSubMenuSelect;
 
 /**
@@ -76,11 +77,13 @@ public class MainView extends Panel implements View
         JavaScript.getCurrent().removeFunction("com_wide_wideweb_subMenuSelect");
         JavaScript.getCurrent().removeFunction("com_wide_wideweb_filterCategory");
         JavaScript.getCurrent().removeFunction("com_wide_wideweb_filterWelcome");
+        JavaScript.getCurrent().removeFunction("com_wide_wideweb_sendCart");
 
         JavaScript.getCurrent().addFunction("com_wide_wideweb_menuSelect", new HandleMenuSelect(this.layout));
         JavaScript.getCurrent().addFunction("com_wide_wideweb_subMenuSelect", new HandleSubMenuSelect(this.layout));
         JavaScript.getCurrent().addFunction("com_wide_wideweb_filterCategory", new HandleFilterCategory(this.layout));
         JavaScript.getCurrent().addFunction("com_wide_wideweb_filterWelcome", new HandleFilterWelcome(this.layout));
+        JavaScript.getCurrent().addFunction("com_wide_wideweb_sendCart", new HandleSendCart());
 
         if (ViewUtils.getCurrentExercise() != null) {
             ViewUtils.setCurrentExercise(null);

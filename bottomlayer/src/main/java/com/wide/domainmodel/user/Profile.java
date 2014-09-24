@@ -13,6 +13,8 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.wide.domainmodel.Exercise.SchoolLevel;
+
 @Entity
 @Table(name = "Profile")
 public class Profile {
@@ -21,7 +23,8 @@ public class Profile {
     private String name;
     private Boolean female;
     private Date date_of_birth;
-    private String edu_level;
+    private String email;
+    private SchoolLevel edu_level;
     private String interests;
     private User account;
 
@@ -29,8 +32,13 @@ public class Profile {
 
     }
 
-    public Profile(String name) {
+    public Profile(String name, Boolean female, String email, Date date_of_birth, SchoolLevel edu_level, String interests) {
         this.name = name;
+        this.female = female;
+        this.email = email;
+        this.date_of_birth = date_of_birth;
+        this.edu_level = edu_level;
+        this.interests = interests;
     }
 
     @Id
@@ -68,11 +76,11 @@ public class Profile {
         this.date_of_birth = date_of_birth;
     }
 
-    public String getEdu_level() {
+    public SchoolLevel getEdu_level() {
         return this.edu_level;
     }
 
-    public void setEdu_level(String edu_level) {
+    public void setEdu_level(SchoolLevel edu_level) {
         this.edu_level = edu_level;
     }
 
@@ -92,6 +100,14 @@ public class Profile {
 
     public void setAccount(User account) {
         this.account = account;
+    }
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
 }

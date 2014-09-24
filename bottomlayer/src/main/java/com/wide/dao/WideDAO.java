@@ -45,6 +45,10 @@ public class WideDAO extends BaseDAO {
         return findAll(User.class);
     }
 
+    public List<Group> getGroups() {
+        return findAll(Group.class);
+    }
+
     public List<Exercise> getExercisesByCategory(Category category) {
         return findByQuery("from Exercise where category = ?1", category);
     }
@@ -120,6 +124,16 @@ public class WideDAO extends BaseDAO {
             tests.add((Test) results[0]);
         }
         return tests;
+    }
+
+    public List<Group> getUserGroups(User u) {
+        List<Object> resObjs = findByQuery("from Group g join g.members m where ?1 in m", u);
+        List<Group> groups = new ArrayList<Group>();
+        for (Object obj : resObjs) {
+            Object[] results = (Object[]) obj;
+            groups.add((Group) results[0]);
+        }
+        return groups;
     }
 
     public List<Test> getTestsBySearchText(String searchText) {

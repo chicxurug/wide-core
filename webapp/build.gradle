@@ -21,6 +21,7 @@ dependencies {
     compile libraries.spring_security_web
     compile libraries.vaadin_spring
     compile libraries.commons_lang3
+    compile libraries.mail
     
     
 	

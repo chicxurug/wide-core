@@ -26,8 +26,8 @@ import com.wide.wideweb.util.ViewUtils;
 @Theme("wideweb")
 @Component
 @Scope("prototype")
-@JavaScript({ "app://VAADIN/themes/wideweb/js/jquery-2.1.0.js" })
-@StyleSheet({ "app://VAADIN/themes/wideweb/styles.css" })
+@JavaScript({ "app://VAADIN/themes/wideweb/js/jquery-2.1.0.js", "app://VAADIN/themes/wideweb/js/jquery-ui.js" })
+@StyleSheet({ "app://VAADIN/themes/wideweb/styles.css", "app://VAADIN/themes/wideweb/css/jquery-ui.css" })
 public class WideWebAppUI extends UI implements ErrorHandler
 {
 

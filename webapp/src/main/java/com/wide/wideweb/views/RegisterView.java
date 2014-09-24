@@ -81,6 +81,12 @@ public class RegisterView extends Panel implements View {
         pwd.setRequired(true);
         this.form.bind(pwd, "password");
 
+        final PasswordField pwd2 = new PasswordField("Confirm password");
+        this.registerLayout.addComponent(pwd2);
+        pwd2.setWidth("10%");
+        pwd2.setNullRepresentation("");
+        pwd2.setRequired(true);
+
         final TextField name = new TextField("Your name");
         this.registerLayout.addComponent(name);
         name.setWidth("30%");
@@ -94,6 +100,13 @@ public class RegisterView extends Panel implements View {
         bdate.setValue(new Date());
         bdate.setRequired(true);
         this.form.bind(bdate, "date_of_birth");
+
+        final TextField email = new TextField("Your e-mail address");
+        this.registerLayout.addComponent(email);
+        email.setWidth("10%");
+        email.setNullRepresentation("");
+        email.setRequired(true);
+        this.form.bind(email, "email");
 
         BeanItemContainer<String> genderitems = new BeanItemContainer<String>(String.class, Arrays.asList(new String[] { "Female", "Male" }));
         final OptionGroup gendergr = new OptionGroup("Gender", genderitems);
@@ -146,13 +159,18 @@ public class RegisterView extends Panel implements View {
                     }
                 }
                 try {
+                    if (!pwd.getValue().equals(pwd2.getValue())) {
+                        Notification.show("Error", "passwords do not match", Notification.Type.ERROR_MESSAGE);
+                        return;
+                    }
                     RegisterView.this.form.commit();
                     User newUser = RegisterView.this.current.getAccount();
-                    Group group = RegisterView.this.service.getOrCreateGroup("ROLE_USER");
+                    Group group = RegisterView.this.service.getOrCreateGroup("Registered user");
                     group.getMembers().add(newUser);
                     RegisterView.this.service.saveOrUpdateGroup(group);
                     Notification.show("Account created!");
                     ViewDataCache.getInstance().initUsers();
+                    ViewDataCache.getInstance().initGroups();
                     navigator.navigateTo(ViewUtils.LOGIN);
                 } catch (CommitException e) {
                     logger.error("Error during commiting newly created user.", e);
