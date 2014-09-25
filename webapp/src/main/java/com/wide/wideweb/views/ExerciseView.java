@@ -17,6 +17,7 @@ import com.wide.domainmodel.Exercise;
 import com.wide.domainmodel.Feature;
 import com.wide.domainmodel.stat.LogEntry;
 import com.wide.wideweb.util.FeatureFactory;
+import com.wide.wideweb.util.SpringSecurityHelper;
 import com.wide.wideweb.util.ViewDataCache;
 import com.wide.wideweb.util.ViewUtils;
 import com.wide.wideweb.views.customjscript.HandleAddToCart;
@@ -99,6 +100,14 @@ public class ExerciseView extends Panel implements View {
         if (ViewDataCache.getInstance().getUser() == null) {
             JavaScript.getCurrent().execute("window.$(\"input[value='Solution']\").attr(\"style\", \"color:#DF0101\"); + "
                     + "window.$(\"input[value='Solution']\").attr(\"disabled\", \"disabled\");");
+        }
+
+        if (SpringSecurityHelper.hasRole("ROLE_USER")) {
+            JavaScript.getCurrent().execute("window.$(\"#dialog-message\").removeClass(\"active\");");
+            JavaScript.getCurrent().execute("window.$(\"#dialog-message-err\").addClass(\"active\");");
+        } else {
+            JavaScript.getCurrent().execute("window.$(\"#dialog-message-err\").removeClass(\"active\");");
+            JavaScript.getCurrent().execute("window.$(\"#dialog-message\").addClass(\"active\");");
         }
 
         JavaScript.getCurrent().removeFunction("com_wide_wideweb_checkAnswer");

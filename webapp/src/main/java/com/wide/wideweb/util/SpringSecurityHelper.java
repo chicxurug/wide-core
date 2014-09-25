@@ -34,7 +34,7 @@ public class SpringSecurityHelper implements Serializable {
     public static boolean hasRole(String role)
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth instanceof AnonymousAuthenticationToken) {
+        if (auth instanceof AnonymousAuthenticationToken || !auth.isAuthenticated()) {
             return false;
         } else {
             User user = (User) auth.getPrincipal();

@@ -29,6 +29,7 @@ public class HandleLogin implements JavaScriptFunction {
         }
         if ("Log out".equals(command)) {
             SpringSecurityHelper.unauthenticate();
+            ViewUtils.clearSession();
             this.navigator.navigateTo(ViewUtils.MAIN);
         }
         ViewUtils.injectJs("/VAADIN/themes/wideweb/js/subHeader_full.js");

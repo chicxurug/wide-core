@@ -11,6 +11,7 @@ import com.vaadin.ui.Label;
 import com.wide.domainmodel.Exercise;
 import com.wide.domainmodel.stat.LogEntry;
 import com.wide.wideweb.util.FeatureFactory;
+import com.wide.wideweb.util.SpringSecurityHelper;
 import com.wide.wideweb.util.ViewUtils;
 
 public class HandleCheckSolution implements JavaScriptFunction {
@@ -43,6 +44,9 @@ public class HandleCheckSolution implements JavaScriptFunction {
                                     + "');");
             ViewUtils.logEntry(LogEntry.EntryType.SUBMIT_SOLUTION, answer);
         } else {
+            if (!SpringSecurityHelper.hasRole("ROLE_USER")) {
+                return;
+            }
             String solutionText = ViewUtils.getFeatureValue(currentEx, FeatureFactory.SOLUTION_TEXT);
             this.layout.addComponent(new Label(solutionText, ContentMode.HTML), "lessonDesc");
             this.layout.addComponent(ViewUtils.getBreadCrumb(currentEx.getCategory(), currentEx), "crumb");

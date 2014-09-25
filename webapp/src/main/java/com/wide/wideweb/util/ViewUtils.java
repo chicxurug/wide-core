@@ -301,7 +301,8 @@ public class ViewUtils {
         sb.append("<img class=\"level\" src=\"" + getImgPath(ex, "difficulty") + "\"  width=24 height=16/>\n");
         sb.append("<img class=\"rank\" src=\"" + getImgPath(ex, "score") + "\" width=92 height=16/>\n");
         sb.append("<img src=\"" + getImgPath(ex, "share")
-                + "\" onclick=\"window.$('#dialog-message').dialog('open');\" style=\"cursor: pointer; cursor: hand;\" width=16 height=16/>\n");
+                + "\" onclick=\"window.$('" + (SpringSecurityHelper.hasRole("ROLE_USER") ? "#dialog-message" : "#dialog-message-err")
+                + "').dialog('open');\" style=\"cursor: pointer; cursor: hand;\" width=16 height=16/>\n");
         sb.append("<ul class=\"source\">\n");
         sb.append("<li>Szerző: " + getSeparatedLinks("author", ex.getAuthor()) + "</li>\n");
         sb.append("<li>Könyv: " + getSeparatedLinks("booktitle", ex.getBookTitle()) + "</li>\n");
@@ -490,5 +491,16 @@ public class ViewUtils {
         // Start mail sending in a separate thread
         senMailThread.start();
 
+    }
+
+    public static void clearSession() {
+        setCurrentCategory(null);
+        setCurrentExercise(null);
+        clearCart();
+    }
+
+    public static void clearCart() {
+        ViewDataCache cache = ViewDataCache.getInstance();
+        cache.clearCart();
     }
 }

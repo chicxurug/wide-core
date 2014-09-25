@@ -183,6 +183,8 @@ window.$( "#dialog-message" ).dialog({
     autoOpen : false,
     open: function() {
         $(this).parents(".ui-dialog:first").find('.ui-dialog-titlebar').css('font-size','10pt');
+        $(this).parents(".ui-dialog:first").find('.ui-dialog-title').css('color','white');
+        $(this).parents(".ui-dialog:first").find('.ui-dialog-titlebar').css('background-color','#62abff');
         $('.ui-dialog-buttonpane').find('button').css('font-size','10pt');
         document.getElementById("share_url").select();
         $(".ui-dialog-titlebar-close").hide();
@@ -200,6 +202,29 @@ window.$( "#dialog-message" ).dialog({
             $( this ).dialog( "close" );
         },
         Close: function() {
+            $( this ).dialog( "close" );
+        }
+    }
+});
+window.$( "#dialog-message-err" ).dialog({
+    autoOpen : false,
+    open: function() {
+        $(this).parents(".ui-dialog:first").find('.ui-dialog-titlebar').css('font-size','10pt');
+        $(this).parents(".ui-dialog:first").find('.ui-dialog-title').css('color','white');
+        $(this).parents(".ui-dialog:first").find('.ui-dialog-titlebar').css('background-color','#62abff');
+        $('.ui-dialog-buttonpane').find('button').css('font-size','10pt');
+        document.getElementById("share_url").select();
+        $(".ui-dialog-titlebar-close").hide();
+    },
+    modal: true,
+    resizable: false,
+    width: 500,
+    maxHeight: 200,
+    draggable: true,
+    show: 'fade',
+    hide: 'fade',
+    buttons: {        
+        OK: function() {
             $( this ).dialog( "close" );
         }
     }
