@@ -22,7 +22,7 @@ import com.wide.domainmodel.Feature;
 
 public class PDFExporter {
 
-    public static final String PDF_TEMP = "/home/wide_export.pdf";
+    public static final String PDF_TEMP = System.getProperty("java.io.tmpdir") + "/wide_export.pdf";
     private final Map<Exercise, String> exercises;
 
     public PDFExporter(Map<Exercise, String> exercises) {
