@@ -8,12 +8,12 @@ import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.wide.common.FeatureFactory;
 import com.wide.domainmodel.Category;
 import com.wide.domainmodel.Exercise;
 import com.wide.domainmodel.Exercise.DifficultyLevel;
 import com.wide.domainmodel.Exercise.SchoolLevel;
 import com.wide.domainmodel.Feature;
-import com.wide.wideweb.util.FeatureFactory;
 
 public class ExerciseBean implements Serializable {
 

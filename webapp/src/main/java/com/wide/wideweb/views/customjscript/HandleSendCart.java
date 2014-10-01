@@ -1,10 +1,17 @@
 package com.wide.wideweb.views.customjscript;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import com.vaadin.server.FileDownloader;
+import com.vaadin.server.FileResource;
+import com.vaadin.server.VaadinRequest;
+import com.vaadin.server.VaadinResponse;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
@@ -12,11 +19,14 @@ import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.JavaScriptFunction;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
+import com.wide.domainmodel.Exercise;
 import com.wide.domainmodel.user.Group;
+import com.wide.exporters.PDFExporter;
 import com.wide.wideweb.util.SpringSecurityHelper;
 import com.wide.wideweb.util.ViewUtils;
 
@@ -59,9 +69,38 @@ public class HandleSendCart implements JavaScriptFunction {
         Button send = new Button("Send");
         Button close = new Button("Close");
         Button clear = new Button("Clear");
+        Button exportPDF = new Button("Export to PDF");
         line3.addComponent(send);
-        line3.addComponent(close);
+        line3.addComponent(exportPDF);
         line3.addComponent(clear);
+        line3.addComponent(close);
+
+        FileDownloader fileDownloader = new FileDownloader(new FileResource(new File(PDFExporter.PDF_TEMP)))
+        {
+
+            /**
+             * 
+             */
+            private static final long serialVersionUID = -4951900490200896593L;
+
+            @Override
+            public boolean handleConnectorRequest(VaadinRequest request, VaadinResponse response, String path) throws IOException
+            {
+                Map<Exercise, String> myCart = ViewUtils.getCart();
+                if (myCart.isEmpty()) {
+                    Notification.show("Error", "nothing to export", Notification.Type.ERROR_MESSAGE);
+                    return false;
+                }
+                PDFExporter exporter = new PDFExporter(myCart);
+                if (exporter.exportExercises()) {
+                    return super.handleConnectorRequest(request, response, path);
+                } else {
+                    Notification.show("Error", "unexpected event happened during PDF export", Notification.Type.ERROR_MESSAGE);
+                    return false;
+                }
+            }
+        };
+        fileDownloader.extend(exportPDF);
 
         // Put some components in it
         subContent.addComponent(line1);

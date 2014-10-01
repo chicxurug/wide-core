@@ -32,6 +32,7 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
+import com.wide.common.FeatureFactory;
 import com.wide.domainmodel.Category;
 import com.wide.domainmodel.Exercise;
 import com.wide.domainmodel.Feature;
@@ -503,4 +504,10 @@ public class ViewUtils {
         ViewDataCache cache = ViewDataCache.getInstance();
         cache.clearCart();
     }
+
+    public static Map<Exercise, String> getCart() {
+        ViewDataCache cache = ViewDataCache.getInstance();
+        return cache.getCart();
+    }
+
 }

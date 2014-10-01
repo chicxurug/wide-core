@@ -22,6 +22,9 @@ project.ext {
 		jewelcli:                'com.lexicalscope.jewelcli:jewelcli:0.8.6', // Command line argument parser
 		hamcrest:                'org.hamcrest:hamcrest-all:1.3', // matchers
         mail:                    'javax.mail:mail:1.4.1', //java mail api
+        itextpdf:                'com.itextpdf:itextpdf:5.0.6', //html to pdf converter
+        xmlworker:               'com.itextpdf.tool:xmlworker:5.5.3', //parsing html to pdf conversion
+        jtidy:                   'net.sf.jtidy:jtidy:r938', //cleaning up malformed html
 		// ------\  Util  /------
 		
 		// ------/  Apache  \------

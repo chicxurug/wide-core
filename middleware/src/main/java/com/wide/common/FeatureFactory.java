@@ -1,4 +1,4 @@
-package com.wide.wideweb.util;
+package com.wide.common;
 
 import com.google.common.collect.ImmutableSet;
 import com.wide.domainmodel.Feature;

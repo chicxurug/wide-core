@@ -9,10 +9,10 @@ import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.JavaScript;
 import com.vaadin.ui.JavaScriptFunction;
 import com.vaadin.ui.Label;
+import com.wide.common.FeatureFactory;
 import com.wide.domainmodel.Category;
 import com.wide.domainmodel.Exercise;
 import com.wide.domainmodel.Feature;
-import com.wide.wideweb.util.FeatureFactory;
 import com.wide.wideweb.util.ViewDataCache;
 import com.wide.wideweb.util.ViewUtils;
 
