@@ -44,7 +44,7 @@ a {
 	background-position: left -1745px;
 }
 
-input[type="text"], textarea {
+input[type="text"], textarea, input[type="password"] {
   cursor: text; }
 
 /* fonts */
@@ -402,7 +402,7 @@ div.lesson {
       -ms-transition: all 0.3s ease;
       transition: all 0.3s ease; }
 
-input.default, select.default {
+input.default, select.default, textarea.default  {
   color: #aaa !important; }
 
 .header > div {
@@ -1007,9 +1007,9 @@ a {
 b {
   font-weight: bold; }
 
-input[type=text], input[type=submit] {
+input[type=text], input[type=submit], input[type=password], textarea {
   border: 2px solid transparent; }
-  input[type=text]:focus, input[type=submit]:focus {
+  input[type=text]:focus, input[type=submit]:focus, textarea:focus {
     outline: none;
     border: 2px solid #ffba00; }
 
@@ -1096,3 +1096,197 @@ input[type=text], input[type=submit] {
   transform: rotate(3deg);
   right: 10px;
   left: auto; }
+  
+.main .loginPanel .input {
+  margin: 8px 0 0 0;
+  background-color: #ddd;
+  padding: 15px;
+  display: block; 
+  max-width: 456px;
+  margin: 0 auto;
+  margin-top: 200px;
+  -webkit-box-shadow: 5px 8px 15px #eee;
+  -moz-box-shadow: 5px 8px 15px #eee;
+  box-shadow: 5px 8px 15px #eee;
+  height: 83px }
+  .main .loginPanel .input input {
+    line-height: 24px;
+    padding-left: 8px;
+    padding-right: 8px; }
+  .main .loginPanel .input input[type="text"], .main .loginPanel .input input[type="password"] {
+    color: #444444;
+    font-size: 18px;
+    font-family: education;
+    font-weight: bold;
+    padding-left: 12px;
+    margin-right: 0;
+    width: 200px;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    -ms-border-radius: 0;
+    -o-border-radius: 0;
+    border-radius: 0;
+    padding-right: 10px;
+    background-color: white; }
+    .main .loginPanel .input input[type="text"]:focus, .main .loginPanel .input input[type="password"]:focus {
+      outline: none;
+      background-color: white; }
+    .main .loginPanel .input input[type="text"].default, .main .loginPanel .input input[type="password"].default {
+      color: #aaa !important; }
+  .main .loginPanel .input input[type="submit"] + input[type="submit"] {
+  background-color: #ffba00; }
+  .main .loginPanel .input input[type="submit"] {
+  background-color: #3eb535;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  font-family: education;
+  font-size: 18px;
+  width: 93px;
+  margin-left: 1px;
+  margin-top: 11px;
+  padding: 5px 0;
+  cursor: pointer;
+  float: right;
+  margin-left: 10px;
+  color: #fff; }
+.main .loginPanel .input input[type="submit"]:hover {
+  color: #666; }
+.main .loginPanel .input input[type="submit"]:focus {
+  outline: none;
+  color: #fff; }
+  .main .loginPanel .input input[type="submit"]:focus {
+  border-color: #3eb535; }
+  .main .loginPanel .input input[type="submit"] + input[type="submit"]:focus {
+  border-color: #ffba00; }
+
+
+.main .registerPanel .input {
+  margin: 8px 0 0 0;
+  background-color: #ddd;
+  padding: 15px;
+  padding-top: 20px;
+  display: block; 
+  max-width: 450px;
+  margin: 0 auto;
+  margin-top: 50px;
+  -webkit-box-shadow: 5px 8px 15px #eee;
+  -moz-box-shadow: 5px 8px 15px #eee;
+  box-shadow: 5px 8px 15px #eee; }
+  .main .registerPanel .input input {
+    line-height: 24px;
+    padding-left: 8px;
+    padding-right: 8px; }
+  .main .registerPanel .input input[type="text"], .main .registerPanel .input input[type="password"] {
+    color: #444444;
+    font-size: 18px;
+    font-family: education;
+    font-weight: bold;
+    padding-left: 12px;
+    margin-right: 0;
+    width: 200px;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    -ms-border-radius: 0;
+    -o-border-radius: 0;
+    border-radius: 0;
+    padding-right: 10px;
+    background-color: white; }
+    .main .registerPanel .input input[type="text"]:focus, .main .registerPanel .input input[type="password"]:focus, .main .registerPanel .input textarea:focus {
+      outline: none;
+      background-color: white; }
+    .main .registerPanel .input input[type="text"].default, .main .registerPanel .input input[type="password"].default {
+      color: #999 !important; }
+  .main .registerPanel .input input[type="submit"] + input[type="submit"] {
+  background-color: #ffba00; }
+  .main .registerPanel .input input[type="submit"] {
+  background-color: #3eb535;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  font-family: education;
+  font-size: 18px;
+  width: 93px;
+  margin-left: 1px;
+  margin-top: 11px;
+  padding: 5px 0;
+  cursor: pointer;
+  margin-left: 10px;
+  color: #fff; }
+.main .registerPanel .input input[type="submit"]:hover {
+  color: #666; }
+.main .registerPanel .input input[type="submit"]:focus {
+  outline: none;
+  color: #fff; }
+  .main .registerPanel .input input[type="submit"]:focus {
+  border-color: #3eb535; }
+  .main .registerPanel .input input[type="submit"] + input[type="submit"]:focus {
+  border-color: #ffba00; }
+
+.main .registerPanel .input .inputLabel {
+    width: 200px;
+    display: inline-block;
+    padding-left: 10px;
+    line-height: 24px;
+    font-family: education;
+    font-size: 14px;
+    vertical-align: top;
+}
+
+.main .registerPanel .input input[type=checkbox]:not(old),
+.main .registerPanel .input input[type=radio   ]:not(old){
+  width   : 20px;
+  margin  : 0;
+  padding : 0;
+  opacity : 0;
+}
+
+.main .registerPanel .input input[type=checkbox]:not(old) + label,
+.main .registerPanel .input input[type=radio   ]:not(old) + label{
+    display      : inline-block;
+    margin-left  : -28px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    line-height: 28px;
+    font-family: education;
+    font-size: 14px;
+    padding: 0 8px;
+    -webkit-border-radius: 14px;
+    -moz-border-radius: 14px;
+    border-radius: 14px;
+    border: 1px solid transparent;
+    
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.main .registerPanel .input input[type=checkbox]:not(old):checked + label{
+  background-color   : #fff;
+  border-color: #000;
+}
+
+.main .registerPanel .input input[type=radio]:not(old):checked + label{
+  background-color   : #fff;
+}
+
+.main .registerPanel .input textarea {
+    color: #777 !important;
+    font-size: 14px;
+    font-family: education;
+    font-weight: normal;
+    padding: 6px;
+    margin-right: 0;
+    width: 206px;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    -ms-border-radius: 0;
+    -o-border-radius: 0;
+    border-radius: 0;
+    padding-right: 10px;
+    background-color: white; 
+    resize: none;
+}

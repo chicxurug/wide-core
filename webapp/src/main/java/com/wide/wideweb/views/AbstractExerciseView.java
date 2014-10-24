@@ -1,6 +1,8 @@
 package com.wide.wideweb.views;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +14,7 @@ import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.navigator.View;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.shared.ui.combobox.FilteringMode;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.AbstractSelect.ItemCaptionMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -19,6 +22,7 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Link;
 import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.Notification;
@@ -36,6 +40,7 @@ import com.wide.service.WideService;
 import com.wide.wideweb.beans.ExerciseBean;
 import com.wide.wideweb.util.ViewDataCache;
 import com.wide.wideweb.util.ViewUtils;
+import com.wide.wideweb.views.components.VariableLayout;
 
 public abstract class AbstractExerciseView extends Panel implements View {
 
@@ -53,6 +58,10 @@ public abstract class AbstractExerciseView extends Panel implements View {
 
     private Button actionExerciseButton = new Button(actionButtonLabel());
     private FormLayout editorLayout = new FormLayout();
+
+    private List<VariableLayout> vars = new ArrayList<VariableLayout>();
+
+    private int index = 0;
 
     protected void init() {
         this.form.setItemDataSource(this.current);
@@ -212,31 +221,110 @@ public abstract class AbstractExerciseView extends Panel implements View {
         exerciseText.addValidator(new StringLengthValidator("The text should be at least 5 characters long.", 5, null, false));
         exerciseText.setValidationVisible(false);
 
+        final Button previewButton = new Button("Preview");
+        this.editorLayout.addComponent(previewButton);
+
+        final Label exerciseTextPreview = new Label("", ContentMode.HTML);
+        exerciseTextPreview.setCaption("Exercise preview");
+        this.editorLayout.addComponent(exerciseTextPreview);
+
+        previewButton.addClickListener(new ClickListener() {
+
+            /**
+             * 
+             */
+            private static final long serialVersionUID = -4685275662657761127L;
+
+            @Override
+            public void buttonClick(ClickEvent event) {
+                exerciseTextPreview.setValue(exerciseText.getValue());
+                com.vaadin.ui.JavaScript.getCurrent().execute("MathJax.Hub.Queue([\"Typeset\",MathJax.Hub]);");
+            }
+        });
+
         final TextArea relatedLinks = new TextArea("Related links");
         this.editorLayout.addComponent(relatedLinks);
         this.form.bind(relatedLinks, "relatedLinks");
         relatedLinks.setNullRepresentation("");
         relatedLinks.setWidth("70%");
 
-        final TextField shortAnswer = new TextField("Short answer");
-        this.editorLayout.addComponent(shortAnswer);
-        this.form.bind(shortAnswer, "shortAnswer");
-        shortAnswer.setNullRepresentation("");
-        shortAnswer.setWidth("70%");
-        shortAnswer.setRequired(true);
-        shortAnswer.setRequiredError("The short answer cannot be empty.");
-        // shortAnswer.addValidator(new StringLengthValidator("The short answer should be at least 1 characters long.", 1, null, false));
-        // shortAnswer.setValidationVisible(false);
-
         final RichTextArea solutionText = new RichTextArea("Solution");
         this.editorLayout.addComponent(solutionText);
         this.form.bind(solutionText, "solutionText");
         solutionText.setNullRepresentation("");
         solutionText.setWidth("70%");
-        // solutionText.setRequired(true);
-        // solutionText.setRequiredError("The solution text of the exercise cannot be empty.");
-        // solutionText.addValidator(new StringLengthValidator("The solution text should be at least 5 characters long.", 5, null, true));
-        // solutionText.setValidationVisible(false);
+
+        final Button previewButtonS = new Button("Preview");
+        this.editorLayout.addComponent(previewButtonS);
+
+        final Label solutionTextPreview = new Label("", ContentMode.HTML);
+        solutionTextPreview.setCaption("Solution preview");
+        this.editorLayout.addComponent(solutionTextPreview);
+
+        previewButtonS.addClickListener(new ClickListener() {
+
+            /**
+             * 
+             */
+            private static final long serialVersionUID = -4685275662657761127L;
+
+            @Override
+            public void buttonClick(ClickEvent event) {
+                solutionTextPreview.setValue(solutionText.getValue());
+                com.vaadin.ui.JavaScript.getCurrent().execute("MathJax.Hub.Queue([\"Typeset\",MathJax.Hub]);");
+            }
+        });
+
+        HorizontalLayout var = getVar(false);
+        var.setCaption("Short answer(s)");
+        this.editorLayout.addComponent(var);
+        this.index = this.editorLayout.getComponentIndex(var);
+
+        final Button moreAnsw = new Button("Add more...");
+
+        if (this.current.getVarName_2() != null && !this.current.getVarName_2().isEmpty()) {
+            AbstractExerciseView.this.editorLayout.addComponent(getVar(true), AbstractExerciseView.this.index
+                    + this.vars.size() - 1);
+            if (this.vars.size() == 4) {
+                moreAnsw.setEnabled(false);
+            }
+        }
+
+        if (this.current.getVarName_3() != null && !this.current.getVarName_3().isEmpty()) {
+            AbstractExerciseView.this.editorLayout.addComponent(getVar(true), AbstractExerciseView.this.index
+                    + this.vars.size() - 1);
+            if (this.vars.size() == 4) {
+                moreAnsw.setEnabled(false);
+            }
+        }
+
+        if (this.current.getVarName_4() != null && !this.current.getVarName_4().isEmpty()) {
+            AbstractExerciseView.this.editorLayout.addComponent(getVar(true), AbstractExerciseView.this.index
+                    + this.vars.size() - 1);
+            if (this.vars.size() == 4) {
+                moreAnsw.setEnabled(false);
+            }
+        }
+
+        this.editorLayout.addComponent(moreAnsw);
+        moreAnsw.addClickListener(new ClickListener() {
+
+            /**
+             * 
+             */
+            private static final long serialVersionUID = 378489649077395275L;
+
+            @Override
+            public void buttonClick(ClickEvent event) {
+                if (AbstractExerciseView.this.vars.size() < 4) {
+                    AbstractExerciseView.this.editorLayout.addComponent(getVar(true), AbstractExerciseView.this.index
+                            + AbstractExerciseView.this.vars.size() - 1);
+                    if (AbstractExerciseView.this.vars.size() == 4) {
+                        moreAnsw.setEnabled(false);
+                    }
+                }
+            }
+        });
 
         HorizontalLayout buttonLayout = new HorizontalLayout();
         buttonLayout.addComponent(this.actionExerciseButton);
@@ -258,6 +346,71 @@ public abstract class AbstractExerciseView extends Panel implements View {
         });
     }
 
+    public String cancelButtonLabel() {
+        return "Go back";
+    }
+
+    private void rebindAll() {
+        for (int i = 1; i < this.vars.size(); i++) {
+            AbstractExerciseView.this.form.unbind(this.vars.get(i).getVarVal());
+            AbstractExerciseView.this.form.unbind(this.vars.get(i).getVarName());
+        }
+        for (int i = 1; i < this.vars.size(); i++) {
+            this.form.bind(this.vars.get(i).getVarName(), "varName_" + (i + 1));
+            this.form.bind(this.vars.get(i).getVarVal(), "varVal_" + (i + 1));
+        }
+    }
+
+    private HorizontalLayout getVar(boolean removable) {
+        ClickListener removeAction = null;
+        final VariableLayout layout = new VariableLayout(this.editorLayout);
+
+        if (removable) {
+            removeAction = new ClickListener() {
+
+                /**
+                 * 
+                 */
+                private static final long serialVersionUID = -8257009120769586300L;
+
+                @Override
+                public void buttonClick(ClickEvent event) {
+                    AbstractExerciseView.this.editorLayout.removeComponent(layout);
+                    switch (AbstractExerciseView.this.vars.indexOf(layout)) {
+                        case 1:
+                            AbstractExerciseView.this.current.setVarName_2(AbstractExerciseView.this.vars.size() > 2 ? AbstractExerciseView.this.vars.get(2)
+                                    .getVarName().getValue() : "");
+                            AbstractExerciseView.this.current.setVarVal_2(AbstractExerciseView.this.vars.size() > 2 ? AbstractExerciseView.this.vars.get(2)
+                                    .getVarVal().getValue() : "");
+                        case 2:
+                            AbstractExerciseView.this.current.setVarName_3(AbstractExerciseView.this.vars.size() > 3 ? AbstractExerciseView.this.vars.get(3)
+                                    .getVarName().getValue() : "");
+                            AbstractExerciseView.this.current.setVarVal_3(AbstractExerciseView.this.vars.size() > 3 ? AbstractExerciseView.this.vars.get(3)
+                                    .getVarVal().getValue() : "");
+                        case 3:
+                            AbstractExerciseView.this.current.setVarName_4("");
+                            AbstractExerciseView.this.current.setVarVal_4("");
+
+                    }
+                    AbstractExerciseView.this.vars.remove(layout);
+                    AbstractExerciseView.this.form.unbind(layout.getVarVal());
+                    AbstractExerciseView.this.form.unbind(layout.getVarName());
+                    rebindAll();
+                    AbstractExerciseView.this.editorLayout.getComponent(AbstractExerciseView.this.index + AbstractExerciseView.this.vars.size())
+                            .setEnabled(true);
+                }
+            };
+            layout.addRemoveAction(removeAction);
+        }
+
+        this.form.bind(layout.getVarName(), "varName_" + (this.vars.size() + 1));
+        this.form.bind(layout.getVarVal(), "varVal_" + (this.vars.size() + 1));
+
+        this.vars.add(layout);
+
+        return layout;
+    }
+
     public abstract void actionButtonClicked(AbstractExerciseView view);
 
     public abstract String actionButtonLabel();
@@ -265,9 +418,4 @@ public abstract class AbstractExerciseView extends Panel implements View {
     public abstract boolean isViewProvideDelete();
 
     public abstract Button getDeleteButton();
-
-    public String cancelButtonLabel() {
-        return "Go back";
-    }
-
 }

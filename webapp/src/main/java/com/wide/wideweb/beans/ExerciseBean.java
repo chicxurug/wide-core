@@ -1,6 +1,8 @@
 package com.wide.wideweb.beans;
 
 import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -19,6 +21,8 @@ public class ExerciseBean implements Serializable {
 
     private static final long serialVersionUID = -3343445526753441596L;
 
+    public static final String VAR_SEPARATOR = "#";
+
     private String language;
     private String title;
     private Category category;
@@ -31,8 +35,17 @@ public class ExerciseBean implements Serializable {
     private String tags;
     private String exerciseText;
     private String relatedLinks;
-    private String shortAnswer;
     private String solutionText;
+
+    // Short answer variables
+    private String varName_1;
+    private String varName_2;
+    private String varName_3;
+    private String varName_4;
+    private String varVal_1;
+    private String varVal_2;
+    private String varVal_3;
+    private String varVal_4;
 
     public ExerciseBean() {
         this.language = null;
@@ -47,8 +60,15 @@ public class ExerciseBean implements Serializable {
         this.tags = null;
         this.exerciseText = null;
         this.relatedLinks = null;
-        this.shortAnswer = null;
         this.solutionText = null;
+        this.varName_1 = "";
+        this.varName_2 = "";
+        this.varName_3 = "";
+        this.varName_4 = "";
+        this.varVal_1 = "";
+        this.varVal_2 = "";
+        this.varVal_3 = "";
+        this.varVal_4 = "";
     }
 
     public ExerciseBean(Exercise currentExercise) {
@@ -73,7 +93,20 @@ public class ExerciseBean implements Serializable {
                     this.relatedLinks = feature.getValue();
                     break;
                 case FeatureFactory.SHORT_ANSWER:
-                    this.shortAnswer = feature.getValue();
+                    String variableString[] = feature.getValue().split(VAR_SEPARATOR);
+                    for (int i = 0; i < variableString.length; i++) {
+                        try {
+                            Method setVarName = this.getClass().getMethod("setVarName_" + (i + 1), String.class);
+                            Method setVarVal = this.getClass().getMethod("setVarVal_" + (i + 1), String.class);
+                            setVarName.invoke(this, (variableString[i].split(":=").length < 2 ? "" : variableString[i].split(":=")[0]));
+                            setVarVal.invoke(this, (variableString[i].split(":=").length < 2 ? "" : variableString[i].split(":=")[1]));
+                        } catch (SecurityException | IllegalArgumentException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+                            this.varName_1 = this.varVal_1 = null;
+                            this.varName_2 = this.varVal_2 = null;
+                            this.varName_3 = this.varVal_3 = null;
+                            this.varName_4 = this.varVal_4 = null;
+                        }
+                    }
                     break;
                 case FeatureFactory.SOLUTION_TEXT:
                     this.solutionText = feature.getValue();
@@ -127,7 +160,8 @@ public class ExerciseBean implements Serializable {
                     break;
                 case FeatureFactory.SHORT_ANSWER:
                     featurekinds.remove(FeatureFactory.SHORT_ANSWER);
-                    feature.setValue(this.shortAnswer);
+                    feature.setValue(this.varName_1 + ":=" + this.varVal_1 + VAR_SEPARATOR + this.varName_2 + ":=" + this.varVal_2 + VAR_SEPARATOR
+                            + this.varName_3 + ":=" + this.varVal_3 + VAR_SEPARATOR + this.varName_4 + ":=" + this.varVal_4);
                     break;
                 case FeatureFactory.SOLUTION_TEXT:
                     featurekinds.remove(FeatureFactory.SOLUTION_TEXT);
@@ -155,7 +189,9 @@ public class ExerciseBean implements Serializable {
             features.add(relatedLinks);
         }
         if (featurekinds.contains(FeatureFactory.SHORT_ANSWER)) {
-            Feature shortAnswer = FeatureFactory.createShortAnswer(this.shortAnswer);
+            Feature shortAnswer = FeatureFactory.createShortAnswer(this.varName_1 + ":=" + this.varVal_1 + VAR_SEPARATOR + this.varName_2 + ":="
+                    + this.varVal_2 + VAR_SEPARATOR
+                    + this.varName_3 + ":=" + this.varVal_3 + VAR_SEPARATOR + this.varName_4 + ":=" + this.varVal_4);
             features.add(shortAnswer);
         }
         if (featurekinds.contains(FeatureFactory.SOLUTION_TEXT) && StringUtils.isNotBlank(this.solutionText)) {
@@ -261,20 +297,76 @@ public class ExerciseBean implements Serializable {
         this.relatedLinks = relatedLinks;
     }
 
-    public String getShortAnswer() {
-        return this.shortAnswer;
-    }
-
-    public void setShortAnswer(String shortAnswer) {
-        this.shortAnswer = shortAnswer;
-    }
-
     public String getSolutionText() {
         return this.solutionText;
     }
 
     public void setSolutionText(String solutionText) {
         this.solutionText = solutionText;
+    }
+
+    public String getVarName_1() {
+        return this.varName_1;
+    }
+
+    public void setVarName_1(String varName_1) {
+        this.varName_1 = varName_1;
+    }
+
+    public String getVarName_2() {
+        return this.varName_2;
+    }
+
+    public void setVarName_2(String varName_2) {
+        this.varName_2 = varName_2;
+    }
+
+    public String getVarName_3() {
+        return this.varName_3;
+    }
+
+    public void setVarName_3(String varName_3) {
+        this.varName_3 = varName_3;
+    }
+
+    public String getVarName_4() {
+        return this.varName_4;
+    }
+
+    public void setVarName_4(String varName_4) {
+        this.varName_4 = varName_4;
+    }
+
+    public String getVarVal_1() {
+        return this.varVal_1;
+    }
+
+    public void setVarVal_1(String varVal_1) {
+        this.varVal_1 = varVal_1;
+    }
+
+    public String getVarVal_2() {
+        return this.varVal_2;
+    }
+
+    public void setVarVal_2(String varVal_2) {
+        this.varVal_2 = varVal_2;
+    }
+
+    public String getVarVal_3() {
+        return this.varVal_3;
+    }
+
+    public void setVarVal_3(String varVal_3) {
+        this.varVal_3 = varVal_3;
+    }
+
+    public String getVarVal_4() {
+        return this.varVal_4;
+    }
+
+    public void setVarVal_4(String varVal_4) {
+        this.varVal_4 = varVal_4;
     }
 
     @Override
@@ -305,7 +397,9 @@ public class ExerciseBean implements Serializable {
         builder.append(", relatedLinks=");
         builder.append(this.relatedLinks);
         builder.append(", shortAnswer=");
-        builder.append(this.shortAnswer);
+        builder.append(this.varName_1 + ":=" + this.varVal_1 + VAR_SEPARATOR + this.varName_2 + ":="
+                + this.varVal_2 + VAR_SEPARATOR + this.varName_3 + ":=" + this.varVal_3 + VAR_SEPARATOR
+                + this.varName_4 + ":=" + this.varVal_4);
         builder.append(", solutionText=");
         builder.append(this.solutionText);
         builder.append("]");

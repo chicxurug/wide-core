@@ -20,6 +20,9 @@ public class HandleEditExcersize implements JavaScriptFunction {
     @Override
     public void call(JSONArray arguments) throws JSONException {
         // TODO how to find out which exercise is currently on screen?
+        if (ViewUtils.getCurrentExercise() == null) {
+            return;
+        }
         this.navigator.navigateTo(ViewUtils.EDIT_EXERCISE);
     }
 

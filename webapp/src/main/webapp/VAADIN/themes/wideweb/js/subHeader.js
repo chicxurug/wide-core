@@ -241,4 +241,9 @@ window.$( document ).ready(function() {
                 }
             }
         });
+        window.$("div[class='loginPanel']").keypress(function(e) {
+          if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {
+            window.$("input[value='Log in']").click();
+          }
+        });
 });

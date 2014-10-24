@@ -62,6 +62,7 @@ public class HandleSubMenuSelectEx implements JavaScriptFunction {
                 this.navigator.navigateTo(ViewUtils.MAIN);
             }
             ViewUtils.injectJs("/VAADIN/themes/wideweb/js/subHeader_full.js");
+            JavaScript.getCurrent().execute("MathJax.Hub.Queue([\"Typeset\",MathJax.Hub]);");
         } catch (InterruptedException e) {
             ViewUtils.injectJs("/VAADIN/themes/wideweb/js/subHeader_full.js");
         }

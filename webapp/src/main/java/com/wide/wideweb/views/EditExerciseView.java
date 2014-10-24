@@ -41,6 +41,7 @@ public class EditExerciseView extends AbstractExerciseView {
         this.previous = ViewUtils.getCurrentExercise();
         this.current = new ExerciseBean(this.previous);
         init();
+        com.vaadin.ui.JavaScript.getCurrent().execute("MathJax.Hub.Queue([\"Typeset\",MathJax.Hub]);");
     }
 
     @Override

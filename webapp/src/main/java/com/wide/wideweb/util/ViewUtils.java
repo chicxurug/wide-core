@@ -43,6 +43,7 @@ import com.wide.domainmodel.user.Group;
 import com.wide.domainmodel.user.User;
 import com.wide.persistence.PersistenceListener;
 import com.wide.service.WideService;
+import com.wide.wideweb.beans.ExerciseBean;
 
 /**
  * 
@@ -508,6 +509,25 @@ public class ViewUtils {
     public static Map<Exercise, String> getCart() {
         ViewDataCache cache = ViewDataCache.getInstance();
         return cache.getCart();
+    }
+
+    public static Label getAnswerTable(Exercise currentEx) {
+        StringBuilder tableBuilder = new StringBuilder();
+        tableBuilder.append("<table>\n");
+        String answer = getFeatureValue(currentEx, FeatureFactory.SHORT_ANSWER);
+        for (String var : answer.split(ExerciseBean.VAR_SEPARATOR)) {
+            if (":=".equals(var)) {
+                continue;
+            }
+            tableBuilder.append("<tr><td>\n");
+            tableBuilder.append(var.split(":=")[0] + ":");
+            tableBuilder.append("</td></tr>\n");
+            tableBuilder.append("<tr><td style=\"padding:5px;spacing:-5px\">\n");
+            tableBuilder.append("<input type=\"text\" class=\"filled default\" value=\"Your solution comes here\">\n");
+            tableBuilder.append("</td></tr>\n");
+        }
+        tableBuilder.append("</table>\n");
+        return new Label(tableBuilder.toString(), ContentMode.HTML);
     }
 
 }

@@ -59,7 +59,7 @@ public class PDFExporter {
             }
             buf.append("<b>Tags:</b>" + tags + "</br>");
             buf.append("<br/><hr/>");
-            buf.append(desc);
+            buf.append(desc.replaceAll("\\$(?<a>[^$]*)\\$", "<img src=\"http://latex.codecogs.com/gif.latex?" + "${a}" + "\"/>"));
             buf.append("<br/><a href=\"" + this.exercises.get(e) + "\">Go to exercise</a><br/><br/><hr/>");
         }
 

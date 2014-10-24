@@ -92,6 +92,7 @@ public class ExerciseView extends Panel implements View {
         layout.addComponent(new Label("<p style=\"padding-top:34px; color: white; text-align: center; font-family: education;\">" + cache.getUsername()
                 + "</p>", ContentMode.HTML), "auth_user");
 
+        layout.addComponent(ViewUtils.getAnswerTable(currentEx), "solution_boxes");
         setContent(layout);
         ViewUtils.injectJs("/VAADIN/themes/wideweb/js/subHeader.js");
         JavaScript.getCurrent().execute("window.$( \"body\" ).removeClass(\"welcome\");");
@@ -121,5 +122,8 @@ public class ExerciseView extends Panel implements View {
         JavaScript.getCurrent().addFunction("com_wide_wideweb_subMenuSelect", new HandleSubMenuSelectEx(event.getNavigator(), layout));
         JavaScript.getCurrent().addFunction("com_wide_wideweb_menuSelect", new HandleMenuSelect(layout));
         JavaScript.getCurrent().addFunction("com_wide_wideweb_addCurExToCart", new HandleAddToCart());
+
+        JavaScript.getCurrent().execute("MathJax.Hub.Queue([\"Typeset\",MathJax.Hub]);");
+        JavaScript.getCurrent().execute("window.$(\"div[id='sb_div'] > div\").removeAttr(\"style\");");
     }
 }

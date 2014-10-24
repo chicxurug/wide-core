@@ -33,6 +33,7 @@ public class CreateExerciseView extends AbstractExerciseView {
     @Override
     public void enter(ViewChangeEvent event) {
         init();
+        com.vaadin.ui.JavaScript.getCurrent().execute("MathJax.Hub.Queue([\"Typeset\",MathJax.Hub]);");
     }
 
     @Override

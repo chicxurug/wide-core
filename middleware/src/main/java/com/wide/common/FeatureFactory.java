@@ -33,5 +33,4 @@ public class FeatureFactory {
     public static Feature createTags(String value) {
         return new Feature(TAGS, value, FeatureType.TAG);
     }
-
 }

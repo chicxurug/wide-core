@@ -51,6 +51,7 @@ public class HandleCheckSolution implements JavaScriptFunction {
             this.layout.addComponent(new Label(solutionText, ContentMode.HTML), "lessonDesc");
             this.layout.addComponent(ViewUtils.getBreadCrumb(currentEx.getCategory(), currentEx), "crumb");
             ViewUtils.injectJs("/VAADIN/themes/wideweb/js/subHeader_full.js");
+            JavaScript.getCurrent().execute("MathJax.Hub.Queue([\"Typeset\",MathJax.Hub]);");
             ViewUtils.logEntry(LogEntry.EntryType.CHECK_SOLUTION);
         }
     }
