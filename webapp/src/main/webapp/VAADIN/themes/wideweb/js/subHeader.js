@@ -134,7 +134,7 @@ window.$( document ).ready(function() {
           deselectTopMenuItem();
         });
         var $searchDefaultText = window.$(".welcome .search .text").val();
-        var $solutionDefaultText = window.$(".solutionBar .yourSolution > input").val();
+        var $solutionDefaultText = window.$(".solutionBar .yourSolution input[id='var1']").val();
         window.$( ".welcome .search .submit").click(function() {
             window.$(".welcome .search .text").trigger("enterKey");
         });
@@ -170,14 +170,14 @@ window.$( document ).ready(function() {
             com_wide_wideweb_sendCart();
         });
         window.$( "input[value='Submit']" ).click(function() {
-        	com_wide_wideweb_checkAnswer(window.$(".solutionBar .yourSolution > input").val());            
-            window.$(".solutionBar .yourSolution > input").removeClass("filled");
-            window.$(".solutionBar .yourSolution > input").addClass("default");
+        	com_wide_wideweb_checkAnswer(window.$(".solutionBar .yourSolution input[type='text']").map(function(idx, elem) {return $(elem).val();}).get());            
+            window.$(".solutionBar .yourSolution input[type='text']").removeClass("filled");
+            window.$(".solutionBar .yourSolution input[type='text']").addClass("default");
         });
         window.$( "input[value='Solution']" ).click(function() {
-        	com_wide_wideweb_checkSolution(window.$(".solutionBar .yourSolution > input").val());    
+        	com_wide_wideweb_checkSolution();    
         });
-        window.$(".solutionBar .yourSolution > input").focus(function() {
+        window.$(".solutionBar .yourSolution input[type='text']").focus(function() {
           if(window.$(this).hasClass("default")) {
               this.value = "";
               window.$(this).removeClass("default");
@@ -185,7 +185,7 @@ window.$( document ).ready(function() {
               window.$(this).removeAttr("style");
           }
         });
-        window.$(".solutionBar .yourSolution > input").blur(function() {
+        window.$(".solutionBar .yourSolution input[type='text']").blur(function() {
             if(this.value == "") {
                 window.$(this).val($solutionDefaultText);
                 window.$(this).addClass("default");

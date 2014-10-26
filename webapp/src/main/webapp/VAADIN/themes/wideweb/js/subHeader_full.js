@@ -158,14 +158,14 @@ window.$( ".gIco").click(function() {
     com_wide_wideweb_sendCart();
 });
 window.$( "input[value='Submit']" ).click(function() {
-	com_wide_wideweb_checkAnswer(window.$(".solutionBar .yourSolution > input").val());    
-    window.$(".solutionBar .yourSolution > input").removeClass("filled");
-    window.$(".solutionBar .yourSolution > input").addClass("default");
+	com_wide_wideweb_checkAnswer(window.$(".solutionBar .yourSolution input[type='text']").map(function(idx, elem) {return $(elem).val();}).get());    
+    window.$(".solutionBar .yourSolution input[type='text']").removeClass("filled");
+    window.$(".solutionBar .yourSolution input[type='text']").addClass("default");
 });
 window.$( "input[value='Solution']" ).click(function() {
-	com_wide_wideweb_checkSolution(window.$(".solutionBar .yourSolution > input").val());    
+	com_wide_wideweb_checkSolution();    
 });
-window.$(".solutionBar .yourSolution > input").focus(function() {
+window.$(".solutionBar .yourSolution input[type='text']").focus(function() {
 	if(window.$(this).hasClass("default")) {
         this.value = "";
         window.$(this).removeClass("default");
@@ -173,7 +173,7 @@ window.$(".solutionBar .yourSolution > input").focus(function() {
         window.$(this).removeAttr("style");
     }
 });
-window.$(".solutionBar .yourSolution > input").blur(function() {
+window.$(".solutionBar .yourSolution input[type='text']").blur(function() {
 	if(this.value == "") {
         window.$(this).val($solutionDefaultText);
         window.$(this).addClass("default");

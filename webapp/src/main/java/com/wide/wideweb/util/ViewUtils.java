@@ -515,6 +515,7 @@ public class ViewUtils {
         StringBuilder tableBuilder = new StringBuilder();
         tableBuilder.append("<table>\n");
         String answer = getFeatureValue(currentEx, FeatureFactory.SHORT_ANSWER);
+        int varid = 1;
         for (String var : answer.split(ExerciseBean.VAR_SEPARATOR)) {
             if (":=".equals(var)) {
                 continue;
@@ -523,7 +524,7 @@ public class ViewUtils {
             tableBuilder.append(var.split(":=")[0] + ":");
             tableBuilder.append("</td></tr>\n");
             tableBuilder.append("<tr><td style=\"padding:5px;spacing:-5px\">\n");
-            tableBuilder.append("<input type=\"text\" class=\"filled default\" value=\"Your solution comes here\">\n");
+            tableBuilder.append("<input id='var" + varid++ + "' type=\"text\" class=\"filled default\" value=\"Your solution comes here\">\n");
             tableBuilder.append("</td></tr>\n");
         }
         tableBuilder.append("</table>\n");
