@@ -17,7 +17,9 @@
 			<div class="topSearch search reset">
 				<div class="input"><input class="searchInput default" type="text" value="Enter search keywords here" /><input class="filterIco" type="submit" value=" "/></div>
 			</div>
-			<a href="#!login" class="userIco"></a>
+			<a href="#!login" class="userIco">
+			<div location="auth_user"></div>
+			</a>
 			<a href="#!login" class="logo" title="WIDE"></a>
 			<div class="subHeader">
 				<div class="subMenuContainer">
@@ -77,8 +79,18 @@
 					<div class="login">
 						<div class="loginPanel">
                             <div class="input fadeIn" style="display: block;">
-                                <input id="uname" type="text" class="default" value="Username" >
-                                <input id="passwd" type="password" class="default" value="Password" >
+                                <table>
+                                	<tr><td style="padding:3px;color:white">Username:</td><td style="color:white">Password:</td></tr>
+                                	<tr><td style="padding:3px"><input id="uname" type="text" class="default" value="Enter username here"
+                                	onFocus="if (document.getElementById('uname').value == 'Enter username here') {document.getElementById('uname').className='';document.getElementById('uname').value=''};"
+                                	onBlur="if (document.getElementById('uname').value=='') {document.getElementById('uname').className='default';document.getElementById('uname').value='Enter username here';}">
+                                	</td><td>
+                                	<input type="text" id="placeholder" class="default" value="Enter password here"
+                                	onFocus="if (document.getElementById('placeholder').value == 'Enter password here') {document.getElementById('placeholder').style.display = 'none';document.getElementById('passwd').style.display = 'inline';document.getElementById('passwd').className='';document.getElementById('passwd').focus();}"/>
+                                	<input id="passwd" type="password" class="default" value="" style="display: none;"
+                                	onBlur="if (document.getElementById('passwd').value=='') {document.getElementById('passwd').style.display = 'none';document.getElementById('placeholder').style.display = 'inline';document.getElementById('placeholder').className='default';document.getElementById('placeholder').value='Enter password here';}">
+                                	</td></tr>
+                                </table>
                                 <input type="submit" value="Log in" onclick="com_wide_wideweb_handleauth(window.$(uname).val(), window.$(passwd).val());">
                                 <input type="submit" value="Register" onclick="window.open('#!register', '_self');return true;">
                             </div>

@@ -15,6 +15,7 @@ import com.wide.domainmodel.Category;
 import com.wide.domainmodel.Exercise;
 import com.wide.domainmodel.Exercise.DifficultyLevel;
 import com.wide.domainmodel.Exercise.SchoolLevel;
+import com.wide.domainmodel.Exercise.SolutionType;
 import com.wide.domainmodel.Feature;
 
 public class ExerciseBean implements Serializable {
@@ -36,6 +37,7 @@ public class ExerciseBean implements Serializable {
     private String exerciseText;
     private String relatedLinks;
     private String solutionText;
+    private SolutionType type;
 
     // Short answer variables
     private String varName_1;
@@ -69,6 +71,7 @@ public class ExerciseBean implements Serializable {
         this.varVal_2 = "";
         this.varVal_3 = "";
         this.varVal_4 = "";
+        this.type = SolutionType.SIMPLE;
     }
 
     public ExerciseBean(Exercise currentExercise) {
@@ -81,6 +84,7 @@ public class ExerciseBean implements Serializable {
         this.publisher = currentExercise.getPublisher();
         this.difficulty = currentExercise.getDifficulty();
         this.schoolLevel = currentExercise.getLevel();
+        this.type = currentExercise.getType();
         for (Feature feature : currentExercise.getFeatures()) {
             switch (feature.getName()) {
                 case FeatureFactory.TAGS:
@@ -132,6 +136,7 @@ public class ExerciseBean implements Serializable {
         ret.setPublisher(this.publisher);
         ret.setBookTitle(this.book);
         ret.setCategory(this.category);
+        ret.setType(this.type);
         final List<Feature> features = ret.getFeatures();
         // iterate through old exercise's features and remove those features which were cleared, or update them accordingly.
         Set<String> featurekinds = new HashSet<>(FeatureFactory.FEATUREKINDS);
@@ -404,6 +409,14 @@ public class ExerciseBean implements Serializable {
         builder.append(this.solutionText);
         builder.append("]");
         return builder.toString();
+    }
+
+    public SolutionType getType() {
+        return this.type;
+    }
+
+    public void setType(SolutionType type) {
+        this.type = type;
     }
 
 }

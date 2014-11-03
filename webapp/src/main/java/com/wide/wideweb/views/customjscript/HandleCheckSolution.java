@@ -13,6 +13,7 @@ import com.vaadin.ui.JavaScriptFunction;
 import com.vaadin.ui.Label;
 import com.wide.common.FeatureFactory;
 import com.wide.domainmodel.Exercise;
+import com.wide.domainmodel.Exercise.SolutionType;
 import com.wide.domainmodel.stat.LogEntry;
 import com.wide.wideweb.beans.ExerciseBean;
 import com.wide.wideweb.util.SpringSecurityHelper;
@@ -44,12 +45,12 @@ public class HandleCheckSolution implements JavaScriptFunction {
             for (int i = 0; i < answerVars.size(); i++) {
                 JavaScript.getCurrent().execute(
                         "window.$(\".solutionBar .yourSolution input[id='var" + (i + 1) + "']\").css('border-color', '"
-                                + (answerVars.get(i).equals(submitVars.get(i)) ? "green" : "red") + "')");
+                                + (compareSolution(answerVars.get(i), submitVars.get(i), currentEx.getType()) ? "green" : "red") + "')");
                 JavaScript.getCurrent().execute("window.$(\".solutionBar .yourSolution input[id='var" + (i + 1) + "']\").css('border-width', '2px')");
                 JavaScript.getCurrent()
                         .execute(
                                 "window.$(\".solutionBar .yourSolution input[id='var" + (i + 1) + "']\").val('" + submitVars.get(i) + " - "
-                                        + (answerVars.get(i).equals(submitVars.get(i)) ? "Correct" : "Wrong")
+                                        + (compareSolution(answerVars.get(i), submitVars.get(i), currentEx.getType()) ? "Correct" : "Wrong")
                                         + "');");
             }
             ViewUtils.logEntry(LogEntry.EntryType.SUBMIT_SOLUTION, answer);
@@ -68,8 +69,8 @@ public class HandleCheckSolution implements JavaScriptFunction {
 
     private List<String> splitAnswer(String answer) {
         List<String> vars = new ArrayList<String>();
-        for (String answ : answer.substring(1, answer.length() - 1).split(",")) {
-            vars.add(answ.substring(1, answ.length() - 1).replace(" - Correct", "").replace(" - Wrong", ""));
+        for (String answ : answer.substring(1, answer.length() - 1).split("\",")) {
+            vars.add(answ.replace("\"", "").replace(" - Correct", "").replace(" - Wrong", ""));
         }
         return vars;
     }
@@ -84,5 +85,25 @@ public class HandleCheckSolution implements JavaScriptFunction {
         }
 
         return vars;
+    }
+
+    private boolean compareSolution(String answer, String varval, SolutionType type) {
+        boolean ret = false;
+
+        if (type == SolutionType.SIMPLE) {
+            ret = answer.equals(varval);
+        } else if (type == SolutionType.MULTI_CHOICE) {
+            String extract1 = answer.toUpperCase().replaceAll("[^A-Z]+", "");
+            String extract2 = varval.toUpperCase().replaceAll("[^A-Z]+", "");
+            for (int i = 0; i < extract1.length(); i++) {
+                if (!extract2.contains(extract1.charAt(i) + "")) {
+                    ret = false;
+                    break;
+                }
+                extract2 = extract2.replaceFirst(extract1.charAt(i) + "", "");
+            }
+            ret = extract2.isEmpty();
+        }
+        return ret;
     }
 }

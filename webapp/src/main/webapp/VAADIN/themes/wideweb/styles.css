@@ -1009,7 +1009,7 @@ b {
 
 input[type=text], input[type=submit], input[type=password], textarea {
   border: 2px solid transparent; }
-  input[type=text]:focus, input[type=submit]:focus, textarea:focus {
+  input[type=text]:focus, input[type=password]:focus, input[type=submit]:focus, textarea:focus {
     outline: none;
     border: 2px solid #ffba00; }
 
@@ -1108,7 +1108,7 @@ input[type=text], input[type=submit], input[type=password], textarea {
   -webkit-box-shadow: 5px 8px 15px #eee;
   -moz-box-shadow: 5px 8px 15px #eee;
   box-shadow: 5px 8px 15px #eee;
-  height: 83px }
+  height: 103px }
   .main .loginPanel .input input {
     line-height: 24px;
     padding-left: 8px;

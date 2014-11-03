@@ -35,6 +35,7 @@ import com.vaadin.ui.TextField;
 import com.wide.domainmodel.Category;
 import com.wide.domainmodel.Exercise.DifficultyLevel;
 import com.wide.domainmodel.Exercise.SchoolLevel;
+import com.wide.domainmodel.Exercise.SolutionType;
 import com.wide.persistence.PersistenceListener;
 import com.wide.service.WideService;
 import com.wide.wideweb.beans.ExerciseBean;
@@ -274,6 +275,14 @@ public abstract class AbstractExerciseView extends Panel implements View {
                 com.vaadin.ui.JavaScript.getCurrent().execute("MathJax.Hub.Queue([\"Typeset\",MathJax.Hub]);");
             }
         });
+
+        final ComboBox types = new ComboBox("Solution type");
+        types.setNullSelectionAllowed(false);
+        types.addItem(SolutionType.SIMPLE);
+        types.addItem(SolutionType.MULTI_CHOICE);
+        types.setValue(SolutionType.SIMPLE);
+        this.editorLayout.addComponent(types);
+        this.form.bind(types, "type");
 
         HorizontalLayout var = getVar(false);
         var.setCaption("Short answer(s)");

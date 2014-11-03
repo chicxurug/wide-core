@@ -1,6 +1,8 @@
 package com.wide.defaults;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,10 +27,13 @@ import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.wide.common.FeatureFactory;
 import com.wide.domainmodel.Category;
 import com.wide.domainmodel.Exercise;
 import com.wide.domainmodel.Exercise.DifficultyLevel;
+import com.wide.domainmodel.Exercise.SolutionType;
 import com.wide.domainmodel.ExercisePoint;
+import com.wide.domainmodel.Feature;
 import com.wide.domainmodel.Test;
 import com.wide.service.WideService;
 
@@ -147,12 +152,55 @@ public class WideDefaultsInitiator {
         }
     }
 
+    private void initExercisesFromLatex(File exLatex, File solLatex, String separator) throws IOException {
+        BufferedReader exbr = new BufferedReader(new FileReader(exLatex));
+        BufferedReader solbr = new BufferedReader(new FileReader(solLatex));
+        Category category = this.service.getOrCreateCategory("Linear Algebra", null);
+        int counter = 1;
+        String line = "";
+        String sline = "";
+
+        do {
+            StringBuffer exText = new StringBuffer();
+            Exercise ex = new Exercise("Serbian", "Polinomi i racionalne funkcije 1." + counter, "hpeter", DifficultyLevel.D2_AVERAGE, 1,
+                    "M1_prvi", Exercise.SchoolLevel.HIGHSCHOOL, "Polygon Group Ltd.", "M1_prvi", category, null, SolutionType.MULTI_CHOICE);
+            List<Feature> exFeatures = new ArrayList<Feature>();
+            while ((line = exbr.readLine()) != null) {
+                if (line.contains(separator)) {
+                    break;
+                }
+                exText.append(line.trim());
+            }
+            exFeatures.add(FeatureFactory.createExerciseText(exText.toString()));
+            boolean first = true;
+            StringBuffer solText = new StringBuffer();
+            while ((sline = solbr.readLine()) != null) {
+                if (sline.contains(separator)) {
+                    break;
+                }
+                if (first) {
+                    exFeatures.add(FeatureFactory.createShortAnswer("Odgovor:=" + sline.replace("<br/>", "").replace(",", ";").trim() + "#:=#:=#:="));
+                    first = false;
+                } else {
+                    solText.append(sline.trim());
+                }
+            }
+            exFeatures.add(FeatureFactory.createSolutionText(solText.toString()));
+            ex.setFeatures(exFeatures);
+            counter++;
+            this.service.saveOrUpdateExercise(ex);
+        } while (line != null);
+        exbr.close();
+        solbr.close();
+    }
+
     private void generateRandomExercises(Category category) {
         List<ExercisePoint> exs = new ArrayList<ExercisePoint>();
         Test t = new Test();
         for (int i = 1; i < 4; i++) {
             Exercise ex = new Exercise("English", "Exercise" + category.getName() + i, "generator", DifficultyLevel.randomDifficulty(), i,
-                    "Author" + category.getName() + i, Exercise.SchoolLevel.COLLEGE, "Publisher", "Title" + category.getName() + i, category, null);
+                    "Author" + category.getName() + i, Exercise.SchoolLevel.COLLEGE, "Publisher", "Title" + category.getName() + i, category, null,
+                    SolutionType.SIMPLE);
             exs.add(new ExercisePoint(ex, new Long(i)));
         }
         t.setDescription("Test" + category.getName());
@@ -168,8 +216,10 @@ public class WideDefaultsInitiator {
         WideDefaultsInitiator main = new WideDefaultsInitiator(wideService);
         if (args.length == 0) {
             main.initDefaults();
-        } else {
+        } else if (args.length == 2) {
             main.initDefaultsFromMM(new File(args[0]), Boolean.parseBoolean(args[1]));
+        } else {
+            main.initExercisesFromLatex(new File(args[0]), new File(args[1]), args[2]);
         }
         // Close at application end
         emf.close();

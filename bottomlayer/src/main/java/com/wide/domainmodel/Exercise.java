@@ -72,6 +72,21 @@ public class Exercise extends Solvable implements Serializable {
         }
     }
 
+    public enum SolutionType {
+        SIMPLE("Simple"),
+        MULTI_CHOICE("Multi choice");
+
+        private final String description;
+
+        SolutionType(String description) {
+            this.description = description;
+        }
+
+        public String getDescription() {
+            return this.description;
+        }
+    }
+
     private String language;
     private String title;
     private String uploader;
@@ -85,6 +100,7 @@ public class Exercise extends Solvable implements Serializable {
     private Integer numberOfSubmits;
     private Category category;
     private List<Feature> features;
+    private SolutionType type;
 
     public Exercise() {
 
@@ -92,7 +108,7 @@ public class Exercise extends Solvable implements Serializable {
 
     public Exercise(String language, String title, String uploader, DifficultyLevel difficulty, Integer score, String author, SchoolLevel level,
             String publisher,
-            String bookTitle, Category category, List<Feature> features) {
+            String bookTitle, Category category, List<Feature> features, SolutionType type) {
         this.language = language;
         this.title = title;
         this.uploader = uploader;
@@ -106,6 +122,7 @@ public class Exercise extends Solvable implements Serializable {
         this.numberOfSubmits = 0;
         this.category = category;
         this.features = features;
+        this.type = type;
     }
 
     // copy constructor
@@ -130,6 +147,7 @@ public class Exercise extends Solvable implements Serializable {
                 this.features.add(new Feature(feature));
             }
         }
+        this.type = prev.type;
     }
 
     @Column(nullable = false)
@@ -249,5 +267,13 @@ public class Exercise extends Solvable implements Serializable {
 
     public void setUploader(String uploader) {
         this.uploader = uploader;
+    }
+
+    public SolutionType getType() {
+        return this.type;
+    }
+
+    public void setType(SolutionType type) {
+        this.type = type;
     }
 }

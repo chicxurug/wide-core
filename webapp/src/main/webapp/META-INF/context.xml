@@ -5,10 +5,10 @@
 		name="jdbc/WideWebApp"
 		auth="Container"
 		type="javax.sql.DataSource"
-		username="postgres"
-		password="postgres"
+		username="wide"
+		password="wide5432"
 		driverClassName="org.postgresql.Driver"
-		url="jdbc:postgresql://localhost:5433/wide"
+		url="jdbc:postgresql://localhost:5432/wide"
 		maxActive="8"
 		maxIdle="4"/>
 </Context>
