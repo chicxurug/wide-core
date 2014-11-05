@@ -1,7 +1,7 @@
 package com.wide.wideweb.views;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 
 import ru.xpoft.vaadin.VaadinView;
@@ -10,43 +10,37 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.CustomLayout;
-import com.vaadin.ui.JavaScript;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
-import com.wide.wideweb.util.SpringSecurityHelper;
 import com.wide.wideweb.util.ViewDataCache;
 import com.wide.wideweb.util.ViewUtils;
-import com.wide.wideweb.views.customjscript.HandleAuthRequest;
 
 /**
  * 
- * @author Attila Cs.
+ * @author Peter Hegedus
  * 
  */
 @Component
 @Scope("prototype")
-@VaadinView(ViewUtils.LOGIN)
-public class LoginView extends Panel implements View {
+@VaadinView(ViewUtils.PROFILE)
+@PreAuthorize("hasRole('ROLE_USER')")
+public class ProfileView extends Panel implements View {
 
-    private static final long serialVersionUID = -2114781199528566532L;
-
-    @Autowired
-    SpringSecurityHelper authHelper;
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 8385818412506619730L;
 
     @Override
-    public void enter(final ViewChangeEvent event) {
-
-        CustomLayout layout = new CustomLayout("login");
+    public void enter(ViewChangeEvent event) {
         ViewDataCache cache = ViewDataCache.getInstance();
-        JavaScript.getCurrent().removeFunction("com_wide_wideweb_handleauth");
+        CustomLayout layout = new CustomLayout("profile");
+        setContent(layout);
 
         layout.addComponent(new Label("<p style=\"padding-top:34px; color: white; text-align: center; font-family: education;\">" + cache.getUsername()
                 + "</p>", ContentMode.HTML), "auth_user");
 
-        JavaScript.getCurrent().addFunction("com_wide_wideweb_handleauth", new HandleAuthRequest(event, this.authHelper));
-        JavaScript.getCurrent().execute("window.$(\"input[id='uname']\").focus();");
-
-        setContent(layout);
         ViewUtils.injectJs("/VAADIN/themes/wideweb/js/subHeader.js");
     }
+
 }

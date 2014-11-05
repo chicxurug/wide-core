@@ -58,6 +58,7 @@ public class ViewUtils {
     public static final String CREATE_EXERCISE = "createExercise";
     public static final String EDIT_EXERCISE = "editExercise";
     public static final String VIEW_EXERCISE = "viewExercise";
+    public static final String PROFILE = "profile";
     public static final String ERROR = "error";
 
     public static void navigateToErrorView(VaadinSession session, ViewChangeEvent event, Exception e) {

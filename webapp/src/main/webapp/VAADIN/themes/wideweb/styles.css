@@ -1167,7 +1167,7 @@ input[type=text], input[type=submit], input[type=password], textarea {
   padding: 15px;
   padding-top: 20px;
   display: block; 
-  max-width: 450px;
+  max-width: 460px;
   margin: 0 auto;
   margin-top: 50px;
   -webkit-box-shadow: 5px 8px 15px #eee;
@@ -1289,4 +1289,157 @@ input[type=text], input[type=submit], input[type=password], textarea {
     padding-right: 10px;
     background-color: white; 
     resize: none;
+}
+
+/* profile page */
+.profile .basic
+{
+    background: #eee;
+    height: 193px;
+}
+.profile  .basic .profilePic
+{
+    width: 225px;
+    height: 225px;
+    display: inline;
+    float: left;
+}
+
+.profile  .basic .name
+{
+    display: inline-block;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 20px;
+    color: black;
+    vertical-align: top;
+    padding-left: 40px;
+    padding-top: 60px;
+    padding-bottom: 8px;
+    margin-bottom: 5px;
+    width: 645px;
+    clear: left;
+    background: #31859a;
+    color: white;
+}
+
+.profile .basic .work, 
+.profile  .basic .studies, 
+.profile  .basic .excercises
+{
+    display: inline-block;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 20px;
+    color: black;
+    vertical-align: top;
+    margin-left: 40px;
+    width: 600px;
+    clear: left;
+}
+
+.profile .tabs
+{
+    border-top: 1px solid #bbb;
+    border-bottom: 1px solid #bbb;
+    width: 100%;
+    height: 30px;
+    margin-left: 225px;
+    width: 685px;
+}
+
+.profile .tabs ul
+{
+    margin-left: 30px;
+}
+
+.profile .tabs ul li 
+{
+    display: inline;	
+    line-height: 30px;
+}
+
+.profile .tabs ul li a
+{
+    padding: 0 10px 0 10px;
+    display: inline-block;	
+    line-height: 30px;
+}
+
+.profile .tabs ul li a:hover
+{
+    background: #62abff;
+    color: white;
+}
+
+.profile .tabContent
+{
+    
+}
+
+.profile .tabContent .story
+{
+    width: 645px;
+    text-align: justify;
+    float: left;
+}
+    
+.profile .tabContent .story h4
+{
+    font-weight: bold;
+    margin-top: 25px;
+    margin-bottom: 5px;
+    font-size: 16px;
+}
+    
+.profile .tabContent .education,
+.profile .tabContent .work,
+.profile .tabContent .contact
+{
+    width: 225px;
+    float: right;
+    clear: right;
+}
+
+.profile .tabContent .education h4,
+.profile .tabContent .work h4,
+.profile .tabContent .contact h4
+{
+    font-weight: bold;
+    margin-top: 25px;
+    font-size: 16px;
+}
+
+.profile .tabContent .education ul li,
+.profile .tabContent .work ul li,
+.profile .tabContent .contact ul li
+{
+    margin-top: 10px;
+}
+
+.profile .tabContent .education span,
+.profile .tabContent .work span,
+.profile .tabContent .contact span
+{
+    font-size: 14px;
+    clear: left;
+    display: block;
+    color: #777;
+    line-height:normal;
+}
+
+
+
+    
+    
+.profile .tabContent .education
+{
+}
+    
+.profile .tabContent .work
+{
+}
+    
+.profile .tabContent .contact
+{
 }

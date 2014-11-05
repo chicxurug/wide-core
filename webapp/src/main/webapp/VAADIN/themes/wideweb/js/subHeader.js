@@ -159,6 +159,7 @@ window.$( document ).ready(function() {
         });
         window.$( ".userSubContainer > .subMenu > li" ).click(function() {
           com_wide_wideweb_loginSelect(window.$(this).text());
+          window.$( "body" ).removeClass("welcome");
         });
         window.$( ".donate").click(function() {
             com_wide_wideweb_createExercise(window.$(this).text());
@@ -186,8 +187,22 @@ window.$( document ).ready(function() {
           }
         });
         window.$(".solutionBar .yourSolution input[type='text']").blur(function() {
-            if(this.value == "") {
+        	if(this.value == "") {
                 window.$(this).val($solutionDefaultText);
+                window.$(this).addClass("default");
+            }
+        });
+        window.$(".registerPanel input, .registerPanel textarea").focus(function() {
+        	if(window.$(this).hasClass("default")) {
+                this.value = "";
+                window.$(this).removeClass("default");
+            }
+        });
+        window.$(".registerPanel input[type='text'], .registerPanel textarea").blur(function() {
+        	str = window.$(this).parent().attr('class');
+        	if(this.value == "" && str.indexOf('v-datefield') == -1) {
+        		str = window.$(this).parent().parent().children().first().children().first().children().first().text();
+        		window.$(this).val(str.substring(0, str.length -1));
                 window.$(this).addClass("default");
             }
         });

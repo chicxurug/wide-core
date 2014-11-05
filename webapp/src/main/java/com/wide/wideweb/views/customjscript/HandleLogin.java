@@ -32,6 +32,8 @@ public class HandleLogin implements JavaScriptFunction {
             ViewUtils.clearSession();
             this.navigator.navigateTo(ViewUtils.MAIN);
         }
-        ViewUtils.injectJs("/VAADIN/themes/wideweb/js/subHeader.js");
+        if ("Profile".equals(command)) {
+            this.navigator.navigateTo(ViewUtils.PROFILE);
+        }
     }
 }

@@ -21,14 +21,16 @@
 	<div class="header">
 		<div>
 			<ul class="menu">
-				<li><a href="#" target="" class="learn">Learn</a></li>
-				<li><a href="#" target="" class="teach">Teach</a></li>
+				<li><a href="#!register" target="" class="learn">Learn</a></li>
+				<li><a href="#!register" target="" class="teach">Teach</a></li>
 			</ul>
 			<div class="topSearch search reset">
 				<div class="input"><input class="searchInput default" type="text" value="Enter search keywords here" /><input class="filterIco" type="submit" value=" "/></div>
 			</div>
-			<a href="#" class="userIco"></a>
-			<a href="#" class="logo" title="WIDE"></a>
+			<a href="#!register" class="userIco">
+				<div location="auth_user"></div>
+			</a>
+			<a href="#!register" class="logo" title="WIDE"></a>
 			<div class="subHeader">
 				<div class="subMenuContainer">
 					<ul class="subMenu first">
@@ -38,20 +40,20 @@
 				</div>
 				<div class="userSubContainer">
 					<ul class="subMenu">
-						<li><a href="#" target="">Log in</a></li>
-						<li><a href="#" target="">Profile</a></li>
-						<li><a href="#" target="">Log out</a></li>
+						<li><a href="#!register" target="">Log in</a></li>
+						<li><a href="#!register" target="">Profile</a></li>
+						<li><a href="#!register" target="">Log out</a></li>
 					</ul>
 				</div>
 				<div class="searchFilter reset">
 					<ul class="col">
-						<li><a href="#" target="">Difficulty level 1-5</a></li>
-						<li><a href="#" target=""><input type="text" class="default" value="Author" /></a></li>
-						<li><a href="#" target="">School level</a></li>
-						<li><a href="#" target="">Type</a></li>
+						<li><a href="#!register" target="">Difficulty level 1-5</a></li>
+						<li><a href="#!register" target=""><input type="text" class="default" value="Author" /></a></li>
+						<li><a href="#!register" target="">School level</a></li>
+						<li><a href="#!register" target="">Type</a></li>
 					</ul>
 					<ul class="col">					
-						<li><a href="#" target="">Ratings
+						<li><a href="#!register" target="">Ratings
 								<div class="rating">
 									<input type="checkbox" name="rating1" value="1" checked /><span></span>
 									<input type="checkbox" name="rating2" value="2" checked /><span></span>
@@ -61,16 +63,16 @@
 								</div>
 							</a>
 						</li>
-						<li><a href="#" target=""><input type="text" class="default" value="Publisher" /></a></li>
-						<li><a href="#" target=""><input type="text" class="default" value="Book" /></a></li>
-						<li><a href="#" target=""><input type="text" class="default" value="Title" /></a></li>
+						<li><a href="#!register" target=""><input type="text" class="default" value="Publisher" /></a></li>
+						<li><a href="#!register" target=""><input type="text" class="default" value="Book" /></a></li>
+						<li><a href="#!register" target=""><input type="text" class="default" value="Title" /></a></li>
 					</ul>
 					<ul class="col">					
-						<li><a href="#" target="">Test member yes/no</a></li>
-						<li><a href="#" target=""><input type="text" class="half default" value="Submits No." /></a></li>
+						<li><a href="#!register" target="">Test member yes/no</a></li>
+						<li><a href="#!register" target=""><input type="text" class="half default" value="Submits No." /></a></li>
 					</ul>
-					<a class="closeFilter" href="#"></a>
-					<a href="#" class="clearFilter">X</a>
+					<a class="closeFilter" href="#!register"></a>
+					<a href="#!register" class="clearFilter">X</a>
 					<ul class="typeSelector">
 						<input type="checkbox" name="typeCategory" value="1" checked /><li>Menus</li><input type="checkbox" name="typeLesson" value="1"  checked /><li>Lessons</li><input type="checkbox" name="typeTest" value="1"  checked  /><li>Tests</li>
 					</ul>
@@ -87,20 +89,22 @@
 					<div class="login">
 						<div class="registerPanel">
                             <div class="input fadeIn" style="display: block;">
-                                <span class="inputLabel">Username: *</span><input type="text" class="default" value="Username" >
-                                <span class="inputLabel">Password: *</span><input type="password" class="default" value="Password" >
-                                <span class="inputLabel">Confirm Password: *</span><input type="password" class="default" value="Password" >
-                                <span class="inputLabel">Your name: *</span><input type="text" class="default" value="Your name" >
-                                <span class="inputLabel">Date of birth: *</span><input type="text" class="default" value="31/12/1900" >
-                                <span class="inputLabel">Your e-mail address: *</span><input type="text" class="default" value="Your e-mail address" >
-                                <span class="inputLabel">Gender: *</span>
+                            	<font color="white" size="3">Registration form</font>
+                                <div location="username"></div>
+                                <div location="password"></div>
+                                <div location="cpassword"></div>
+                                <div location="name"></div>
+                                <div location="dateofbirth"></div>
+                                <div location="email"></div>
+                                <span class="inputLabel">Gender: <font color="red" size="4">*</font></span>
 									  <input id="male" type="radio" name="field" value="option" checked>
                                       <label for="male">Male</label>
                                       <input id="female" type="radio" name="field" value="option">
                                       <label for="female">Female</label>
-                                <span class="inputLabel">Topics of interests: </span><textarea class="default" >Interests</textarea>
+                                <div location="interests"></div>
                                 <br>
-                                <input type="submit" value="Register">
+                                <input type="submit" value="Register" onclick="com_wide_wideweb_register(window.$(&quot;input[id='male']:checked&quot;).val())">
+                                <input type="submit" value="Go back" onclick="window.open('#!main', '_self');return true;">
 							</div>
 				      </div>
 					</div>
@@ -116,8 +120,8 @@
 			® Copyight by <a href="/">WIDE</a>, 
 			Made by <a href="/" target="_blank">The W.I.D.E. Team</a>
 			<ul class="footerIcons">
-				<li><a href="#" target="" class="donate">donate</a></li>
-				<li><a href="#" target="" class="aboutUs">about us</a></li>
+				<li><a href="#!register" target="" class="donate">donate</a></li>
+				<li><a href="#!register" target="" class="aboutUs">about us</a></li>
 			</ul>
 			<ul class="socialIcons">
 				<li><a href="1.html" target="" class="fbIco">facebook</a></li>
